@@ -1,0 +1,54 @@
+/* class réutilisable */
+.flex {
+    display: flex;
+}
+
+.jc_center {
+    justify-content: center;
+}
+
+.jc_spaceEvenly {
+    justify-content: space-evenly;
+}
+
+.ai_center {
+    align-items: center;
+}
+
+.boutton {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    background-color: bisque;
+    padding: 1em 0em;
+    border: solid 1px;
+    border-radius: 5px;
+    transition: background-color 1s;
+}
+
+.boutton:hover {
+    background-color: darksalmon;
+}
+
+/* base.html.twig */
+body {
+    background-image:url("../img/fondCuirTempo.jpg") ;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size: cover;
+}
+
+.mainPage {
+    background-color: #FFFFFF;
+    width: 90%;
+    border-radius: 1em;
+}
+
+.navBar {
+
+}
+
+.navBar .boutton {
+    flex-grow: 1;
+}
