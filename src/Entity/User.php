@@ -60,11 +60,6 @@ class User implements UserInterface
      */
     private $telephone;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $pseudo;
-
     public function __construct()
     { }
 
@@ -183,11 +178,6 @@ class User implements UserInterface
         $this->telephone = $telephone;
 
         return $this;
-    }
-
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
     }
 
     public function setPseudo(string $pseudo): self
