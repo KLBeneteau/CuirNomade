@@ -28,6 +28,14 @@
 
             </nav>
 
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash flash-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
             <main> {% block body %}{% endblock %} </main>
 
             <footer class="flex jc_center" > footer </footer>

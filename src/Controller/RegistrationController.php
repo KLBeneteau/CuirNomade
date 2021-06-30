@@ -30,16 +30,18 @@ class RegistrationController extends AbstractController
                         $form->get('mdp')->getData()
                     )
                 );
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Votre profil a bien été enregistrer');
+
+                return $this->redirectToRoute('app_login');
+
             } else {
-
+                $this->addFlash('error', 'Le mot de passe et ça confirmation ne sont pas identique ');
             }
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('main_accueil');
         }
 
         return $this->render('registration/register.html.twig', [

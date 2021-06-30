@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints\IsNull;
 
 /**
  * @Route("/monCompte", name="profil_")
@@ -50,19 +51,37 @@ class ProfilController extends AbstractController {
         $profilForm->handleRequest($request);
 
         if ($profilForm->isSubmitted() && $profilForm->isValid()) {
+            dump($monProfil->getPassword()) ;
+            dump($passwordEncoder->encodePassword( $monProfil, $profilForm->get('mdp')->getData() )) ;
+            if (
+                $passwordEncoder->encodePassword( $monProfil, $profilForm->get('mdp')->getData() )
+                ==
+                $monProfil->getPassword()
+            ) {
 
-            $monProfil->setPassword(
-                $passwordEncoder->encodePassword(
-                    $monProfil,
-                    $profilForm->get('plainPassword')->getData()
-                )
-            );
+                $nouveauMdp = $profilForm->get('NouveauMdp')->getData() ;
+                dump($nouveauMdp);
+                if ($nouveauMdp == $profilForm->get('confirmationMdp')->getData()) {
+                    if (!$nouveauMdp) {
+                        $monProfil->setPassword(
+                            $passwordEncoder->encodePassword(
+                                $monProfil, $nouveauMdp
+                            )
+                        );
+                    }
+                } else {
+                    $this->addFlash('error', 'Confirmation du nouveau mot de passe incorect');
+                }
 
-            $entityManager->flush();
+                $entityManager->flush();
 
-            $this->addFlash('success', 'Votre profil a bien été modifier');
+                $this->addFlash('success', 'Votre profil a bien été modifier');
 
-            $this->redirectToRoute('profil_consulter');
+                return $this->redirectToRoute('profil_consulter');
+
+            } else {
+                $this->addFlash('error', 'Mot de passe incorect');
+            }
         }
 
         return $this->render("profil/modifier.html.twig", [
