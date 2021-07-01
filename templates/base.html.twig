@@ -18,8 +18,8 @@
                 <a class="boutton" href="{{ path('main_accueil') }}" >Accueil</a>
                 <a class="boutton" href="#" >Produits</a>
                 <a class="boutton" href="{{ path('main_presentation') }}" >L'Entreprise</a>
-                <a class="boutton" href="{{ path('profil_accueil') }} " >Mon Compte</a>
                 {% if app.user %}
+                    <a class="boutton" href="{{ path('profil_accueil') }} " >Mon Compte</a>
                     <a class="boutton" href={{ path('app_logout')}} >déco</a>
                 {% else %}
                     <a class="boutton" href={{ path('app_login')}} >se connecter</a>
