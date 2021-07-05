@@ -85,8 +85,10 @@ class RegistrationController extends AbstractController
                 if (!$validatorCode->getCompte()->getEmailValider()) {
                     if ($validatorCode->getCode() == $code ) {
                         $validatorCode->getCompte()->setEmailValider(true);
+                        $entityManager->remove($validatorCode);
                         $entityManager->flush();
                         $this->addFlash('success', "Votre Email à bien été validé ! " );
+
                     } else {
                         $this->addFlash('error', "Oops, le code de validation du mail est faux !" );
                         return $this->redirectToRoute('main_accueil');
