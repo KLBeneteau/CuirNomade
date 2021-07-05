@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Il existe déja un compte avec cette email !")
  */
 class User implements UserInterface
 {
@@ -25,7 +25,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      *
      * @Assert\Email(
-     *     message = "The email '{{ value }}' is not a valid email."
+     *     message = "l'email '{{ value }}' n'est pas un email valide."
      * )
      */
     private $email;
@@ -59,6 +59,11 @@ class User implements UserInterface
      * )
      */
     private $telephone;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $EmailValider;
 
     public function __construct()
     { }
@@ -179,6 +184,18 @@ class User implements UserInterface
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getEmailValider(): ?bool
+    {
+        return $this->EmailValider;
+    }
+
+    public function setEmailValider(bool $EmailValider): self
+    {
+        $this->EmailValider = $EmailValider;
 
         return $this;
     }
