@@ -68,12 +68,12 @@ class User implements UserInterface
     private $EmailValider;
 
     /**
-     * @ORM\OneToMany(targetEntity=ValidatorChangementMDP::class, mappedBy="compte", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ValidatorChangementMDP::class, mappedBy="compte", orphanRemoval=false)
      */
     private $ValidatorChangementMDPs;
 
     /**
-     * @ORM\OneToMany(targetEntity=ValidatorMail::class, mappedBy="compte", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ValidatorMail::class, mappedBy="compte", orphanRemoval=false)
      */
     private $validatorMails;
 

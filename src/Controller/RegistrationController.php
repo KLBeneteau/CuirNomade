@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\ValidatorMail;
 use App\Form\RegistrationFormType;
+use App\Repository\InvitationClientRepository;
 use App\Repository\ValidatorMailRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Scalar\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +50,7 @@ class RegistrationController extends AbstractController
 
                 $message = (new \Swift_Message('Cuir Nomade : Validation Email'))
                     // On attribue l'expéditeur
-                    ->setFrom("kael.beneteau@gmail.com")
+                    ->setFrom("cuirsnomades@gmail.com")
                     // On attribue le destinataire
                     ->setTo($user->getEmail())
                     // On crée le texte avec la vue
@@ -73,6 +75,62 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/CeerUnCompteVIP/{email}/{code}", name="app_registerVIP")
+     */
+    public function registerVIP(Request $request,
+                                UserPasswordEncoderInterface $passwordEncoder,
+                                \Swift_Mailer $mailer,
+                                String $email, String $code,
+                                InvitationClientRepository $invitationClientRepository): Response
+    {
+
+        $invitation = $invitationClientRepository->findOneBy(['email'=>$email]);
+        if ($invitation){
+
+            $user = new User();
+            $user->setRoles(["ROLE_CLIENT_VIP"]);
+            $user->setEmailValider(true);
+            $user->setEmail($email);
+            $form = $this->createForm(RegistrationFormType::class, $user);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                // encode the plain password
+                if ($form->get('mdp')->getData() == $form->get('confirmationMdp')->getData()) {
+                    $user->setPassword(
+                        $passwordEncoder->encodePassword(
+                            $user,
+                            $form->get('mdp')->getData()
+                        )
+                    );
+
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+
+                    $this->addFlash('success', 'Votre profil a bien été enregistrer');
+
+                    return $this->redirectToRoute('app_login');
+
+                } else {
+                    $this->addFlash('error', 'Le mot de passe et ça confirmation ne sont pas identique ');
+                }
+            }
+
+            return $this->render('registration/register.html.twig', [
+                'registrationForm' => $form->createView(),
+            ]);
+
+        } else {
+            //TODO:erreur404
+            return $this->redirectToRoute('main_accueil');
+        }
+
+
+
     }
 
     /**

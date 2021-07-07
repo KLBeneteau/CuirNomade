@@ -24,7 +24,8 @@ class ValidatorMail
     private $code;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ValidatorChangementMDPs", cascade={"remove"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\JoinColumn(nullable=false)
      */
     private $compte;

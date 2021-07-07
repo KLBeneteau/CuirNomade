@@ -11,7 +11,19 @@ class MainController extends AbstractController {
      * @Route("/", name="main_accueil")
      */
     public function accueil(){
-        return $this->render("main/accueil.html.twig") ;
+
+        if ($this->isGranted("ROLE_ADMIN")) {
+            return $this->render("main/accueil.html.twig") ;
+        } else {
+            return $this->redirectToRoute("main_adminAccueil");
+        }
+    }
+
+    /**
+     * @Route("/admin/", name="main_adminAccueil")
+     */
+    public function adminAccueil(){
+        return $this->render("main/adminAccueil.html.twig") ;
     }
 
     /**

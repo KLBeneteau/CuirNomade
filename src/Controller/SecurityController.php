@@ -41,7 +41,7 @@ class SecurityController extends AbstractController
      */
     public function motDePasseOublier(Request $request, UserRepository $userRepository, \Swift_Mailer $mailer, EntityManagerInterface $entityManager)
     {
-        dump($request->get('email')) ;
+
         if ($request->get('email')){
             $user = $userRepository->findOneBy(['email'=>$request->get('email')]) ;
             if (!is_null($user)) {
@@ -52,7 +52,7 @@ class SecurityController extends AbstractController
 
                 $message = (new \Swift_Message('Cuir Nomade : changement mot de passe'))
                     // On attribue l'expéditeur
-                    ->setFrom("kael.beneteau@gmail.com")
+                    ->setFrom("cuirsnomades@gmail.com")
                     // On attribue le destinataire
                     ->setTo($user->getEmail())
                     // On crée le texte avec la vue
