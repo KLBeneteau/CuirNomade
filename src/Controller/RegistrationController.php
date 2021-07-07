@@ -8,7 +8,6 @@ use App\Form\RegistrationFormType;
 use App\Repository\InvitationClientRepository;
 use App\Repository\ValidatorMailRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Scalar\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -125,12 +124,9 @@ class RegistrationController extends AbstractController
                 'registrationForm' => $form->createView(),
             ]);
 
-        } else {
-            //TODO:erreur404
-            return $this->redirectToRoute('main_accueil');
         }
 
-
+        return $this->redirectToRoute('main_accueil');
 
     }
 
@@ -150,8 +146,6 @@ class RegistrationController extends AbstractController
                     $this->addFlash('error', "Votre mail à déja été validé !" );
                     return $this->redirectToRoute('main_accueil');
                 }
-            } else {
-                //TODO:retourner ver page 404
             }
 
             return $this->render("main/accueil.html.twig") ;

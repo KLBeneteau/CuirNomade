@@ -119,7 +119,7 @@ class SecurityController extends AbstractController
             ]) ;
 
         } else {
-            //TODO:retourner ver page 404
+
             return $this->render("main/accueil.html.twig") ;
         }
     }
