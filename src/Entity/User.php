@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -65,8 +67,22 @@ class User implements UserInterface
      */
     private $EmailValider;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ValidatorChangementMDP::class, mappedBy="compte", orphanRemoval=true)
+     */
+    private $ValidatorChangementMDPs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ValidatorMail::class, mappedBy="compte", orphanRemoval=true)
+     */
+    private $validatorMails;
+
     public function __construct()
-    { }
+    {
+        $this->changementMDPs = new ArrayCollection();
+        $this->validatorMails = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -196,6 +212,66 @@ class User implements UserInterface
     public function setEmailValider(bool $EmailValider): self
     {
         $this->EmailValider = $EmailValider;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ValidatorChangementMDP[]
+     */
+    public function getValidatorChangementMDPs(): Collection
+    {
+        return $this->ValidatorChangementMDPs;
+    }
+
+    public function addValidatorChangementMDP(ValidatorChangementMDP $ValidatorChangementMDP): self
+    {
+        if (!$this->ValidatorChangementMDPs->contains($ValidatorChangementMDP)) {
+            $this->ValidatorChangementMDPs[] = $ValidatorChangementMDP;
+            $ValidatorChangementMDP->setCompte($this);
+        }
+
+        return $this;
+    }
+
+    public function removeValidatorChangementMDP(ValidatorChangementMDP $ValidatorChangementMDP): self
+    {
+        if ($this->ValidatorChangementMDPs->removeElement($ValidatorChangementMDP)) {
+            // set the owning side to null (unless already changed)
+            if ($ValidatorChangementMDP->getCompte() === $this) {
+                $ValidatorChangementMDP->setCompte(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ValidatorMail[]
+     */
+    public function getValidatorMails(): Collection
+    {
+        return $this->validatorMails;
+    }
+
+    public function addValidatorMail(ValidatorMail $validatorMail): self
+    {
+        if (!$this->validatorMails->contains($validatorMail)) {
+            $this->validatorMails[] = $validatorMail;
+            $validatorMail->setCompte($this);
+        }
+
+        return $this;
+    }
+
+    public function removeValidatorMail(ValidatorMail $validatorMail): self
+    {
+        if ($this->validatorMails->removeElement($validatorMail)) {
+            // set the owning side to null (unless already changed)
+            if ($validatorMail->getCompte() === $this) {
+                $validatorMail->setCompte(null);
+            }
+        }
 
         return $this;
     }

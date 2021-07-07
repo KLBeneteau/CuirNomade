@@ -81,18 +81,12 @@ class RegistrationController extends AbstractController
     public function validerEmail(int $idCode, String $code, ValidatorMailRepository $validatorMailRepository, EntityManagerInterface $entityManager){
 
             $validatorCode = $validatorMailRepository->find($idCode);
-            if ($validatorCode) {
+            if ($validatorCode && $validatorCode->getCode() == $code ) {
                 if (!$validatorCode->getCompte()->getEmailValider()) {
-                    if ($validatorCode->getCode() == $code ) {
-                        $validatorCode->getCompte()->setEmailValider(true);
-                        $entityManager->remove($validatorCode);
-                        $entityManager->flush();
-                        $this->addFlash('success', "Votre Email à bien été validé ! " );
-
-                    } else {
-                        $this->addFlash('error', "Oops, le code de validation du mail est faux !" );
-                        return $this->redirectToRoute('main_accueil');
-                    }
+                    $validatorCode->getCompte()->setEmailValider(true);
+                    $entityManager->remove($validatorCode);
+                    $entityManager->flush();
+                    $this->addFlash('success', "Votre Email à bien été validé ! " );
                 } else {
                     $this->addFlash('error', "Votre mail à déja été validé !" );
                     return $this->redirectToRoute('main_accueil');
@@ -101,6 +95,6 @@ class RegistrationController extends AbstractController
                 //TODO:retourner ver page 404
             }
 
-        return $this->render("main/accueil.html.twig") ;
-    }
+            return $this->render("main/accueil.html.twig") ;
+        }
 }

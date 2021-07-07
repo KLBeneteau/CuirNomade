@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Mot de passe oublié ?</h1>
+    <form method="post" action=" {{ path('app_motDePasseOublier') }}">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" />
+        <button class="boutton" type="submit">Envoyer</button>
+    </form>
+    <a class="boutton" href="{{ path('app_login') }}">Retour</a>
+{% endblock %}
+
+{% block title %}
+    Recuperation du mot de passe
+{% endblock %}
+

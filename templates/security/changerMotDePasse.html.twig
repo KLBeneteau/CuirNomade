@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}changer le mot de passe{% endblock %}
+
+{% block body %}
+    {{ form_start(changerMDPForm) }}
+    {{ form_widget(changerMDPForm) }}
+    <button type="submit" class="btn">Valider</button>
+    {{ form_end(changerMDPForm) }}
+{% endblock %}
