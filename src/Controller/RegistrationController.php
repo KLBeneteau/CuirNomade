@@ -88,7 +88,7 @@ class RegistrationController extends AbstractController
     {
 
         $invitation = $invitationClientRepository->findOneBy(['email'=>$email]);
-        if ($invitation){
+        if ($invitation && $invitation->getCode() == $code ){
 
             $user = new User();
             $user->setRoles(["ROLE_CLIENT_VIP"]);
@@ -109,6 +109,7 @@ class RegistrationController extends AbstractController
 
                     $entityManager = $this->getDoctrine()->getManager();
                     $entityManager->persist($user);
+                    $entityManager->remove($invitation);
                     $entityManager->flush();
 
                     $this->addFlash('success', 'Votre profil a bien été enregistrer');
