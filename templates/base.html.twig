@@ -28,6 +28,12 @@
 
             </nav>
 
+            {% if 'ROLE_ADMIN' in app.user.roles %}
+                <nav>
+                    <a class="boutton" href="{{ path('invitationClient_accueil') }}">Inviter Des Clients VIP</a>
+                </nav>
+            {% endif %}
+
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="flash flash-{{ label }}">

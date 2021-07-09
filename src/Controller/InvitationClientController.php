@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\InvitationClient;
 use App\Repository\InvitationClientRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,13 +25,42 @@ class InvitationClientController extends AbstractController {
     /**
      * @Route("/admin/invitationClient/ajouter", name="invitationClient_ajouter")
      */
-    public function ajouter(Request $request,EntityManagerInterface $entityManager, \Swift_Mailer $mailer){
+    public function ajouter(Request $request,UserRepository $userRepository,EntityManagerInterface $entityManager, \Swift_Mailer $mailer){
+
 
         $email = $request->get("email") ;
+        $user = $userRepository->findOneBy(['email'=>$email]) ;
 
-        if($email) {
+        if ($email) {
 
-            $invitationClient = new InvitationClient($email) ;
+            if($user){
+
+                if (in_array('ROLE_CLIENT_VIP',$user->getRoles())) {
+                    $this->addFlash('error','le compte client corespondant à cette adresse Email est déja VIP !');
+                } else {
+                    $user->setRoles(['ROLE_CLIENT_VIP']);
+                    $entityManager->flush();
+
+                    $message = (new \Swift_Message('Cuir Nomade : Promue Client VIP !'))
+                        // On attribue l'expéditeur
+                        ->setFrom("cuirsnomades@gmail.com")
+                        // On attribue le destinataire
+                        ->setTo($email)
+                        // On crée le texte avec la vue
+                        ->setBody(
+                            $this->renderView(
+                                'email/promotionClientVIP.html.twig'
+                            ),
+                            'text/html'
+                        );
+                    $mailer->send($message);
+
+                    $this->addFlash('success','le compte client corespondant à cette adresse Email a été promu VIP, un mail pour lui annoncer la nouvelle a été envoyer !');
+                }
+
+            } else {
+
+            $invitationClient = new InvitationClient($email);
             $entityManager->persist($invitationClient);
             $entityManager->flush();
 
@@ -42,15 +72,14 @@ class InvitationClientController extends AbstractController {
                 // On crée le texte avec la vue
                 ->setBody(
                     $this->renderView(
-                        'email/invitationVIP.html.twig',compact('invitationClient')
+                        'email/invitationVIP.html.twig', compact('invitationClient')
                     ),
                     'text/html'
-                )
-            ;
+                );
             $mailer->send($message);
 
-            $this->addFlash('sucess','Une invitation a '.$email.' été envoyer ! ');
-
+            $this->addFlash('sucess', 'Une invitation a ' . $email . ' été envoyer ! ');
+            }
         }
 
         return $this->redirectToRoute("invitationClient_accueil") ;
