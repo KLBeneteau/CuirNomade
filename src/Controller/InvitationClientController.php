@@ -10,10 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/admin/invitationClient", name="invitationClient_")
+ */
 class InvitationClientController extends AbstractController {
 
     /**
-     * @Route("/admin/invitationClient/", name="invitationClient_accueil")
+     * @Route("/", name="accueil")
      */
     public function accueil(InvitationClientRepository $invitationClientRepository){
 
@@ -23,7 +26,7 @@ class InvitationClientController extends AbstractController {
     }
 
     /**
-     * @Route("/admin/invitationClient/ajouter", name="invitationClient_ajouter")
+     * @Route("/ajouter", name="ajouter")
      */
     public function ajouter(Request $request,UserRepository $userRepository,EntityManagerInterface $entityManager, \Swift_Mailer $mailer){
 
@@ -86,41 +89,68 @@ class InvitationClientController extends AbstractController {
     }
 
     /**
-     * @Route("/admin/invitationClient/renvoyer", name="invitationClient_renvoyer")
+     * @Route("/renvoyer", name="renvoyer")
      */
-    public function renvoyer(EntityManagerInterface $entityManager, InvitationClientRepository $invitationClientRepository, Request $request, \Swift_Mailer $mailer){
+    public function renvoyer(EntityManagerInterface $entityManager,UserRepository $userRepository, InvitationClientRepository $invitationClientRepository, Request $request, \Swift_Mailer $mailer){
 
         $invitation = $invitationClientRepository->find($request->get("invitationID"));
         $email = $invitation->getEmail();
         $entityManager->remove($invitation);
         $entityManager->flush();
 
-        $invitationClient = new InvitationClient($email) ;
-        $entityManager->persist($invitationClient);
-        $entityManager->flush();
+        $user = $userRepository->findOneBy(['email'=>$email]) ;
+        if($user){
 
-        $message = (new \Swift_Message('Cuir Nomade : Invitation Client VIP !'))
-            // On attribue l'expéditeur
-            ->setFrom("cuirsnomades@gmail.com")
-            // On attribue le destinataire
-            ->setTo($email)
-            // On crée le texte avec la vue
-            ->setBody(
-                $this->renderView(
-                    'email/invitationVIP.html.twig',compact('invitationClient')
-                ),
-                'text/html'
-            )
-        ;
-        $mailer->send($message);
+            if (in_array('ROLE_CLIENT_VIP',$user->getRoles())) {
+                $this->addFlash('error','le compte client corespondant à cette adresse Email est déja VIP !');
+            } else {
+                $user->setRoles(['ROLE_CLIENT_VIP']);
+                $entityManager->flush();
 
-        $this->addFlash('sucess','Une invitation a '.$email.' été envoyer ! ');
+                $message = (new \Swift_Message('Cuir Nomade : Promue Client VIP !'))
+                    // On attribue l'expéditeur
+                    ->setFrom("cuirsnomades@gmail.com")
+                    // On attribue le destinataire
+                    ->setTo($email)
+                    // On crée le texte avec la vue
+                    ->setBody(
+                        $this->renderView(
+                            'email/promotionClientVIP.html.twig'
+                        ),
+                        'text/html'
+                    );
+                $mailer->send($message);
+
+                $this->addFlash('success','le compte client corespondant à cette adresse Email a été promu VIP, un mail pour lui annoncer la nouvelle a été envoyer !');
+            }
+
+        } else {
+            $invitationClient = new InvitationClient($email);
+            $entityManager->persist($invitationClient);
+            $entityManager->flush();
+
+            $message = (new \Swift_Message('Cuir Nomade : Invitation Client VIP !'))
+                // On attribue l'expéditeur
+                ->setFrom("cuirsnomades@gmail.com")
+                // On attribue le destinataire
+                ->setTo($email)
+                // On crée le texte avec la vue
+                ->setBody(
+                    $this->renderView(
+                        'email/invitationVIP.html.twig', compact('invitationClient')
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
+
+            $this->addFlash('sucess', 'Une invitation a ' . $email . ' été envoyer ! ');
+        }
 
         return $this->redirectToRoute('invitationClient_accueil');
     }
 
     /**
-     * @Route("/admin/invitationClient/supprimer", name="invitationClient_supprimer")
+     * @Route("/supprimer", name="supprimer")
      */
     public function supprimer(EntityManagerInterface $entityManager, InvitationClientRepository $invitationClientRepository, Request $request){
 
