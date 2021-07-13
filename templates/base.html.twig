@@ -10,42 +10,53 @@
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
     </head>
-    <body class="flex jc_center ai_center">
-        <div class="mainPage">
-            <header> <h1 class="flex jc_center" > TODO : mettre le logo du site </h1> </header>
+    <body class="flex jc_center ai_center column">
 
-            <nav class="navBar flex jc_spaceEvenly" >
-                <a class="boutton" href="{{ path('main_accueil') }}" >Accueil</a>
-                <a class="boutton" href="#" >Produits</a>
-                <a class="boutton" href="{{ path('main_presentation') }}" >L'Entreprise</a>
-                {% if app.user %}
-                    <a class="boutton" href="{{ path('profil_accueil') }} " >Mon Compte</a>
-                    <a class="boutton" href={{ path('app_logout')}} >déco</a>
-                {% else %}
-                    <a class="boutton" href={{ path('app_login')}} >se connecter</a>
-                    <a class="boutton" href={{ path('app_register')}} >créer un compte</a>
+            <header class="bloc flex">
+                <a id="logoCuirNomade" href="{{ path('main_accueil') }}">
+                    <img src="../public/img/frame-29873_640.png" alt="Logo du Site Cuirs Nomades">
+                </a>
+                <div id="contenueHeader" class="flex column jc_spaceBetween">
+                    <h1> Cuirs Nomades </h1>
+                    <nav class="flex jc_end">
+                        {% if app.user %}
+                            <a class="boutton " href="{{ path('profil_accueil') }} " >Mon Compte</a>
+                            <a class="boutton boutton_endNav" href={{ path('app_logout')}} >Déconnexion</a>
+                        {% else %}
+                            <a class="boutton " href={{ path('app_login')}} >Connexion</a>
+                            <a class="boutton boutton_endNav" href={{ path('app_register')}} >Creer un compte</a>
+                        {% endif %}
+                    </nav>
+                </div>
+            </header>
+
+            {% block slider %} {% endblock %}
+
+            <div class="bloc">
+                <nav id="main_nav" class="flex" >
+                    <a class="boutton" href="{{ path('main_accueil') }}" >Accueil</a>
+                    <a class="boutton" href="#" >Produits</a>
+                    <a class="boutton boutton_endNav" href="{{ path('main_presentation') }}" >L'Entreprise</a>
+                </nav>
+
+                {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+                    <nav id="admin_nav" class="flex">
+                        <a class="boutton boutton_endNav"  href="{{ path('invitationClient_accueil') }}">Inviter Des Clients VIP</a>
+                    </nav>
                 {% endif %}
 
-            </nav>
-
-            {% if 'ROLE_ADMIN' in app.user.roles %}
-                <nav>
-                    <a class="boutton" href="{{ path('invitationClient_accueil') }}">Inviter Des Clients VIP</a>
-                </nav>
-            {% endif %}
-
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="flash flash-{{ label }}">
-                        {{ message }}
-                    </div>
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="flash flash-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
 
-            <main> {% block body %}{% endblock %} </main>
+                <main> {% block body %}{% endblock %} </main>
+            </div>
 
-            <footer class="flex jc_center" > footer </footer>
-        </div>
+            <footer class="bloc flex jc_center" > footer </footer>
     </body>
 
 </html>

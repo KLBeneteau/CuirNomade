@@ -65,7 +65,7 @@ class SecurityController extends AbstractController
                 ;
                 $mailer->send($message);
 
-                $this->addFlash('sucess','Un email de reinitialisation de mot de passe à été envoyé');
+                $this->addFlash('success','Un email de reinitialisation de mot de passe à été envoyé');
             } else {
                 $this->addFlash('error','Aucun compte avec cette email existe ! ');
             }
