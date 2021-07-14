@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ValidatorChangementMDP;
-use App\Form\ChangementMDPType;
+use App\Form\ChangementMdpFormType;
 use App\Repository\ValidatorChangementMDPRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -88,7 +88,7 @@ class SecurityController extends AbstractController
 
             $user = $validatorCode->getCompte() ;
 
-            $form = $this->createForm(ChangementMDPType::class, $user);
+            $form = $this->createForm(ChangementMdpFormType::class, $user);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {

@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ModificationProfilType extends AbstractType
+class ModificationProfilFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

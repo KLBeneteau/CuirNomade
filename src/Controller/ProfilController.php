@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\ModificationProfilType;
+use App\Form\ModificationProfilFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,7 +45,7 @@ class ProfilController extends AbstractController {
 
         $monProfil = $userRepository->find($this->getUser()) ;
 
-        $profilForm =$this-> createForm(ModificationProfilType::class, $monProfil) ;
+        $profilForm =$this-> createForm(ModificationProfilFormType::class, $monProfil) ;
 
         $profilForm->handleRequest($request);
 

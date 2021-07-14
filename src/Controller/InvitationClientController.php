@@ -81,7 +81,7 @@ class InvitationClientController extends AbstractController {
                 );
             $mailer->send($message);
 
-            $this->addFlash('sucess', 'Une invitation a ' . $email . ' été envoyer ! ');
+            $this->addFlash('success', 'Une invitation a ' . $email . ' été envoyer ! ');
             }
         }
 
@@ -143,7 +143,7 @@ class InvitationClientController extends AbstractController {
                 );
             $mailer->send($message);
 
-            $this->addFlash('sucess', 'Une invitation a ' . $email . ' été envoyer ! ');
+            $this->addFlash('success', 'Une invitation a ' . $email . ' été envoyer ! ');
         }
 
         return $this->redirectToRoute('invitationClient_accueil');

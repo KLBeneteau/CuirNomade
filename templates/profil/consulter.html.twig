@@ -1,11 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div>Nom : {{ monProfil.nom }}</div>
-    <div>Prenom : {{ monProfil.prenom }}</div>
-    <div>Email : {{ monProfil.email }}</div>
-    <div>Telephone : {{ monProfil.telephone }} </div>
-    <a class="boutton" href="{{ path('profil_modifier') }}"> Modifier </a>
+    <div id="main_consuler" class="flex jc_center jc_spaceBetween margin_Auto">
+        <div class="flex column">
+            <label>Nom : </label>
+            <label>Prenom : </label>
+            <label>Email : </label>
+            <label>Telephone : </label>
+        </div>
+        <div class="flex column">
+            <div>{{ monProfil.nom }}</div>
+            <div>{{ monProfil.prenom }}</div>
+            <div>{{ monProfil.email }}</div>
+            <div>{{ monProfil.telephone }}</div>
+        </div>
+    </div>
+    <div class="flex jc_center margin_Auto">
+        <a class="boutton boutton_endNav" href="{{ path('profil_modifier') }}"> Modifier </a>
+    </div>
 {% endblock %}
 
 {% block title %}

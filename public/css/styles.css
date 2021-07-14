@@ -28,6 +28,10 @@
     flex-direction: column;
 }
 
+.margin_Auto {
+    margin: auto;
+}
+
 /*------------------------------------------------------------------------------------*/
 /* boutton */
 .boutton {
@@ -35,7 +39,7 @@
     text-decoration: none;
     color: black;
     background-color: bisque;
-    padding: 0.5em;
+    padding: 0.5em 1.5em ;
     border: solid 2px black;
     border-right: none;
     transition: background-color 1s;
@@ -119,10 +123,6 @@ header {
     background-color: peru;
 }
 
-#main_nav a, #admin_nav a {
-    padding: 0.5em 1.5em ;
-}
-
 /*------------------------------------------------------------------------------------*/
 /* Base : flash */
 .flash {
@@ -141,5 +141,83 @@ header {
 /*------------------------------------------------------------------------------------*/
 /* Base : main */
 main {
-    margin: 0.5em;
+    margin: 1em;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* Tout les form */
+form > div[id*="_form"] {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 60%;
+    margin: auto;
+    margin-bottom: 1em;
+}
+
+form > div[id*="_form"] div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.2em;
+}
+
+form > div[id*="_form"] > div[id*="_form"] {
+    justify-content: space-around;
+}
+
+form[name*="_form"] > button {
+    display: flex;
+    margin: auto;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* register.html.twig */
+form div#registration_form div:nth-last-child(2){
+    justify-content: flex-start;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* login.html.twig */
+
+/*------------------------------------------------------------------------------------*/
+/* login.html.twig */
+#main_consuler {
+    width: 60%;
+    margin-bottom: 1em;
+}
+#main_consuler > div > div, #main_consuler > div > label {
+    margin-bottom: 0.3em;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* motDePasseOublier.html.twig */
+#MDPOublier_form input{
+    margin-right: 0.5em;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* invitationClient/accueil.html.twig */
+#invitationClient_Table{
+    border: solid 1px black;
+    margin-top: 1em;
+}
+
+#invitationClient_Table * {
+    border: solid 1px black;
+}
+
+#invitationClient_Table th {
+   padding: 0.3em 1em;
+}
+
+#invitationClient_Table form , #invitationClient_Table div{
+    border: none;
+}
+
+#invitationClient_Table form {
+    margin-right: 0.2em;
+}
+
+#invitationClient_Table button {
+    padding: 0.3em 1em;
 }

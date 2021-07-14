@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ChangementMDPType extends AbstractType
+class ChangementMdpFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
