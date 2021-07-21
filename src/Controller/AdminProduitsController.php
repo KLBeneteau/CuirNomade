@@ -15,7 +15,19 @@ class AdminProduitsController extends AbstractController {
      */
     public function accueil(){
 
-        return $this->render("adminProduits/accueil.html.twig") ;
+        $listeProduits = [] ;
+
+        return $this->render("adminProduits/accueil.html.twig", compact('listeProduits')) ;
+    }
+
+    /**
+     * @Route("/creer", name="creer")
+     */
+    public function creer(){
+
+        $listeProduits = [] ;
+
+        return $this->render("adminProduits/creer.html.twig", compact('listeProduits')) ;
     }
 
 }

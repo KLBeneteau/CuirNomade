@@ -23,8 +23,13 @@
         {% endfor %}
     </div>
 
-    <div class="flex">
-        <nav class="bloc"> {% block navigation %} {% endblock %}</nav>
-        <main class="bloc"> {% block body %} {% endblock %} </main>
+    <div id="MiseEnPage" class="flex">
+        <nav id="MiseEnPage_nav" class="bloc">
+            {% for produitsType in listeProduits %}
+                <a href="#">{{ produitsType.nom }}</a>
+            {% endfor %}
+            <a href="{{ path('adminProduit_creer') }}" class="boutton boutton_endNav">Ceer un nouveau produit</a>
+        </nav>
+        <main id="MiseEnPage_main" class="bloc"> {% block body %} {% endblock %} </main>
     </div>
 {% endblock %}

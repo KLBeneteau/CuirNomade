@@ -145,6 +145,28 @@ main {
 }
 
 /*------------------------------------------------------------------------------------*/
+/* mise en page : gestion */
+#MiseEnPage {
+    width: 60%;
+    margin: 1em;
+    min-height: 400px;
+}
+
+#MiseEnPage_nav {
+    width: 20%;
+    margin: 0 0.5em 0 0;
+}
+
+#MiseEnPage_nav > * {
+    margin-left: 0.5em;
+}
+
+#MiseEnPage_main {
+    width: 80%;
+    margin: 0;
+}
+
+/*------------------------------------------------------------------------------------*/
 /* Tout les form */
 form > div[id*="_form"] {
     display: flex;
