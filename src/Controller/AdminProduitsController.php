@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Repertoir;
+use App\Repository\RepertoirRepository;
 use App\Service\Connexion;
 use App\Service\CreationProduit;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,9 +19,9 @@ class AdminProduitsController extends AbstractController {
     /**
      * @Route("/", name="accueil")
      */
-    public function accueil(){
+    public function accueil(RepertoirRepository $repertoirRepository){
 
-        $listeProduits = [] ;
+        $listeProduits = $repertoirRepository->findAll();
 
         return $this->render("adminProduits/accueil.html.twig", compact('listeProduits')) ;
     }
@@ -26,18 +29,20 @@ class AdminProduitsController extends AbstractController {
     /**
      * @Route("/creer", name="creer")
      */
-    public function creer(Connexion $connexion, Request $request, CreationProduit $creationProduit )
+    public function creer(RepertoirRepository $repertoirRepository,
+                          Connexion $connexion,
+                          Request $request,
+                          CreationProduit $creationProduit,
+                          EntityManagerInterface $entityManager)
     {
 
-        $listeProduits = [];
-
-        //Si le formulaire est envoyer
         $nomProduit = str_replace(' ','',ucwords($request->get("nom")," \t\r\n\f\v "));
         if ($request->get("isVIP")) {
             $isVIP = 1;
         } else {
             $isVIP = 0;
         }
+        //Si le formulaire est envoyer
         if ($nomProduit) {
             try {
                 $pdo = $connexion->createConnexion();
@@ -58,12 +63,17 @@ class AdminProduitsController extends AbstractController {
 
                 $this->addFlash("success","le produit $nomProduit été créer");
 
+                $newRepertoir = new Repertoir($nomProduit);
+                $entityManager->persist($newRepertoir);
+                $entityManager->flush();
+
              } catch (\Exception $e) {
                 $this->addFlash("error","le produit $nomProduit n'a pas pu etre créé");
             }
 
         }
 
+        $listeProduits = $repertoirRepository->findAll();
 
         return $this->render("adminProduits/creer.html.twig", compact('listeProduits')) ;
     }

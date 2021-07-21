@@ -20,8 +20,16 @@
     justify-content: flex-end;
 }
 
+.jc_stretch {
+    justify-content: stretch;
+}
+
 .ai_center {
     align-items: center;
+}
+
+.ai_stretch {
+    align-items: stretch;
 }
 
 .column {
@@ -51,6 +59,16 @@
 
 .boutton:hover{
     background-color: lightsalmon;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* boutton V2 */
+.bouttonV2 {
+    border: solid 1px black;
+    background-color: #dfdfdf;
+    text-decoration: none;
+    color: black;
+    padding: 0.1em 0.7em ;
 }
 
 /*------------------------------------------------------------------------------------*/
@@ -158,7 +176,7 @@ main {
 }
 
 #MiseEnPage_nav > * {
-    margin-left: 0.5em;
+    margin: 0.2em 0.5em;
 }
 
 #MiseEnPage_main {
