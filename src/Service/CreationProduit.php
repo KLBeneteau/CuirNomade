@@ -4,7 +4,7 @@ namespace App\Service;
 
 class CreationProduit{
 
-    public function getEntityPattern(String $nom, int $isVIP) {
+    public function getEntityPattern(String $nom, int $VIP) {
 
         $texte = '<?php' ;
         $texte.= "\r\n namespace App\Entity; \r\n";
@@ -31,9 +31,9 @@ class CreationProduit{
                         private $nom;
                     
                         /**
-                         * @ORM\Column(type="boolean", options = {"default" = '.$isVIP.'}))
+                         * @ORM\Column(type="boolean", options = {"default" = '.$VIP.'}))
                          */
-                        private $isVIP;
+                        private $VIP;
                     
                         /**
                          * @ORM\Column(type="integer")
@@ -48,7 +48,7 @@ class CreationProduit{
                         /**
                          * @ORM\Column(type="integer")
                          */
-                        private $nbStock;
+                        private $Stock;
                     
                         public function getId(): ?int
                         {
@@ -67,14 +67,14 @@ class CreationProduit{
                             return $this;
                         }
                     
-                        public function getIsVIP(): ?bool
+                        public function getVIP(): ?bool
                         {
-                            return $this->isVIP;
+                            return $this->VIP;
                         }
                     
-                        public function setIsVIP(bool $isVIP): self
+                        public function setVIP(bool $VIP): self
                         {
-                            $this->isVIP = $isVIP;
+                            $this->VIP = $VIP;
                     
                             return $this;
                         }
@@ -103,14 +103,14 @@ class CreationProduit{
                             return $this;
                         }
                     
-                        public function getNbStock(): ?int
+                        public function getStock(): ?int
                         {
-                            return $this->nbStock;
+                            return $this->Stock;
                         }
                     
-                        public function setNbStock(int $nbStock): self
+                        public function setStock(int $Stock): self
                         {
-                            $this->nbStock = $nbStock;
+                            $this->Stock = $Stock;
                     
                             return $this;
                         }
