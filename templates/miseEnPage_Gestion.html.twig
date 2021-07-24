@@ -30,6 +30,9 @@
             {% endfor %}
             <a href="{{ path('adminProduit_creer') }}" class="boutton boutton_endNav flex jc_center">Ajouter</a>
         </nav>
-        <main id="MiseEnPage_main" class="bloc"> {% block body %} {% endblock %} </main>
+        <div class="bloc" id="MiseEnPage_main">
+            <main> {% block body %} {% endblock %} </main>
+        </div>
+
     </div>
 {% endblock %}

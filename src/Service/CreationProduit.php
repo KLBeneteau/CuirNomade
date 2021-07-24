@@ -14,7 +14,6 @@ class CreationProduit{
                     
                     /**
                      * @ORM\Entity(repositoryClass='.$nom.'Repository::class)
-                     * @UniqueEntity(fields={"nom"}, message="Il existe déja un produit avec se nom !")
                      */
                     class '.$nom.'
                     {
@@ -26,7 +25,7 @@ class CreationProduit{
                         private $id;
                     
                         /**
-                         * @ORM\Column(type="string", length=50, unique=true)
+                         * @ORM\Column(type="string", length=50)
                          */
                         private $nom;
                     

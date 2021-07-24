@@ -49,12 +49,12 @@ class AdminProduitsController extends AbstractController {
             try {
                 $pdo = $connexion->createConnexion();
 
-                file_put_contents('../src/Entity/'.$nomProduit.'.php', $creationProduit->getEntityPattern($nomProduit,$VIP));
-                file_put_contents('../src/Repository/'.$nomProduit.'Repository.php', $creationProduit->getRepositoryPattern($nomProduit));
+                //file_put_contents('../src/Entity/'.$nomProduit.'.php', $creationProduit->getEntityPattern($nomProduit,$VIP));
+                //file_put_contents('../src/Repository/'.$nomProduit.'Repository.php', $creationProduit->getRepositoryPattern($nomProduit));
 
                 $query = 'CREATE TABLE '.$nomProduit.'
                              ( id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                             nom VARCHAR(50) NOT NULL UNIQUE,
+                             nom VARCHAR(50) NOT NULL,
                              prix INT NOT NULL,
                              description VARCHAR(300),
                              stock INT NOT NULL,
@@ -69,10 +69,10 @@ class AdminProduitsController extends AbstractController {
                 $entityManager->persist($newRepertoir);
                 $entityManager->flush();
 
-                //TODO: redirection
+                return $this->redirectToRoute('adminProduit_modifier',['nomProduit'=>$nomProduit]);
 
              } catch (\Exception $e) {
-                $this->addFlash("error","le produit $nomProduit n'a pas pu etre créé");
+                $this->addFlash("error","Le produit $nomProduit n'a pas pu etre créé");
             }
         }
 
@@ -86,8 +86,7 @@ class AdminProduitsController extends AbstractController {
      */
     public function affichage(RepertoirRepository $repertoirRepository,
                               Connexion $connexion,
-                              string $nomProduit,
-                              ManagerRegistry $registry, BaboucheRepository $baboucheRepository){
+                              string $nomProduit){
 
         $pdo = $connexion->createConnexion();
 
@@ -103,6 +102,11 @@ class AdminProduitsController extends AbstractController {
             $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ;
         }
 
+        /*
+        $nomRepository = $nomProduit.'Repository' ;
+        $listeArticle = $$nomRepository->findAll() ;
+        */
+
         //Récupère tout se qui est enregistrer dans la table
         $query = "SELECT * FROM ".$nomProduit;
         $prep = $pdo->prepare($query);
@@ -112,6 +116,102 @@ class AdminProduitsController extends AbstractController {
         $listeProduits = $repertoirRepository->findAll();
 
         return $this->render("adminProduits/affichage.html.twig", compact('listeProduits','listeColonne', 'listeArticle','nomProduit')) ;
+    }
+
+    /**
+     * @Route("/supprimer/{nomProduit}", name="supprimer")
+     */
+    public function supprimer(Request $request,
+                              RepertoirRepository $repertoirRepository,
+                              String $nomProduit, Connexion $connexion,
+                              EntityManagerInterface $entityManager){
+
+        dump($request->get('suppression'));
+        if ($request->get('suppression')) {
+
+            //Supprime les fichier
+            //@unlink( '../src/Entity/'.$nomProduit.'.php' ) ;
+            //@unlink( '../src/Repository/'.$nomProduit.'Repository.php' ) ;
+
+            //Supprime l'enregistrement dans Repertoir
+            $entityManager->remove($repertoirRepository->findOneBy(['nom'=>$nomProduit]));
+            $entityManager->flush();
+
+            //Supprime la BDD
+            $pdo = $connexion->createConnexion();
+            $query = 'DROP TABLE '.$nomProduit ;
+            $pdo->exec($query);
+
+            $this->addFlash('success','Le produit '.$nomProduit.' a bien été supprimer');
+
+            return $this->redirectToRoute('adminProduit_accueil');
+        }
+
+        $listeProduits = $repertoirRepository->findAll();
+
+        return $this->render("adminProduits/supprimer.html.twig", compact('listeProduits','nomProduit'));
+    }
+
+    /**
+     * @Route("/modifier/{nomProduit}", name="modifier")
+     */
+    public function modifier(RepertoirRepository $repertoirRepository, String $nomProduit, Connexion $connexion){
+
+        $pdo = $connexion->createConnexion();
+
+        //récupère tout les nom de colone de la table
+        $query = "DESCRIBE ".$nomProduit;
+        $prep = $pdo->prepare($query);
+        $prep->execute();
+        $prep->fetch(); //on ne veut jamais l'id
+        $resultat = $prep->fetchAll();
+
+        $listeColonne = [];
+        foreach ($resultat as $coloneInfo){
+            $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ;
+        }
+
+        $listeProduits = $repertoirRepository->findAll();
+
+        return $this->render("adminProduits/modifier.html.twig", compact('listeProduits','nomProduit','listeColonne'));
+    }
+
+    /**
+     * @Route("/modifier/AjouterCharactéristique/{nomProduit}", name="modifier_AjoutChar")
+     */
+    public function AjoutChar(String $nomProduit, Connexion $connexion, Request $request){
+
+        $nomChara = $request->get('nomChara');
+        $unite = $request->get('unite');
+
+        $pdo = $connexion->createConnexion();
+
+        $query = "ALTER TABLE ".$nomProduit."
+                 ADD ".$nomChara." ".$unite ;
+        if ($unite = 'varchar') { $query.='(255)' ; }
+
+        $pdo->exec($query);
+
+        $this->addFlash('success','La caractéritique '.$nomChara.' a bien été ajouté');
+
+        return $this->redirectToRoute('adminProduit_modifier',['nomProduit'=>$nomProduit]);
+    }
+
+    /**
+     * @Route("/modifier/SupprimerCharactéristique/{nomProduit}/{nomChara}", name="modifier_SupprimerChar")
+     */
+    public function SupprimerChar(String $nomProduit,String $nomChara, Connexion $connexion, Request $request){
+
+        $pdo = $connexion->createConnexion();
+
+        $query = "ALTER TABLE ".$nomProduit."
+                    DROP COLUMN ".$nomChara ;
+
+        $pdo->exec($query);
+
+        $this->addFlash('success','La caractéritique '.$nomChara.' a bien été supprimé');
+
+        return $this->redirectToRoute('adminProduit_modifier',['nomProduit'=>$nomProduit]);
     }
 
 }

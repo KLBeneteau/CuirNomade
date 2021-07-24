@@ -1,0 +1,15 @@
+{% extends 'miseEnPage_Gestion_navProduit.html.twig' %}
+
+{% block title %}
+    Supprimer {{ nomProduit }}
+{% endblock %}
+
+{% block body2 %}
+    <h3>Etes vous sur de vouloir suprimer {{ nomProduit }} ? </h3>
+    <p>Ceci effacera tout les {{ nomProduit }} du site</p>
+    <form action="{{ path('adminProduit_supprimer', {'nomProduit': nomProduit }) }}" method="post">
+        <input type="hidden" value="1" name="suppression">
+        <input type="submit" value="Valider">
+    </form>
+{% endblock %}
+

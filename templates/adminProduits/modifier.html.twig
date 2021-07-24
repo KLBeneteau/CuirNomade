@@ -1,0 +1,45 @@
+{% extends 'miseEnPage_Gestion_navProduit.html.twig' %}
+
+{% block body2 %}
+    <div class="flex">
+        <table id="infoProduit_Table">
+            <tr>
+                <th>Caractéristique</th>
+                <th>Unité</th>
+                <th>Action</th>
+            </tr>
+            {% for carac,unite in listeColonne %}
+                <tr>
+                    <th>{{ carac }}</th>
+                    {% set nomUnite = unite|split('(')|first %}
+                    {% if nomUnite == 'varchar'%}<th>Texte</th>{% endif %}
+                    {% if nomUnite == 'int'%}<th>Entier</th>{% endif %}
+                    {% if nomUnite == 'tinyint'%}<th>Booleen</th>{% endif %}
+                    {% if loop.index > 5 %}
+                        <th><a href="{{ path('adminProduit_modifier_SupprimerChar', {'nomChara': carac, 'nomProduit': nomProduit}) }}" class="bouttonV2">Supprimer</a></th>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+        <form method="post" action="{{ path('adminProduit_modifier_AjoutChar', {'nomProduit': nomProduit}) }}" class="flex column" id="ModifeProduit_form">
+            <div>
+                <label for="nomChara">Nom</label>
+                <input type="text" name="nomChara" id="nomChara">
+            </div>
+            <div>
+                <label for="unite">Unité</label>
+                <select id="unite" name="unite">
+                    <option value="varchar">Texte</option>
+                    <option value="int">Entier</option>
+                    <option value="tinyint">Booleen</option>
+                </select>
+            </div>
+            <input type="submit" value="Ajouter">
+        </form>
+    </div>
+{% endblock %}
+
+{% block title %}
+    Modifier {{ nomProduit }}
+{% endblock %}
+

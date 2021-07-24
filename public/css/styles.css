@@ -237,33 +237,57 @@ form div#registration_form div:nth-last-child(2){
 
 /*------------------------------------------------------------------------------------*/
 /* invitationClient/accueil.html.twig */
-#invitationClient_Table{
+*[id*="_Table"]{
     border: solid 1px black;
     margin-top: 1em;
 }
 
-#invitationClient_Table * {
+*[id*="_Table"] * {
     border: solid 1px black;
 }
 
-#invitationClient_Table th {
+*[id*="_Table"] th {
    padding: 0.3em 1em;
 }
 
-#invitationClient_Table form , #invitationClient_Table div{
+*[id*="_Table"] form , *[id*="_Table"] div{
     border: none;
 }
 
-#invitationClient_Table form {
+*[id*="_Table"] form {
     margin-right: 0.2em;
 }
 
-#invitationClient_Table button {
+*[id*="_Table"] button {
     padding: 0.3em 1em;
+}
+*[id*="_Table"] input {
+    max-width: 7em;
 }
 
 /*------------------------------------------------------------------------------------*/
 /* adminProduits/affichage.html.twig */
 #nomProduit{
     margin: 0.5em 1em;
+}
+
+#nomProduit a {
+    text-decoration: none;
+    color: black;
+}
+
+#bouttonAjoutProduit {
+    margin-top: 1em;
+    display: inline-block;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* adminProduits/modifier.html.twig */
+#ModifeProduit_form {
+    margin-left: 2em;
+    margin-top: 1em;
+}
+
+#ModifeProduit_form > * {
+   margin-bottom: 0.5em;
 }

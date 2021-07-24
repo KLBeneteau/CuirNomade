@@ -1,15 +1,7 @@
-{% extends 'miseEnPage_Gestion.html.twig' %}
+{% extends 'miseEnPage_Gestion_navProduit.html.twig' %}
 
-{% block body %}
-    <div class="flex ai_center">
-        <h1 id="nomProduit">{{ nomProduit }}</h1>
-        <div>
-            <a class="boutton boutton_endNav">Mettre a jour le stock</a>
-            <a class="boutton boutton_endNav">Modifier</a>
-            <a class="boutton boutton_endNav">Supprimer</a>
-        </div>
-    </div>
-   <table>
+{% block body2 %}
+    <table id="affichageProduit_Table">
        <tr>
            {% for nom,type in listeColonne %}
                <th>{{ nom }}</th>
@@ -29,19 +21,12 @@
                </th>
            </tr>
        {% endfor %}
-       <tr>
-           <form method="post" action="#">
-               {% for colone in listeColonne %}
-
-               {% endfor %}
-               <th> <button class="bouttonV2" type="submit" >Ajouter</button> </th>
-           </form>
-       </tr>
-   </table>
+    </table>
+    <a id="bouttonAjoutProduit" class="bouttonV2" href="#">Ajouter</a>
 
 {% endblock %}
 
 {% block title %}
-
+    Produit : {{ nomProduit }}
 {% endblock %}
 
