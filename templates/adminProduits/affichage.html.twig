@@ -1,12 +1,14 @@
 {% extends 'miseEnPage_Gestion_navProduit.html.twig' %}
 
 {% block body2 %}
+    {% if isVIP %} <p>Ce produit est réservé au clients VIP</p>
+    {% else %} <p>Ce produit est n'est pas réservé au client VIP</p>
+    {% endif %}
     <table id="affichageProduit_Table">
        <tr>
-           {% for nom,type in listeColonne %}
+           {% for nom in listeColonne|keys %}
                <th>{{ nom }}</th>
            {% endfor %}
-           <th>Action</th>
        </tr>
        {% for article in listeArticle %}
            <tr>
@@ -15,15 +17,10 @@
                        <th> {{ valeur }}</th>
                    {% endif %}
                {% endfor %}
-               <th>
-                   <a class="bouttonV2">Modifier</a>
-                   <a class="bouttonV2">Supprimer</a>
-               </th>
            </tr>
        {% endfor %}
     </table>
-    <a id="bouttonAjoutProduit" class="bouttonV2" href="#">Ajouter</a>
-
+    <a id="bouttonAjoutProduit" class="bouttonV2" href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit}) }}">Editer les articles</a>
 {% endblock %}
 
 {% block title %}

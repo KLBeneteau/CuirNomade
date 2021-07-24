@@ -40,6 +40,10 @@
     margin: auto;
 }
 
+.espaceDroite {
+    margin-right: 1em;
+}
+
 /*------------------------------------------------------------------------------------*/
 /* boutton */
 .boutton {
@@ -69,6 +73,39 @@
     text-decoration: none;
     color: black;
     padding: 0.1em 0.7em ;
+}
+
+table .bouttonV2 {
+    font: inherit;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* mise en page : gestion */
+#MiseEnPage {
+    width: 60%;
+    margin: 1em;
+    min-height: 400px;
+}
+
+#MiseEnPage_nav {
+    width: 20%;
+    margin: 0 0.5em 0 0;
+}
+
+#MiseEnPage_nav > * {
+    margin: 0.2em 0.5em;
+}
+
+#MiseEnPage_main {
+    width: 80%;
+    margin: 0;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* mise en page : Pleine Page */
+#backgroundNeutre {
+    background-color: antiquewhite ;
+    background-image: none;
 }
 
 /*------------------------------------------------------------------------------------*/
@@ -160,28 +197,6 @@ header {
 /* Base : main */
 main {
     margin: 1em;
-}
-
-/*------------------------------------------------------------------------------------*/
-/* mise en page : gestion */
-#MiseEnPage {
-    width: 60%;
-    margin: 1em;
-    min-height: 400px;
-}
-
-#MiseEnPage_nav {
-    width: 20%;
-    margin: 0 0.5em 0 0;
-}
-
-#MiseEnPage_nav > * {
-    margin: 0.2em 0.5em;
-}
-
-#MiseEnPage_main {
-    width: 80%;
-    margin: 0;
 }
 
 /*------------------------------------------------------------------------------------*/

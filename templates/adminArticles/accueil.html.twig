@@ -1,0 +1,76 @@
+{%  extends 'miseEnPage_PleinePage.html.twig' %}
+
+{%  block title %}
+    {{ nomProduit }}
+{% endblock %}
+
+{% block body %}
+    <div class="flex ai_center">
+        <h2 class="espaceDroite">{{ nomProduit }}</h2>
+        <a class="boutton boutton_endNav" href="{{ path('adminProduit_affichage', {'nomProduit': nomProduit}) }}">Retour</a>
+
+    </div>
+    <div class="flex ai_center">
+        {% if isVIP %} <p class="espaceDroite">Ce produit est réservé au clients VIP</p>
+        {% else %} <p class="espaceDroite">Ce produit est n'est pas réservé au client VIP</p>
+        {% endif %}
+        <a class="bouttonV2">Modifier</a>
+    </div>
+    <table id="Article_Table">
+        <tr>
+            {% for nom in listeColonne|keys %}
+                <th>{{ nom }}</th>
+            {% endfor %}
+            <th>Action</th>
+        </tr>
+        {% for article in listeArticle %}
+            <tr>
+                {% if idArticle != article.id %}
+                    {% for key,valeur in article %}
+                        {% if key in  listeColonne|keys  %}
+                            <th> {{ valeur }}</th>
+                        {% endif %}
+                    {% endfor %}
+                    <th>
+                        <a href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit, 'idArticle': article.id }) }}" class="bouttonV2">Modifier</a>
+                        <a href="{{ path('adminArticle_supprimer', {'nomProduit': nomProduit, 'idArticle': article.id }) }}" class="bouttonV2">Supprimer</a>
+                    </th>
+                {% else %}
+                    <form action="{{ path('adminArticle_modifier', {'idArticle': article.id, 'nomProduit': nomProduit}) }}" method="post">
+                        {% for nomColonne,unite in listeColonne %}
+                            {% set nomUnite = unite|split('(')|first %}
+                            {% set tailleUnite = unite|split('(')|last|replace({')' : ""}) %}
+                            <th>
+                                {% if nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" required value="{{ article[nomColonne] }}"> {% endif %}
+                                {% if nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" required value="{{ article[nomColonne] }}" > {% endif %}
+                                {% if nomUnite == 'tinyint' %} <input type="checkbox" name="{{ nomColonne }}" > {% endif %}
+                            </th>
+                        {% endfor %}
+                        <th>
+                            <input type="submit" value="Enregistrer" class="bouttonV2">
+                            <a href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit}) }}" class="bouttonV2">Annuler</a>
+                        </th>
+                    </form>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        {% if idArticle == 0 %}
+            <tr>
+                <form action="{{ path('adminArticle_ajouter', {'nomProduit': nomProduit}) }}" method="post">
+                    {% for nomColonne,unite in listeColonne %}
+                        {% set nomUnite = unite|split('(')|first %}
+                        {% set tailleUnite = unite|split('(')|last|replace({')' : ""}) %}
+                        <th>
+                        {% if nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" required> {% endif %}
+                        {% if nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" required> {% endif %}
+                        {% if nomUnite == 'tinyint' %} <input type="checkbox"  name="{{ nomColonne }}" > {% endif %}
+                        </th>
+                    {% endfor %}
+                    <th>
+                        <input type="submit" value="Ajouter" class="bouttonV2">
+                    </th>
+                </form>
+            </tr>
+        {% endif%}
+    </table>
+{% endblock %}
