@@ -37,7 +37,7 @@
                             <th>
                                 {% if nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" required value="{{ article[nomColonne] }}"> {% endif %}
                                 {% if nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" required value="{{ article[nomColonne] }}" > {% endif %}
-                                {% if nomUnite == 'tinyint' %} <input type="checkbox" name="{{ nomColonne }}" > {% endif %}
+                                {% if nomUnite == 'tinyint' %} <input type="checkbox" name="{{ nomColonne }}" value="1" > {% endif %}
                             </th>
                         {% endfor %}
                         <th>
@@ -67,7 +67,7 @@
                         <th>
                         {% if nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required> {% endif %}
                         {% if nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required> {% endif %}
-                        {% if nomUnite == 'tinyint' %} <input type="checkbox"  name="{{ nomColonne }}" > {% endif %}
+                        {% if nomUnite == 'tinyint' %} <input type="checkbox"  name="{{ nomColonne }}" value="1" > {% endif %}
                         </th>
                     {% endfor %}
                     <th>

@@ -49,7 +49,7 @@ class AdminArticlesController extends AbstractController {
      */
     public function ajouter(String $nomProduit, Connexion $connexion, Request $request){
 
-        try {
+       // try {
             $pdo = $connexion->createConnexion() ;
 
             //récupère tout les nom de colone de la table
@@ -75,9 +75,10 @@ class AdminArticlesController extends AbstractController {
             $query .= ') VALUES (';
             foreach ($listeColonne as $nomColone=>$uniteColone){
                 if (substr($uniteColone,0,7) == 'varchar')
-                    $query.= "'".$request->get($nomColone)."'," ;
-                else
-                    $query.= $request->get($nomColone).',' ;
+                     { $query.= "'".$request->get($nomColone)."'," ; }
+                else if (substr($uniteColone,0,7) == 'tinyint')
+                     { $query.= ($request->get($nomColone)?1:0).',' ; }
+                else { $query.= $request->get($nomColone).',' ; }
             }
             $query = rtrim($query,',') ;
             $query .= ')' ;
@@ -86,9 +87,9 @@ class AdminArticlesController extends AbstractController {
 
             $this->addFlash('success',"l'article a bien été ajouté");
 
-        } catch (\Exception $e) {
+       /* } catch (\Exception $e) {
             $this->addFlash('error',"l'article n'a pas pue etre ajouté");
-        }
+        } */
 
         return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0,"idArticle"=>$pdo->lastInsertId()]);
 
@@ -142,6 +143,8 @@ class AdminArticlesController extends AbstractController {
             foreach ($listeColonne as $nomColone=>$uniteColone){
                 if (substr($uniteColone,0,7) == 'varchar')
                     $query.= $nomColone."='".$request->get($nomColone)."'," ;
+                else if (substr($uniteColone,0,7) == 'tinyint')
+                    $query.= $nomColone."=".($request->get($nomColone)?1:0)."," ;
                 else
                     $query.= $nomColone."=".$request->get($nomColone)."," ;
             }
