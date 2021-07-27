@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminArticlesController extends AbstractController {
 
     /**
-     * @Route("/{nomProduit}/{idArticle<\d+>?0}" , name="accueil")
+     * @Route("/accueil/{nomProduit}/{isModification}/{idArticle<\d+>?0}" , name="accueil")
      */
-    public function accueil(String $nomProduit, int $idArticle, Connexion $connexion){
+    public function accueil(String $nomProduit, int $idArticle, bool $isModification, Connexion $connexion){
 
         $pdo = $connexion->createConnexion() ;
 
@@ -40,7 +40,7 @@ class AdminArticlesController extends AbstractController {
         unset($listeColonne['vip']);
         unset($listeColonne['id']);
 
-        return $this->render("adminArticles/accueil.html.twig", compact('listeArticle','nomProduit', 'listeColonne','isVIP','idArticle'));
+        return $this->render("adminArticles/accueil.html.twig", compact('listeArticle','nomProduit', 'listeColonne','isVIP','idArticle','isModification'));
 
     }
 
@@ -90,7 +90,7 @@ class AdminArticlesController extends AbstractController {
             $this->addFlash('error',"l'article n'a pas pue etre ajouté");
         }
 
-        return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit]);
+        return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0,"idArticle"=>$pdo->lastInsertId()]);
 
     }
 
@@ -113,7 +113,7 @@ class AdminArticlesController extends AbstractController {
             $this->addFlash('error',"l'article n'a pas pue etre supprimé");
         }
 
-        return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit]);
+        return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0]);
     }
 
     /**
@@ -158,7 +158,7 @@ class AdminArticlesController extends AbstractController {
             $this->addFlash('error',"l'article n'a pas pue etre modifié");
         }
 
-        return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit]);
+        return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0]);
 
     }
 

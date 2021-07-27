@@ -25,6 +25,7 @@
 
     <div id="MiseEnPage" class="flex">
         <nav id="MiseEnPage_nav" class="bloc flex column ai_stretch">
+            <h1>Produits</h1>
             {% for produitType in listeProduits %}
                 <a href="{{ path('adminProduit_affichage', {'nomProduit': produitType.nom} ) }}" class="bouttonV2 flex jc_center">{{ produitType.nom }}</a>
             {% endfor %}

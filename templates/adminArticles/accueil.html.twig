@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+    {% set A_ajoutRapide="" %}
     <div class="flex ai_center">
         <h2 class="espaceDroite">{{ nomProduit }}</h2>
         <a class="boutton boutton_endNav" href="{{ path('adminProduit_affichage', {'nomProduit': nomProduit}) }}">Retour</a>
@@ -24,18 +25,11 @@
             <th>Action</th>
         </tr>
         {% for article in listeArticle %}
+            {% if idArticle == article.id %}
+                {% set A_ajoutRapide = article %}
+            {% endif %}
             <tr>
-                {% if idArticle != article.id %}
-                    {% for key,valeur in article %}
-                        {% if key in  listeColonne|keys  %}
-                            <th> {{ valeur }}</th>
-                        {% endif %}
-                    {% endfor %}
-                    <th>
-                        <a href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit, 'idArticle': article.id }) }}" class="bouttonV2">Modifier</a>
-                        <a href="{{ path('adminArticle_supprimer', {'nomProduit': nomProduit, 'idArticle': article.id }) }}" class="bouttonV2">Supprimer</a>
-                    </th>
-                {% else %}
+                {% if idArticle == article.id and isModification %}
                     <form action="{{ path('adminArticle_modifier', {'idArticle': article.id, 'nomProduit': nomProduit}) }}" method="post">
                         {% for nomColonne,unite in listeColonne %}
                             {% set nomUnite = unite|split('(')|first %}
@@ -48,21 +42,31 @@
                         {% endfor %}
                         <th>
                             <input type="submit" value="Enregistrer" class="bouttonV2">
-                            <a href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit}) }}" class="bouttonV2">Annuler</a>
+                            <a href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit ,'isModification':0}) }}" class="bouttonV2">Annuler</a>
                         </th>
                     </form>
+                {% else %}
+                    {% for key,valeur in article %}
+                        {% if key in  listeColonne|keys  %}
+                            <th> {{ valeur }}</th>
+                        {% endif %}
+                    {% endfor %}
+                    <th>
+                        <a href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit, 'idArticle': article.id ,'isModification':1 }) }}" class="bouttonV2">Modifier</a>
+                        <a href="{{ path('adminArticle_supprimer', {'nomProduit': nomProduit, 'idArticle': article.id }) }}" class="bouttonV2">Supprimer</a>
+                    </th>
                 {% endif %}
             </tr>
         {% endfor %}
-        {% if idArticle == 0 %}
+        {% if not isModification %}
             <tr>
                 <form action="{{ path('adminArticle_ajouter', {'nomProduit': nomProduit}) }}" method="post">
                     {% for nomColonne,unite in listeColonne %}
                         {% set nomUnite = unite|split('(')|first %}
                         {% set tailleUnite = unite|split('(')|last|replace({')' : ""}) %}
                         <th>
-                        {% if nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" required> {% endif %}
-                        {% if nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" required> {% endif %}
+                        {% if nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required> {% endif %}
+                        {% if nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required> {% endif %}
                         {% if nomUnite == 'tinyint' %} <input type="checkbox"  name="{{ nomColonne }}" > {% endif %}
                         </th>
                     {% endfor %}
