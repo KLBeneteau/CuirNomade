@@ -57,12 +57,14 @@ class AdminProduitsController extends AbstractController {
 
                 $query = 'CREATE TABLE '.$nomProduit.'
                              ( id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                             Nom VARCHAR(50) NOT NULL,
+                             Modele VARCHAR(50) NOT NULL,
                              Prix INT NOT NULL,
                              Description VARCHAR(300),
                              Stock INT NOT NULL,
-                             Vip tinyint(1) NOT NULL DEFAULT '.$VIP.'
-                             ) ' ;
+                             vip tinyint(1) NOT NULL DEFAULT '.$VIP.',
+                             Couleur VARCHAR(50) NOT NULL,
+                             idEtat INT NOT NULL,
+                            CONSTRAINT fk_IdEtat FOREIGN KEY (idEtat) REFERENCES etat(id)) ' ;
 
                 $pdo->exec($query);
 
@@ -101,11 +103,10 @@ class AdminProduitsController extends AbstractController {
 
         $listeColonne = [];
         foreach ($resultat as $coloneInfo){
-            $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ;
-            if ($coloneInfo['Field']=='vip') $isVIP = $coloneInfo['Default'] ;
+            if ($coloneInfo['Field']=='vip') { $isVIP = $coloneInfo['Default'] ; }
+            elseif ($coloneInfo['Field']!='id' and $coloneInfo['Field']!='idEtat') { $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ; }
         }
-        unset($listeColonne['vip']);
-        unset($listeColonne['id']);
+        $listeColonne['Statut'] = "varchar(30)";
 
         /*
         $nomRepository = $nomProduit.'Repository' ;
@@ -113,9 +114,10 @@ class AdminProduitsController extends AbstractController {
         */
 
         //Récupère tout se qui est enregistrer dans la table
-        $query = "SELECT * FROM ".$nomProduit;
+        $query = "SELECT * FROM ".$nomProduit.'
+                  LEFT JOIN Etat ON Etat.id = '.$nomProduit.'.idEtat';
         $prep = $pdo->prepare($query);
-        $prep->execute();
+        $prep->execute();;
         $listeArticle = $prep->fetchAll();
 
         $listeProduits = $repertoirRepository->findAll();
@@ -176,7 +178,9 @@ class AdminProduitsController extends AbstractController {
 
         $listeColonne = [];
         foreach ($resultat as $coloneInfo){
-            $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ;
+            if ($coloneInfo['Field']=='vip') { $isVIP = $coloneInfo['Default'] ; }
+            elseif ($coloneInfo['Field']=='idEtat') { $listeColonne['Statut'] = "varchar(30)"; }
+            elseif ($coloneInfo['Field']!='id') { $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ; }
         }
 
         $listeProduits = $repertoirRepository->findAll();

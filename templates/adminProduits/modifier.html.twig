@@ -15,7 +15,7 @@
                     {% if nomUnite == 'varchar'%}<th>Texte</th>{% endif %}
                     {% if nomUnite == 'int'%}<th>Entier</th>{% endif %}
                     {% if nomUnite == 'tinyint'%}<th>Booleen</th>{% endif %}
-                    {% if loop.index > 5 %}
+                    {% if loop.index > 6 %}
                         <th><a href="{{ path('adminProduit_modifier_SupprimerChar', {'nomChara': carac, 'nomProduit': nomProduit}) }}" class="bouttonV2">Supprimer</a></th>
                     {% endif %}
                 </tr>

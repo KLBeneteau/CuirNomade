@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\EtatRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=EtatRepository::class)
+ * @UniqueEntity(fields={"statut"}, message="Il existe déja cet etat !")
  */
 class Etat
 {
@@ -18,7 +20,7 @@ class Etat
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, unique=true)
      */
     private $statut;
 

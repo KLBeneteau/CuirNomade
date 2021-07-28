@@ -20,11 +20,19 @@ class AdminArticlesController extends AbstractController {
 
         $pdo = $connexion->createConnexion() ;
 
-        //Recupère tout les articles du produit
-        $query = "SELECT * FROM ".$nomProduit ;
+        //Récupère tout se qui est enregistrer dans la table
+        $query = "SELECT * FROM ".$nomProduit.'
+                  LEFT JOIN Etat ON Etat.id = '.$nomProduit.'.idEtat';
+        $prep = $pdo->prepare($query);
+        $prep->execute();;
+        $listeArticle = $prep->fetchAll();
+
+
+        //récupère tout les etat de vente différent d'un article
+        $query = "SELECT * FROM etat" ;
         $prep = $pdo->prepare($query);
         $prep->execute();
-        $listeArticle = $prep->fetchAll();
+        $listeEtat = $prep->fetchAll();
 
         //récupère tout les nom de colone de la table
         $query = "DESCRIBE ".$nomProduit;
@@ -34,13 +42,12 @@ class AdminArticlesController extends AbstractController {
 
         $listeColonne = [];
         foreach ($resultat as $coloneInfo){
-            $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ;
-            if ($coloneInfo['Field']=='vip') $isVIP = $coloneInfo['Default'] ;
+            if ($coloneInfo['Field']=='vip') { $isVIP = $coloneInfo['Default'] ; }
+            elseif ($coloneInfo['Field']!='id' and $coloneInfo['Field']!='idEtat') { $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ; }
         }
-        unset($listeColonne['vip']);
-        unset($listeColonne['id']);
+        $listeColonne['Statut'] = "varchar(30)";
 
-        return $this->render("adminArticles/accueil.html.twig", compact('listeArticle','nomProduit', 'listeColonne','isVIP','idArticle','isModification'));
+        return $this->render("adminArticles/accueil.html.twig", compact('listeArticle','nomProduit', 'listeColonne','isVIP','idArticle','isModification','listeEtat'));
 
     }
 
@@ -49,7 +56,7 @@ class AdminArticlesController extends AbstractController {
      */
     public function ajouter(String $nomProduit, Connexion $connexion, Request $request){
 
-       // try {
+        try {
             $pdo = $connexion->createConnexion() ;
 
             //récupère tout les nom de colone de la table
@@ -87,9 +94,9 @@ class AdminArticlesController extends AbstractController {
 
             $this->addFlash('success',"l'article a bien été ajouté");
 
-       /* } catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error',"l'article n'a pas pue etre ajouté");
-        } */
+        }
 
         return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0,"idArticle"=>$pdo->lastInsertId()]);
 

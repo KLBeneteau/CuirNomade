@@ -25,19 +25,26 @@
             <th>Action</th>
         </tr>
         {% for article in listeArticle %}
-            {% if idArticle == article.id %}
+            {% if idArticle == article[0] %}
                 {% set A_ajoutRapide = article %}
             {% endif %}
             <tr>
-                {% if idArticle == article.id and isModification %}
-                    <form action="{{ path('adminArticle_modifier', {'idArticle': article.id, 'nomProduit': nomProduit}) }}" method="post">
+                {% if idArticle == article[0] and isModification %}
+                    <form action="{{ path('adminArticle_modifier', {'idArticle': article[0], 'nomProduit': nomProduit}) }}" method="post">
                         {% for nomColonne,unite in listeColonne %}
                             {% set nomUnite = unite|split('(')|first %}
                             {% set tailleUnite = unite|split('(')|last|replace({')' : ""}) %}
                             <th>
-                                {% if nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" required value="{{ article[nomColonne] }}"> {% endif %}
-                                {% if nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" required value="{{ article[nomColonne] }}" > {% endif %}
-                                {% if nomUnite == 'tinyint' %} <input type="checkbox" name="{{ nomColonne }}" value="1" > {% endif %}
+                                {% if nomColonne == 'Statut' %}
+                                    <select name="idEtat">
+                                        {% for etat in listeEtat %}
+                                            <option value="{{ etat['id'] }}" {% if article.Statut == etat['Statut'] %} selected {% endif %} >{{ etat['Statut'] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                {% elseif nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" required value="{{ article[nomColonne] }}">
+                                {% elseif nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" required value="{{ article[nomColonne] }}" >
+                                {% elseif nomUnite == 'tinyint' %} <input type="checkbox" name="{{ nomColonne }}" value="1" {% if article[nomColonne] == 1 %} checked {% endif %} >
+                                {% endif %}
                             </th>
                         {% endfor %}
                         <th>
@@ -52,8 +59,8 @@
                         {% endif %}
                     {% endfor %}
                     <th>
-                        <a href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit, 'idArticle': article.id ,'isModification':1 }) }}" class="bouttonV2">Modifier</a>
-                        <a href="{{ path('adminArticle_supprimer', {'nomProduit': nomProduit, 'idArticle': article.id }) }}" class="bouttonV2">Supprimer</a>
+                        <a href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit, 'idArticle': article[0] ,'isModification':1 }) }}" class="bouttonV2">Modifier</a>
+                        <a href="{{ path('adminArticle_supprimer', {'nomProduit': nomProduit, 'idArticle': article[0] }) }}" class="bouttonV2">Supprimer</a>
                     </th>
                 {% endif %}
             </tr>
@@ -65,9 +72,16 @@
                         {% set nomUnite = unite|split('(')|first %}
                         {% set tailleUnite = unite|split('(')|last|replace({')' : ""}) %}
                         <th>
-                        {% if nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required> {% endif %}
-                        {% if nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required> {% endif %}
-                        {% if nomUnite == 'tinyint' %} <input type="checkbox"  name="{{ nomColonne }}" value="1" > {% endif %}
+                        {% if nomColonne == 'Statut' %}
+                            <select name="idEtat" >
+                                {% for etat in listeEtat %}
+                                    <option value="{{ etat['id'] }}" {% if A_ajoutRapide!="" and A_ajoutRapide.Statut == etat['Statut'] %} selected {% endif %}>{{ etat['Statut'] }} </option>
+                                {% endfor %}
+                            </select>
+                        {% elseif nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required>
+                        {% elseif nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required>
+                        {% elseif nomUnite == 'tinyint' %} <input type="checkbox"  name="{{ nomColonne }}" value="1" {% if A_ajoutRapide!="" and A_ajoutRapide[nomColonne] == 1 %} checked {% endif %}>
+                        {% endif %}
                         </th>
                     {% endfor %}
                     <th>

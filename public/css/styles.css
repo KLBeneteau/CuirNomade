@@ -44,6 +44,10 @@
     margin-right: 1em;
 }
 
+.espaceHaut {
+    margin-top: 1em;
+}
+
 .scroll-x {
     overflow-x: scroll;
     white-space: nowrap;
