@@ -172,4 +172,21 @@ class AdminArticlesController extends AbstractController {
 
     }
 
+    /**
+     * @Route("/ChangeVIP/{nomProduit}", name="ChangeVIP")
+     */
+    public function ChangeVIP(String $nomProduit, Connexion $connexion, Request $request) {
+
+        $isVIP = $request->get('newVIP')?0:1 ;
+
+        $pdo = $connexion->createConnexion();
+
+        $query = "UPDATE ".$nomProduit." SET Vip = ".$isVIP ;
+        $pdo->exec($query);
+
+        $query = "ALTER TABLE ".$nomProduit." ALTER Vip SET DEFAULT ".$isVIP;
+        $pdo->exec($query);
+
+        return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0]);
+    }
 }

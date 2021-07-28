@@ -15,7 +15,10 @@
         {% if isVIP %} <p class="espaceDroite">Ce produit est réservé au clients VIP</p>
         {% else %} <p class="espaceDroite">Ce produit est n'est pas réservé au client VIP</p>
         {% endif %}
-        <a class="bouttonV2">Modifier</a>
+        <form action="{{ path('adminArticle_ChangeVIP', {'nomProduit': nomProduit}) }}" method="post">
+            <input type="hidden" value="{{isVIP}}" name="newVIP">
+            <input type="submit" value="Modifier" class="bouttonV2">
+        </form>
     </div>
     <table id="Article_Table">
         <tr>
