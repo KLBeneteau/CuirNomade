@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminProduitsController extends AbstractController {
 
     /**
-     * @Route("/", name="accueil")
+     * @Route("/accueil", name="accueil")
      */
     public function accueil(RepertoirRepository $repertoirRepository){
 
@@ -57,11 +57,11 @@ class AdminProduitsController extends AbstractController {
 
                 $query = 'CREATE TABLE '.$nomProduit.'
                              ( id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                             nom VARCHAR(50) NOT NULL,
-                             prix INT NOT NULL,
-                             description VARCHAR(300),
-                             stock INT NOT NULL,
-                             vip tinyint(1) NOT NULL DEFAULT '.$VIP.'
+                             Nom VARCHAR(50) NOT NULL,
+                             Prix INT NOT NULL,
+                             Description VARCHAR(300),
+                             Stock INT NOT NULL,
+                             Vip tinyint(1) NOT NULL DEFAULT '.$VIP.'
                              ) ' ;
 
                 $pdo->exec($query);
