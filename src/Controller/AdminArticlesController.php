@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\RepertoirRepository;
 use App\Service\Connexion;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,6 +28,26 @@ class AdminArticlesController extends AbstractController {
         $prep->execute();;
         $listeArticle = $prep->fetchAll();
 
+        //Compte le nombre de photo par article
+        $query = "SELECT idArticle,COUNT(*) FROM image WHERE nomTable = '".$nomProduit."' GROUP BY idArticle ";
+        $prep = $pdo->prepare($query);
+        $prep->execute();
+        $resultat = $prep->fetchAll();
+
+        $infoImage = [] ;
+        foreach ($resultat as $info){
+            $infoImage[$info[0]] = $info['COUNT(*)'] ;
+        }
+        $i=0;
+        foreach ($listeArticle as $article) {
+            if (array_key_exists($article[0] , $infoImage) ) {
+                $article['Images'] = $infoImage[$article[0]] ;
+            } else {
+                $article['Images'] = 0 ;
+            }
+            $listeArticle[$i] = $article ;
+            $i++;
+        }
 
         //récupère tout les etat de vente différent d'un article
         $query = "SELECT * FROM etat" ;
@@ -46,6 +67,7 @@ class AdminArticlesController extends AbstractController {
             elseif ($coloneInfo['Field']!='id' and $coloneInfo['Field']!='idEtat') { $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ; }
         }
         $listeColonne['Statut'] = "varchar(30)";
+        $listeColonne['Images'] = "varchar(30)";
 
         return $this->render("adminArticles/accueil.html.twig", compact('listeArticle','nomProduit', 'listeColonne','isVIP','idArticle','isModification','listeEtat'));
 
@@ -55,8 +77,7 @@ class AdminArticlesController extends AbstractController {
      * @Route("/ajouter/{nomProduit}", name="ajouter")
      */
     public function ajouter(String $nomProduit, Connexion $connexion, Request $request){
-
-        try {
+        //try {
             $pdo = $connexion->createConnexion() ;
 
             //récupère tout les nom de colone de la table
@@ -91,14 +112,29 @@ class AdminArticlesController extends AbstractController {
             $query .= ')' ;
 
             $pdo->exec($query);
+            $idNewArticle = $pdo->lastInsertId() ;
+
+            //enregistre Les Photos
+            foreach ($_FILES["repertoir_image"]["error"] as $key => $error) {
+                if ($error == UPLOAD_ERR_OK) {
+                    $tmp_name = $_FILES["repertoir_image"]["tmp_name"][$key];
+                    $filename = basename($_FILES["repertoir_image"]["name"][$key]);
+                    $folder = "../public/uploads/photos/" . $filename;
+
+                    $query = "INSERT INTO image (idArticle,nomTable,nomImage) VALUES (" . $idNewArticle . ",'" . $nomProduit . "','" . $filename . "')";
+                    $pdo->exec($query);
+
+                    move_uploaded_file($tmp_name, $folder);
+                }
+            }
 
             $this->addFlash('success',"l'article a bien été ajouté");
-
+        /*
         } catch (\Exception $e) {
             $this->addFlash('error',"l'article n'a pas pue etre ajouté");
-        }
+        }*/
 
-        return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0,"idArticle"=>$pdo->lastInsertId()]);
+        return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0,"idArticle"=>$idNewArticle]);
 
     }
 
@@ -110,6 +146,9 @@ class AdminArticlesController extends AbstractController {
         try {
             $pdo = $connexion->createConnexion() ;
 
+            $query = "DELETE FROM image WHERE idArticle =".$idArticle." AND nomTable ='".$nomProduit."'";
+            $pdo->exec($query);
+
             $query = "DELETE FROM ".$nomProduit." WHERE id = ?" ;
             $prep = $pdo->prepare($query);
             $prep->bindValue(1, $idArticle);
@@ -117,7 +156,7 @@ class AdminArticlesController extends AbstractController {
 
             $this->addFlash('success',"l'article a bien été supprimé");
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error',"l'article n'a pas pue etre supprimé");
         }
 
@@ -162,9 +201,24 @@ class AdminArticlesController extends AbstractController {
             $prep->bindValue(1, $idArticle);
             $prep->execute();
 
+            //enregistre Les Photos
+            foreach ($_FILES["repertoir_image"]["error"] as $key => $error) {
+                if ($error == UPLOAD_ERR_OK) {
+
+                    $tmp_name = $_FILES["repertoir_image"]["tmp_name"][$key];
+                    $filename = basename($_FILES["repertoir_image"]["name"][$key]);
+                    $folder = "../public/uploads/photos/" . $filename;
+
+                    $query = "INSERT INTO image (idArticle,nomTable,nomImage) VALUES (" . $idArticle . ",'" . $nomProduit . "','" . $filename . "')";
+                    $pdo->exec($query);
+
+                    move_uploaded_file($tmp_name, $folder);
+                }
+            }
+
             $this->addFlash('success',"l'article a bien été modifié");
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error',"l'article n'a pas pue etre modifié");
         }
 

@@ -286,7 +286,7 @@ form div#registration_form div:nth-last-child(2){
     padding: 0.3em 1em;
 }
 *[id*="_Table"] input {
-    max-width: 7em;
+    max-width: 10em;
 }
 
 /*------------------------------------------------------------------------------------*/
@@ -314,4 +314,12 @@ form div#registration_form div:nth-last-child(2){
 
 #ModifeProduit_form > * {
    margin-bottom: 0.5em;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* adminArticle/accueil.html.twig */
+
+.inputFile[type="file"] {
+    max-width: none;
+    border: none;
 }
