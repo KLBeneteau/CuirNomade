@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\RepertoirRepository;
+use App\Service\FiltreArticleBDD;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -10,9 +12,11 @@ class MainController extends AbstractController {
     /**
      * @Route("/", name="main_accueil")
      */
-    public function accueil(){
+    public function accueil(FiltreArticleBDD $filtreArticleBDD, RepertoirRepository $repertoirRepository){
 
-        return $this->render("main/accueil.html.twig") ;
+        $listeArticle = $filtreArticleBDD->randomGet(10,$repertoirRepository->findAll());
+
+        return $this->render("main/accueil.html.twig",compact('listeArticle')) ;
     }
 
     /**

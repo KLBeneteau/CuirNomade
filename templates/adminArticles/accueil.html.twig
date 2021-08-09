@@ -45,7 +45,7 @@
                                         {% endfor %}
                                     </select>
                                 {% elseif nomColonne == 'Images'%} <input type="file" name="repertoir_image[]" accept=".png, .jpg, .jpeg" multiple class="inputFile" >
-                                {% elseif nomUnite == 'varchar' %}
+                                {% elseif nomUnite == 'varchar' %} <input type="text" value="{{ article[nomColonne] }}"  name="{{ nomColonne }}" required>
                                 {% elseif nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" required value="{{ article[nomColonne] }}" >
                                 {% elseif nomUnite == 'tinyint' %} <input type="checkbox" name="{{ nomColonne }}" value="1" {% if article[nomColonne] == 1 %} checked {% endif %} >
                                 {% endif %}
