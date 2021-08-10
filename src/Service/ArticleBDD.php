@@ -96,4 +96,28 @@ class ArticleBDD {
 
     }
 
+    public function get(String $nomProduit, int $idArticle) {
+
+        $query = "SELECT * FROM ". $nomProduit ." as a
+                  INNER JOIN etat AS e
+                  WHERE a.id = ? AND e.id = a.idEtat " ;
+        $prep = $GLOBALS['pdo']->prepare($query);
+        $prep->bindValue(1, $idArticle);
+        $prep->execute();
+        $article = $prep->fetch();
+
+        $query = "SELECT nomImage FROM Image WHERE nomTable = ? AND idArticle = ? " ;
+        $prep = $GLOBALS['pdo']->prepare($query);
+        $prep->bindValue(1, $nomProduit);
+        $prep->bindValue(2, $idArticle);
+        $prep->execute();
+        $listeImage = $prep->fetchall();
+
+        foreach ($listeImage as $image) {
+            $article['image'][] = $image['nomImage'] ;
+        }
+
+        return $article ;
+    }
+
 }

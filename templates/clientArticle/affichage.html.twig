@@ -1,5 +1,5 @@
 <div class="prensetationArticle" >
-    <a href="#">
+    <a href="{{ path('clientArticle_detail', {'idArticle': article[0], 'nomProduit': article.nomTable }) }}">
     <div class="flex ">
         <img src="../public/uploads/photos/{{ article.nomImage }}" alt="image de {{ article.nomTable }}">
         <div>

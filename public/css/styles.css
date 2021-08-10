@@ -182,7 +182,7 @@ header {
   animation: 30s slidy infinite;
 }
 
-#slider figure a img { width: 10%; height: auto; float: left; } /* 20 car 100/5 le nombre d'image */
+#slider img { width: 10%; height: auto; float: left; } /* 20 car 100/5 le nombre d'image */
 
 /*------------------------------------------------------------------------------------*/
 /* Base : body nav */
@@ -357,4 +357,32 @@ form div#registration_form div:nth-last-child(2){
 .prensetationArticle:hover {
     background-color: peru;
 }
+
+@keyframes slidyArticle {
+    0% { left: 0%; }
+    20% { left: 0%; }
+    25% { left: -100%; }
+    45% { left: -100%; }
+    50% { left: -200%; }
+    70% { left: -200%; }
+    75% { left: -300%; }
+    95% { left: -300%; }
+    100% { left: -400%; }
+}
+
+#sliderArticle { overflow: hidden; width: 50% }
+/* max-width, la taille des image dans dans le slider, pour éviter les déformation*/
+
+#sliderArticle figure {
+    position: relative;
+    width: 1000%; /*car 10 image dans le slider*/
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    left: 0;
+    text-align: left;
+    animation: 30s slidyArticle infinite;
+}
+
+#sliderArticle img { width: 10%; float: left; height: 400px } /* 20 car 100/5 le nombre d'image */
 

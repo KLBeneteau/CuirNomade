@@ -16,7 +16,9 @@ class FiltreArticleBDD {
 
            $query = "SELECT * FROM ".$table[0]->getNom()." as t
                       INNER JOIN image as i
-                      WHERE t.id = i.idArticle AND i.nomTable = '".$table[0]->getNom()."'
+                      INNER JOIN etat as e
+                      WHERE t.id = i.idArticle AND i.nomTable = '".$table[0]->getNom()."' 
+                            AND e.id = t.idEtat AND e.Statut = 'EN_VENTE'
                       GROUP BY t.Modele, t.Couleur 
                       ORDER BY RAND() LIMIT ".$nombre ;
            $prep= $GLOBALS['pdo']->prepare($query);

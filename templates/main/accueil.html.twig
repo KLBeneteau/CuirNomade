@@ -5,7 +5,7 @@
 {% block body %}
     <div class="listeArticle flex wrap">
     {% for article in listeArticle %}
-        {% include 'clientArticle/affichage.thml.twig' with {'article': article} %}
+        {% include 'clientArticle/affichage.html.twig' with {'article': article} %}
     {% endfor %}
     </div>
 {% endblock %}
