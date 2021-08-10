@@ -1,0 +1,11 @@
+{% extends 'misEnPage_Colonne.html.twig' %}
+
+{% block contenueColonne %}
+    <div id="miseEnPage_Colonne_GestionProduit" >
+        <h1>Produits</h1>
+        {% for produitType in listeProduits %}
+            <a href="{{ path('adminProduit_affichage', {'nomProduit': produitType.nom} ) }}" class="bouttonV2 flex jc_center">{{ produitType.nom }}</a>
+        {% endfor %}
+        <a href="{{ path('adminProduit_creer') }}" class="boutton boutton_endNav flex jc_center">Ajouter</a>
+    </div>
+{% endblock %}

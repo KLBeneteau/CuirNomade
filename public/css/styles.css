@@ -93,35 +93,6 @@ table .bouttonV2 {
 }
 
 /*------------------------------------------------------------------------------------*/
-/* mise en page : gestion */
-#MiseEnPage {
-    width: 60%;
-    margin: 1em;
-    min-height: 400px;
-}
-
-#MiseEnPage_nav {
-    width: 20%;
-    margin: 0 0.5em 0 0;
-}
-
-#MiseEnPage_nav > * {
-    margin: 0.2em 0.5em;
-}
-
-#MiseEnPage_main {
-    width: 80%;
-    margin: 0;
-}
-
-/*------------------------------------------------------------------------------------*/
-/* mise en page : Pleine Page */
-#backgroundNeutre {
-    background-color: antiquewhite ;
-    background-image: none;
-}
-
-/*------------------------------------------------------------------------------------*/
 /* base.html.twig */
 body {
     background-image:url("../img/fondCuirTempo.jpg") ;
@@ -169,17 +140,17 @@ header {
 }
 
 #slider { overflow: hidden }
-    /* max-width, la taille des image dans dans le slider, pour éviter les déformation*/
+/* max-width, la taille des image dans dans le slider, pour éviter les déformation*/
 
 #slider figure {
-  position: relative;
-  width: 500%; /*car 5 image dans le slider*/
-  margin: 0;
-  padding: 0;
-  font-size: 0;
-  left: 0;
-  text-align: left;
-  animation: 30s slidy infinite;
+    position: relative;
+    width: 500%; /*car 5 image dans le slider*/
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    left: 0;
+    text-align: left;
+    animation: 30s slidy infinite;
 }
 
 #slider img { width: 10%; height: auto; float: left; } /* 20 car 100/5 le nombre d'image */
@@ -211,6 +182,35 @@ header {
 main {
     margin: 1em;
 }
+
+/*------------------------------------------------------------------------------------*/
+/* mise en page : colonne */
+#MiseEnPage_colonne {
+    width: 60%;
+    margin: 1em;
+    min-height: 400px;
+}
+
+#MiseEnPage_colonne > * {
+    margin: 0;
+}
+
+#MiseEnPage_colonne > *:nth-child(1) {
+    width: 30%;
+    margin-right: 1em;
+}
+
+#MiseEnPage_colonne > *:nth-child(2) {
+    width: 70%;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* mise en page : Pleine Page */
+#backgroundNeutre {
+    background-color: antiquewhite ;
+    background-image: none;
+}
+
 
 /*------------------------------------------------------------------------------------*/
 /* Tout les form */
@@ -245,7 +245,10 @@ form div#registration_form div:nth-last-child(2){
 }
 
 /*------------------------------------------------------------------------------------*/
-/* login.html.twig */
+/* MiseEnPage_Colonne_GestionProduit */
+#miseEnPage_Colonne_GestionProduit * {
+    margin: 0.3em 0.5em
+}
 
 /*------------------------------------------------------------------------------------*/
 /* login.html.twig */
@@ -329,13 +332,7 @@ form div#registration_form div:nth-last-child(2){
 }
 
 /*------------------------------------------------------------------------------------*/
-/* liste d'Article */
-.listeArticle {
-
-}
-
-/*------------------------------------------------------------------------------------*/
-/* presentation un Article */
+/* clientArticle/affichage.html.twig */
 .prensetationArticle img {
     height: 190px;
     width: 190px;
@@ -371,7 +368,6 @@ form div#registration_form div:nth-last-child(2){
 }
 
 #sliderArticle { overflow: hidden; width: 50% }
-/* max-width, la taille des image dans dans le slider, pour éviter les déformation*/
 
 #sliderArticle figure {
     position: relative;

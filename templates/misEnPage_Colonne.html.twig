@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block miseEnPage %}
+    <div class="bloc">
+        {{ include('miseEnPage/mainNav.html.twig') }}
+        {{ include('miseEnPage/adminNav.html.twig') }}
+        {{ include('miseEnPage/flash.html.twig') }}
+    </div>
+
+    <div id="MiseEnPage_colonne" class="flex">
+        <nav class="bloc flex column ai_stretch">
+            {% block contenueColonne %} {% endblock %}
+        </nav>
+        <div class="bloc" id="MiseEnPage_main">
+            <main> {% block body %} {% endblock %} </main>
+        </div>
+    </div>
+{% endblock %}

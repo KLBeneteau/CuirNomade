@@ -10,7 +10,7 @@ $GLOBALS['pdo'] = $connexion->createConnexion();
 
 class FiltreArticleBDD {
 
-   public function randomGet(int $nombre, $table ){
+   public function randomGet(int $nombre, $table){
 
        if (count($table)==1) {
 

@@ -2,26 +2,9 @@
 
 {% block miseEnPage %}
     <div class="bloc">
-        <nav id="main_nav" class="flex" >
-            <a class="boutton" href="{{ path('main_accueil') }}" >Accueil</a>
-            <a class="boutton" href="#" >Produits</a>
-            <a class="boutton boutton_endNav" href="{{ path('main_presentation') }}" >L'Entreprise</a>
-        </nav>
-
-        {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
-            <nav id="admin_nav" class="flex">
-                <a class="boutton "  href="{{ path('invitationClient_accueil') }}">Inviter Des Clients VIP</a>
-                <a class="boutton boutton_endNav"  href="{{ path('adminProduit_accueil') }}">Gestion des Produits</a>
-            </nav>
-        {% endif %}
-
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="flash flash-{{ label }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
+        {{ include('miseEnPage/mainNav.html.twig') }}
+        {{ include('miseEnPage/adminNav.html.twig') }}
+        {{ include('miseEnPage/flash.html.twig') }}
 
         <main> {% block body %}{% endblock %} </main>
     </div>
