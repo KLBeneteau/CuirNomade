@@ -12,11 +12,12 @@ class FiltreArticleBDD {
 
    public function randomGet(int $nombre, $table ){
 
-       $tableArticle = [] ;
        if (count($table)==1) {
+
            $query = "SELECT * FROM ".$table[0]->getNom()." as t
                       INNER JOIN image as i
                       WHERE t.id = i.idArticle AND i.nomTable = '".$table[0]->getNom()."'
+                      GROUP BY t.Modele, t.Couleur 
                       ORDER BY RAND() LIMIT ".$nombre ;
            $prep= $GLOBALS['pdo']->prepare($query);
            $prep->execute();
@@ -24,7 +25,7 @@ class FiltreArticleBDD {
 
        } else {
             //Rapelle la fonction en découpant la liste
-           $nombreArticleParTable = count($table) % $nombre  ;
+           $nombreArticleParTable = intdiv($nombre,count($table)) ;  ;
            $tableArticle = $this->randomGet($nombreArticleParTable+ceil(fmod($nombre,count($table))),array($table[0])) ;
            for($i=1; $i<count($table); $i++){
                $articleAAjouter = $this->randomGet($nombreArticleParTable,array($table[$i])) ;

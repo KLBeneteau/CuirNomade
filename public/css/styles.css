@@ -36,6 +36,10 @@
     flex-direction: column;
 }
 
+.wrap {
+    flex-wrap: wrap;
+}
+
 .margin_Auto {
     margin: auto;
 }
@@ -323,3 +327,34 @@ form div#registration_form div:nth-last-child(2){
     max-width: none;
     border: none;
 }
+
+/*------------------------------------------------------------------------------------*/
+/* liste d'Article */
+.listeArticle {
+
+}
+
+/*------------------------------------------------------------------------------------*/
+/* presentation un Article */
+.prensetationArticle img {
+    height: 190px;
+    width: 190px;
+    margin: 5px 5px 0px;
+}
+
+.prensetationArticle a {
+    text-decoration: none;
+    color: black;
+}
+
+.prensetationArticle {
+    background-color: tan;
+    height: 200px;
+    width: 33%;
+    border: 1px solid gray;
+}
+
+.prensetationArticle:hover {
+    background-color: peru;
+}
+
