@@ -1,7 +1,16 @@
 {% extends 'miseEnPage_Colonne_Filtre.html.twig' %}
 
 {% block body %}
-
+    <div>
+        {% for produit in repertoir %}
+            <h1>{{ produit.nom }}</h1>
+            <div class="flex wrap">
+                {% for article in listeArticle[produit.nom] %}
+                    {% include 'clientArticle/affichage.html.twig' with {'article': article} %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block title %}
