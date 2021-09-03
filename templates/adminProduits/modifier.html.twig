@@ -1,4 +1,4 @@
-{% extends 'miseEnPage_Gestion_navProduit.html.twig' %}
+{% extends 'miseEnPage_Colonne_GestionProduit_nomProduit.html.twig' %}
 
 {% block body2 %}
     <div class="flex">
@@ -33,6 +33,10 @@
                     <option value="int">Entier</option>
                     <option value="tinyint">Booleen</option>
                 </select>
+            </div>
+            <div>
+                <label for="isGroup">Caractéristique groupée</label>
+                <input type="checkbox" name="isGroup" id="isGroup" value="true">
             </div>
             <input type="submit" value="Ajouter">
         </form>

@@ -18,7 +18,6 @@ class ArticleBDD {
         foreach ($info as $coloneInfo){
             $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ;
         }
-        unset($listeColonne['vip']);
         unset($listeColonne['id']);
 
         //Initialise la commande sql
@@ -55,7 +54,6 @@ class ArticleBDD {
         foreach ($info as $coloneInfo){
             $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ;
         }
-        unset($listeColonne['vip']);
         unset($listeColonne['id']);
 
         //Initialise la commande sql

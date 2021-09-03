@@ -24,6 +24,16 @@ class Repertoir
      */
     private $nom;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $isGroup;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVIP;
+
     public function __construct(String $nom)
     {
         $this->setNom($nom) ;
@@ -42,6 +52,30 @@ class Repertoir
     private function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getIsGroup(): ?string
+    {
+        return $this->isGroup;
+    }
+
+    public function setIsGroup(string $isGroup): self
+    {
+        $this->isGroup = $isGroup;
+
+        return $this;
+    }
+
+    public function getIsVIP(): ?bool
+    {
+        return $this->isVIP;
+    }
+
+    public function setIsVIP(bool $isVIP): self
+    {
+        $this->isVIP = $isVIP;
 
         return $this;
     }

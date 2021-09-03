@@ -1,10 +1,14 @@
-{% extends 'miseEnPage_Gestion_navProduit.html.twig' %}
+{% extends 'miseEnPage_Colonne_GestionProduit_nomProduit.html.twig' %}
 
 {% block body2 %}
     <div class="scroll-x">
-        {% if isVIP %} <p>Ce produit est réservé au clients VIP</p>
-        {% else %} <p>Ce produit est n'est pas réservé au client VIP</p>
-        {% endif %}
+        {% for produit in listeProduits %}
+            {% if produit.nom == nomProduit %}
+                {% if produit.isVip %} <p>Ce produit est réservé au clients VIP</p>
+                {% else %} <p>Ce produit est n'est pas réservé au client VIP</p>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
         <table id="affichageProduit_Table">
            <tr>
                {% for nom in listeColonne|keys %}

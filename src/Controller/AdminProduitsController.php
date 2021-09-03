@@ -50,20 +50,23 @@ class AdminProduitsController extends AbstractController {
 
         //Si le formulaire est envoyer
         if ($nomProduit) {
-           // try {
+            try {
 
-                $produitBDD->creer($nomProduit,$VIP);
+                $produitBDD->creer($nomProduit);
 
                 $newRepertoir = new Repertoir($nomProduit);
+                $newRepertoir->setIsVIP($VIP);
+                $newRepertoir->setIsGroup('000010');
                 $entityManager->persist($newRepertoir);
                 $entityManager->flush();
 
                 $this->addFlash("success","le produit $nomProduit été créer");
                 return $this->redirectToRoute('adminProduit_modifier',['nomProduit'=>$nomProduit]);
 
-            /* } catch (\Exception $e) {
-                $this->addFlash("error","Le produit $nomProduit n'a pas pu etre créé");
-            } */
+            } catch (\Exception $e) {
+                $this->addFlash('error','Le produit '.$nomProduit." n'a pas pue etre créer");
+            }
+
         }
 
         $listeProduits = $repertoirRepository->findAll();
@@ -82,13 +85,13 @@ class AdminProduitsController extends AbstractController {
 
         $listeColonne = [];
         foreach ($info as $coloneInfo){
-            if ($coloneInfo['Field']=='vip') { $isVIP = $coloneInfo['Default'] ; }
-            elseif ($coloneInfo['Field']!='id' and $coloneInfo['Field']!='idEtat') { $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ; }
+            if ($coloneInfo['Field']!='id' and $coloneInfo['Field']!='idEtat') { $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ; }
         }
         $listeColonne['Statut'] = "varchar(30)";
 
         $listeProduits = $repertoirRepository->findAll();
-        return $this->render("adminProduits/affichage.html.twig", compact('listeProduits','listeColonne', 'listeArticle','nomProduit','isVIP')) ;
+
+        return $this->render("adminProduits/affichage.html.twig", compact('listeProduits','listeColonne', 'listeArticle','nomProduit')) ;
     }
 
     /**
@@ -131,7 +134,7 @@ class AdminProduitsController extends AbstractController {
         $listeColonne = [];
         foreach ($info as $coloneInfo){
             if ($coloneInfo['Field']=='idEtat') { $listeColonne['Statut'] = "varchar(30)"; }
-            elseif ($coloneInfo['Field']!='id' and $coloneInfo['Field']!='vip') { $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ; }
+            elseif ($coloneInfo['Field']!='id') { $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ; }
         }
 
         $listeProduits = $repertoirRepository->findAll();
@@ -141,9 +144,15 @@ class AdminProduitsController extends AbstractController {
     /**
      * @Route("/modifier/AjouterCharactéristique/{nomProduit}", name="modifier_AjoutChar")
      */
-    public function AjoutChar(String $nomProduit, ProduitBDD $produitBDD, Request $request){
+    public function AjoutChar(String $nomProduit, ProduitBDD $produitBDD, Request $request, RepertoirRepository $repertoirRepository, EntityManagerInterface $entityManager){
 
         try {
+            if ($request->get("isGroup")) {
+                $isGroup = 1;
+            } else {
+                $isGroup = 0;
+            }
+
             $nomChara = '' ;
             foreach (explode(' ', $request->get('nomChara')) as $mot)
             { $nomChara .= ucfirst($mot) ; }
@@ -159,6 +168,10 @@ class AdminProduitsController extends AbstractController {
             if (! array_key_exists($nomChara, $listeColonne)) {
 
                 $produitBDD->addColone($nomProduit,$nomChara,$unite);
+
+                $produit = $repertoirRepository->findOneBy(['nom'=>$nomProduit]);
+                $produit->setIsGroup($produit->getIsGroup() . $isGroup ) ;
+                $entityManager->flush();
 
                 $this->addFlash('success','La caractéritique '.$nomChara.' a bien été ajouté');
 
@@ -177,9 +190,22 @@ class AdminProduitsController extends AbstractController {
     /**
      * @Route("/modifier/SupprimerCharactéristique/{nomProduit}/{nomChara}", name="modifier_SupprimerChar")
      */
-    public function SupprimerChar(String $nomProduit,String $nomChara, ProduitBDD $produitBDD, Request $request){
+    public function SupprimerChar(String $nomProduit,
+                                  String $nomChara,
+                                  ProduitBDD $produitBDD,
+                                  RepertoirRepository
+                                  $repertoirRepository,
+                                  EntityManagerInterface $entityManager){
 
-        try {
+         try {
+            $produit = $repertoirRepository->findOneBy(['nom'=>$nomProduit]);
+            $info =  $produitBDD->info($nomProduit);
+            foreach ($info as $numero => $chara ) {
+                if ($chara['Field'] == $nomChara ) {
+                    $produit->setIsGroup(substr_replace($produit->getIsGroup(),'',$numero-1,1) );
+                }
+            }
+            $entityManager->flush();
 
             $produitBDD->supprColonne($nomProduit,$nomChara);
 

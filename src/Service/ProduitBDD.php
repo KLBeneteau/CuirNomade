@@ -11,7 +11,7 @@ $GLOBALS['pdo'] = $connexion->createConnexion();
 
 class ProduitBDD {
 
-    public function creer(String $nom, String $VIP) {
+    public function creer(String $nom) {
 
         $query = 'CREATE TABLE '.$nom.'
                              ( id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -19,7 +19,6 @@ class ProduitBDD {
                              Prix INT NOT NULL,
                              Description VARCHAR(300),
                              Stock INT NOT NULL,
-                             vip tinyint(1) NOT NULL DEFAULT '.$VIP.',
                              Couleur VARCHAR(50) NOT NULL,
                              idEtat INT NOT NULL,
                             CONSTRAINT fk_IdEtat FOREIGN KEY (idEtat) REFERENCES etat(id)) ' ;
@@ -36,7 +35,6 @@ class ProduitBDD {
     }
 
     public function info(String $nom) {
-
 
         //récupère tout les nom de colone de la table
         $query = "DESCRIBE ".$nom;
@@ -87,15 +85,5 @@ class ProduitBDD {
         $prep = $GLOBALS['pdo']->prepare($query);
         $prep->execute();
         return $prep->fetchAll();
-    }
-
-    public function changeVIP(String $nom, String $VIP){
-
-        $query = "UPDATE ".$nom." SET Vip = ".$VIP ;
-        $GLOBALS['pdo']->exec($query);
-
-        $query = "ALTER TABLE ".$nom." ALTER Vip SET DEFAULT ".$VIP;
-        $GLOBALS['pdo']->exec($query);
-
     }
 }

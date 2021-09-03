@@ -6,6 +6,7 @@ use App\Repository\RepertoirRepository;
 use App\Service\ArticleBDD;
 use App\Service\Connexion;
 use App\Service\ProduitBDD;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,7 @@ class AdminArticlesController extends AbstractController {
     /**
      * @Route("/accueil/{nomProduit}/{isModification}/{idArticle<\d+>?0}" , name="accueil")
      */
-    public function accueil(String $nomProduit, int $idArticle, bool $isModification, ProduitBDD $produitBDD){
+    public function accueil(String $nomProduit, int $idArticle, bool $isModification, ProduitBDD $produitBDD, RepertoirRepository $repertoirRepository){
 
         //recupère tout se qui est enregistrer dans la table
         $listeArticle = $produitBDD->get_JoinEtat($nomProduit) ;
@@ -31,8 +32,7 @@ class AdminArticlesController extends AbstractController {
         $info = $produitBDD->info($nomProduit);
         $listeColonne = [];
         foreach ($info as $coloneInfo){
-            if ($coloneInfo['Field']=='vip') { $isVIP = $coloneInfo['Default'] ; }
-            elseif ($coloneInfo['Field']!='id' and $coloneInfo['Field']!='idEtat') { $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ; }
+            if ($coloneInfo['Field']!='id' and $coloneInfo['Field']!='idEtat') { $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ; }
         }
         $listeColonne['Statut'] = "varchar(30)";
         $listeColonne['Images'] = "varchar(30)";
@@ -53,6 +53,8 @@ class AdminArticlesController extends AbstractController {
             $listeArticle[$i] = $article ;
             $i++;
         }
+
+       $isVIP = $repertoirRepository->findOneBy(['nom'=>$nomProduit])->getIsVIP() ;
 
         return $this->render("adminArticles/accueil.html.twig", compact('listeArticle','nomProduit', 'listeColonne','isVIP','idArticle','isModification','listeEtat'));
 
@@ -144,11 +146,12 @@ class AdminArticlesController extends AbstractController {
     /**
      * @Route("/ChangeVIP/{nomProduit}", name="ChangeVIP")
      */
-    public function ChangeVIP(String $nomProduit, ProduitBDD $produitBDD, Request $request) {
+    public function ChangeVIP(String $nomProduit, Request $request, RepertoirRepository $repertoirRepository, EntityManagerInterface $entityManager) {
 
         $isVIP = $request->get('newVIP')?0:1 ;
 
-        $produitBDD->changeVIP($nomProduit,$isVIP);
+        $repertoirRepository->findOneBy(['nom'=>$nomProduit])->setIsVIP($isVIP) ;
+        $entityManager->flush();
 
         return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0]);
     }
