@@ -54,20 +54,28 @@ class AdminArticlesController extends AbstractController {
             $i++;
         }
 
-       $isVIP = $repertoirRepository->findOneBy(['nom'=>$nomProduit])->getIsVIP() ;
+        $produit = $repertoirRepository->findOneBy(['nom'=>$nomProduit]) ;
 
-        return $this->render("adminArticles/accueil.html.twig", compact('listeArticle','nomProduit', 'listeColonne','isVIP','idArticle','isModification','listeEtat'));
+        $isGroup = substr_replace($produit->getIsGroup(),'',6,1) ;
+        $isGroup = substr_replace($isGroup,'',0,1) ;
+        $isGroup = str_split($isGroup) ;
+
+        $isVIP = $produit->getIsVIP();
+
+        return $this->render("adminArticles/accueil.html.twig",
+            compact('listeArticle','nomProduit', 'listeColonne','isVIP','idArticle','isModification','listeEtat','isGroup'));
 
     }
 
     /**
      * @Route("/ajouter/{nomProduit}", name="ajouter")
      */
-    public function ajouter(String $nomProduit, ArticleBDD $articleBDD, Request $request){
-        try {
+    public function ajouter(String $nomProduit, ArticleBDD $articleBDD, Request $request, RepertoirRepository $repertoirRepository){
+
+        //try {
 
             //Initialise la commande sql
-            $idNewArticle= $articleBDD->ajouter($nomProduit,$request) ;
+            $listNewId = $articleBDD->ajouter($nomProduit,$request,$repertoirRepository) ;
 
             //enregistre Les Photos
             foreach ($_FILES["repertoir_image"]["error"] as $key => $error) {
@@ -76,7 +84,9 @@ class AdminArticlesController extends AbstractController {
                     $filename = basename($_FILES["repertoir_image"]["name"][$key]);
                     $folder = "../public/uploads/photos/" . $filename;
 
-                    $articleBDD->ajouterImage($idNewArticle,$nomProduit,$filename);
+                    foreach ($listNewId as $idNewArticle) {
+                        $articleBDD->ajouterImage($idNewArticle,$nomProduit,$filename);
+                    }
 
                     move_uploaded_file($tmp_name, $folder);
                 }
@@ -84,11 +94,11 @@ class AdminArticlesController extends AbstractController {
 
             $this->addFlash('success',"l'article a bien été ajouté");
 
-        } catch (\Exception $e) {
+       /* } catch (\Exception $e) {
             $this->addFlash('error',"l'article n'a pas pue etre ajouté");
-        }
+        } */
 
-        return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0,"idArticle"=>$idNewArticle]);
+        return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0,"idArticle"=>$listNewId[0]]);
 
     }
 

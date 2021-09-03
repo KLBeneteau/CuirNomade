@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Repository\RepertoirRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 $connexion = new Connexion();
@@ -9,7 +10,7 @@ $GLOBALS['pdo'] = $connexion->createConnexion();
 
 class ArticleBDD {
 
-    public function ajouter(String $nomProduit, Request $request){
+    private function ajouterUneLigne(String $nomProduit, $valeurColonne) {
 
         //récupère tout les nom de colone de la table
         $produitBDD = new ProduitBDD();
@@ -27,12 +28,12 @@ class ArticleBDD {
         }
         $query = rtrim($query,',') ;
         $query .= ') VALUES (';
-        foreach ($listeColonne as $nomColone=>$uniteColone){
-            if (substr($uniteColone,0,7) == 'varchar')
-            { $query.= "'".$request->get($nomColone)."'," ; }
-            else if (substr($uniteColone,0,7) == 'tinyint')
-            { $query.= ($request->get($nomColone)?1:0).',' ; }
-            else { $query.= $request->get($nomColone).',' ; }
+        foreach ($listeColonne as $nomColonne=>$uniteColonne){
+            if (substr($uniteColonne,0,7) == 'varchar')
+            { $query.= "'".$valeurColonne[$nomColonne]."'," ; }
+            else if (substr($uniteColonne,0,7) == 'tinyint')
+            { $query.= ($valeurColonne[$nomColonne]?1:0).',' ; }
+            else { $query.= $valeurColonne[$nomColonne].',' ; }
         }
         $query = rtrim($query,',') ;
         $query .= ')' ;
@@ -42,6 +43,56 @@ class ArticleBDD {
 
         //renvoie l'id générer
         return $GLOBALS['pdo']->lastInsertId() ;
+
+    }
+
+    private function ajoutMultiple(String $nomProduit, $infoColonnePasGrouper, $infoColonneGrouper) {
+
+        if (count($infoColonneGrouper)>0) {
+
+            $clef = array_key_last($infoColonneGrouper);
+            $valeurs =  explode('|', $infoColonneGrouper[$clef]);
+            unset($infoColonneGrouper[$clef]) ;
+            foreach ($valeurs as $valeur) {
+                $infoColonnePasGrouper[$clef] = $valeur ;
+                $listID[] = $this->ajoutMultiple($nomProduit, $infoColonnePasGrouper, $infoColonneGrouper );
+            }
+            return $listID ;
+        }
+        else {
+            return $this->ajouterUneLigne($nomProduit,$infoColonnePasGrouper);
+        }
+
+    }
+
+    public function ajouter(String $nomProduit, Request $request, RepertoirRepository $repertoirRepository) {
+
+        $infoGroup = str_split($repertoirRepository->findOneBy(['nom'=>$nomProduit])->getIsGroup()) ;
+
+        $produitBDD = new ProduitBDD();
+        $infoColonne = $produitBDD->info($nomProduit);
+
+        $infoColonneGrouper = [] ;
+        $infoColonnePasGrouper = [] ;
+        foreach ($infoGroup as $clef => $info) {
+            if ($info) {
+                $infoColonneGrouper[$infoColonne[$clef]['Field']] = $request->get($infoColonne[$clef]['Field']);
+            } else {
+                $infoColonnePasGrouper[$infoColonne[$clef]['Field']] = $request->get($infoColonne[$clef]['Field']);
+            }
+        }
+
+        $listID = $this->ajoutMultiple($nomProduit, $infoColonnePasGrouper, $infoColonneGrouper );
+        while (is_array($listID[0])) {
+            $listTemp = [] ;
+            foreach ($listID as $tab) {
+                foreach ($tab as $value) {
+                    $listTemp[] = $value ;
+                }
+            }
+            $listID = $listTemp ;
+        }
+        return $listID ;
 
     }
 

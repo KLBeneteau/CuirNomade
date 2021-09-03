@@ -20,10 +20,16 @@
             <input type="submit" value="Modifier" class="bouttonV2">
         </form>
     </div>
+    <p> * Ajout groupé : Lors de l'ajout d'un nouveau produit, entrer toutes les valeurs séparées par | pour tout ajouté d'un coup   </p>
+    <p> ( exemple 1 : valeur1|valeur2|valeur3 ou exemple 2 : valeur1 ) </p>
     <table id="Article_Table">
         <tr>
             {% for nom in listeColonne|keys %}
-                <th>{{ nom }}</th>
+                {% if loop.index0<isGroup|length and isGroup[loop.index0] == '1' %}
+                    <th>{{ nom }} * </th>
+                {% else %}
+                    <th>{{ nom }}</th>
+                {% endif %}
             {% endfor %}
             <th>Action</th>
         </tr>

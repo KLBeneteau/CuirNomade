@@ -56,7 +56,7 @@ class AdminProduitsController extends AbstractController {
 
                 $newRepertoir = new Repertoir($nomProduit);
                 $newRepertoir->setIsVIP($VIP);
-                $newRepertoir->setIsGroup('000010');
+                $newRepertoir->setIsGroup('0000010');
                 $entityManager->persist($newRepertoir);
                 $entityManager->flush();
 
@@ -202,7 +202,7 @@ class AdminProduitsController extends AbstractController {
             $info =  $produitBDD->info($nomProduit);
             foreach ($info as $numero => $chara ) {
                 if ($chara['Field'] == $nomChara ) {
-                    $produit->setIsGroup(substr_replace($produit->getIsGroup(),'',$numero-1,1) );
+                    $produit->setIsGroup(substr_replace($produit->getIsGroup(),'',$numero,1) );
                 }
             }
             $entityManager->flush();
