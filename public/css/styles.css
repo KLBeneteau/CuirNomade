@@ -52,6 +52,10 @@
     margin-top: 1em;
 }
 
+.sansEspace {
+    margin: 0;
+}
+
 .scroll-x {
     overflow-x: scroll;
     white-space: nowrap;
@@ -219,8 +223,7 @@ form > div[id*="_form"] {
     flex-direction: column;
     align-items: stretch;
     width: 60%;
-    margin: auto;
-    margin-bottom: 1em;
+    margin: auto auto 1em;
 }
 
 form > div[id*="_form"] div {
@@ -308,8 +311,19 @@ form div#registration_form div:nth-last-child(2){
 }
 
 #bouttonAjoutProduit {
-    margin: 1em 0em;
-    display: inline-block;
+    margin-left: 1em;
+}
+
+#textAjoutProduit {
+    margin: 1em 0;
+}
+
+#textAjoutProduit > p{
+    margin:0;
+}
+
+#affichageProduit_Table tr>th:nth-child(3) {
+    white-space: initial;
 }
 
 /*------------------------------------------------------------------------------------*/
@@ -335,7 +349,7 @@ form div#registration_form div:nth-last-child(2){
 /* clientArticle/affichage.html.twig */
 .prensetationArticle img {
     height: 190px;
-    width: 190px;
+    width: 260px;
     margin: 5px 5px 0px;
 }
 
@@ -353,6 +367,10 @@ form div#registration_form div:nth-last-child(2){
 
 .prensetationArticle:hover {
     background-color: peru;
+}
+
+#Article_Table tr>th:nth-child(3) {
+    white-space: initial;
 }
 
 @keyframes slidyArticle {

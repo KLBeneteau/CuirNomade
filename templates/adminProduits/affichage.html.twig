@@ -1,7 +1,7 @@
 {% extends 'miseEnPage_Colonne_GestionProduit_nomProduit.html.twig' %}
 
 {% block body2 %}
-    <div class="scroll-x">
+    <div class="flex" id="textAjoutProduit">
         {% for produit in listeProduits %}
             {% if produit.nom == nomProduit %}
                 {% if produit.isVip %} <p>Ce produit est réservé au clients VIP</p>
@@ -9,6 +9,9 @@
                 {% endif %}
             {% endif %}
         {% endfor %}
+        <a id="bouttonAjoutProduit" class="bouttonV2 flex ai_center" href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit ,'isModification':0}) }}">Editer les articles</a>
+    </div>
+    <div class="scroll-x">
         <table id="affichageProduit_Table">
            <tr>
                {% for nom in listeColonne|keys %}
@@ -25,7 +28,6 @@
                </tr>
            {% endfor %}
         </table>
-        <a id="bouttonAjoutProduit" class="bouttonV2" href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit ,'isModification':0}) }}">Editer les articles</a>
     </div>
 {% endblock %}
 

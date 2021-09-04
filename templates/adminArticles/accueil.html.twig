@@ -20,8 +20,10 @@
             <input type="submit" value="Modifier" class="bouttonV2">
         </form>
     </div>
-    <p> * Ajout groupé : Lors de l'ajout d'un nouveau produit, entrer toutes les valeurs séparées par | pour tout ajouté d'un coup   </p>
-    <p> ( exemple 1 : valeur1|valeur2|valeur3 ou exemple 2 : valeur1 ) </p>
+    <div>
+        <p class="sansEspace" > * Ajout groupé : Lors de l'ajout d'un nouveau produit, entrer toutes les valeurs séparées par | pour tout ajouté d'un coup   </p>
+        <p class="sansEspace" > ( exemple 1 : valeur1|valeur2|valeur3 ou exemple 2 : valeur1 ) </p>
+    </div>
     <table id="Article_Table">
         <tr>
             {% for nom in listeColonne|keys %}
@@ -37,6 +39,34 @@
             {% if idArticle == article[0] %}
                 {% set A_ajoutRapide = article %}
             {% endif %}
+        {% endfor %}
+        {% if not isModification %}
+            <tr>
+                <form action="{{ path('adminArticle_ajouter', {'nomProduit': nomProduit}) }}" method="post" enctype="multipart/form-data">
+                    {% for nomColonne,unite in listeColonne %}
+                        {% set nomUnite = unite|split('(')|first %}
+                        {% set tailleUnite = unite|split('(')|last|replace({')' : ""}) %}
+                        <th>
+                            {% if nomColonne == 'Statut' %}
+                                <select name="idEtat" >
+                                    {% for etat in listeEtat %}
+                                        <option value="{{ etat['id'] }}" {% if A_ajoutRapide!="" and A_ajoutRapide.Statut == etat['Statut'] %} selected {% endif %}>{{ etat['Statut'] }} </option>
+                                    {% endfor %}
+                                </select>
+                            {% elseif nomColonne == 'Images'%} <input type="file" name="repertoir_image[]" accept=".png, .jpg, .jpeg" multiple required class="inputFile" >
+                            {% elseif nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required>
+                            {% elseif nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required>
+                            {% elseif nomUnite == 'tinyint' %} <input type="checkbox"  name="{{ nomColonne }}" value="1" {% if A_ajoutRapide!="" and A_ajoutRapide[nomColonne] == 1 %} checked {% endif %}>
+                            {% endif %}
+                        </th>
+                    {% endfor %}
+                    <th>
+                        <input type="submit" value="Ajouter" class="bouttonV2">
+                    </th>
+                </form>
+            </tr>
+        {% endif%}
+        {% for article in listeArticle %}
             <tr>
                 {% if idArticle == article[0] and isModification %}
                     <form action="{{ path('adminArticle_modifier', {'idArticle': article[0], 'nomProduit': nomProduit}) }}" method="post" enctype="multipart/form-data" >
@@ -75,31 +105,5 @@
                 {% endif %}
             </tr>
         {% endfor %}
-        {% if not isModification %}
-            <tr>
-                <form action="{{ path('adminArticle_ajouter', {'nomProduit': nomProduit}) }}" method="post" enctype="multipart/form-data">
-                    {% for nomColonne,unite in listeColonne %}
-                        {% set nomUnite = unite|split('(')|first %}
-                        {% set tailleUnite = unite|split('(')|last|replace({')' : ""}) %}
-                        <th>
-                        {% if nomColonne == 'Statut' %}
-                            <select name="idEtat" >
-                                {% for etat in listeEtat %}
-                                    <option value="{{ etat['id'] }}" {% if A_ajoutRapide!="" and A_ajoutRapide.Statut == etat['Statut'] %} selected {% endif %}>{{ etat['Statut'] }} </option>
-                                {% endfor %}
-                            </select>
-                        {% elseif nomColonne == 'Images'%} <input type="file" name="repertoir_image[]" accept=".png, .jpg, .jpeg" multiple required class="inputFile" >
-                        {% elseif nomUnite == 'varchar' %} <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required>
-                        {% elseif nomUnite == 'int' %} <input type="number" name="{{ nomColonne }}" {% if A_ajoutRapide!="" %} value="{{ A_ajoutRapide[nomColonne] }}" {% endif %} required>
-                        {% elseif nomUnite == 'tinyint' %} <input type="checkbox"  name="{{ nomColonne }}" value="1" {% if A_ajoutRapide!="" and A_ajoutRapide[nomColonne] == 1 %} checked {% endif %}>
-                        {% endif %}
-                        </th>
-                    {% endfor %}
-                    <th>
-                        <input type="submit" value="Ajouter" class="bouttonV2">
-                    </th>
-                </form>
-            </tr>
-        {% endif%}
     </table>
 {% endblock %}

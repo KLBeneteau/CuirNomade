@@ -72,7 +72,7 @@ class AdminArticlesController extends AbstractController {
      */
     public function ajouter(String $nomProduit, ArticleBDD $articleBDD, Request $request, RepertoirRepository $repertoirRepository){
 
-        //try {
+        try {
 
             //Initialise la commande sql
             $listNewId = $articleBDD->ajouter($nomProduit,$request,$repertoirRepository) ;
@@ -94,9 +94,9 @@ class AdminArticlesController extends AbstractController {
 
             $this->addFlash('success',"l'article a bien été ajouté");
 
-       /* } catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error',"l'article n'a pas pue etre ajouté");
-        } */
+        }
 
         return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0,"idArticle"=>$listNewId[0]]);
 
