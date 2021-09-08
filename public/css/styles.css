@@ -61,6 +61,11 @@
     white-space: nowrap;
 }
 
+.espaceTopBot {
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
 /*------------------------------------------------------------------------------------*/
 /* boutton */
 .boutton {
@@ -164,7 +169,7 @@ main {
 /*------------------------------------------------------------------------------------*/
 /* Base : flash */
 .flash {
-    margin: 0.5em;
+    margin: 0.5em 0 ;
     padding: 0.2em;
 }
 
@@ -243,11 +248,11 @@ form div#registration_form div:nth-last-child(2){
 
 /*------------------------------------------------------------------------------------*/
 /* login.html.twig */
-#main_consutler {
+#main_consulter {
     width: 60%;
     margin-bottom: 1em;
 }
-#main_consutler > div > div, #main_consuler > div > label {
+#main_consulter > div > div, #main_consulter > div > label {
     margin-bottom: 0.3em;
 }
 

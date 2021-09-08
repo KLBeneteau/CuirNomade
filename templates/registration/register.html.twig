@@ -3,13 +3,14 @@
 {% block title %}Creer Un Compte{% endblock %}
 
 {% block body %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="flash flash-error" role="alert">{{ flashError }}</div>
-    {% endfor %}
+    <div class="espaceTopBot">
+        {% for flashError in app.flashes('verify_email_error') %}
+            <div class="flash flash-error" role="alert">{{ flashError }}</div>
+        {% endfor %}
 
-    {{ form_start(registrationForm) }}
+        {{ form_start(registrationForm) }}
         {{ form_widget(registrationForm) }}
         <button type="submit" class="boutton boutton_endNav">S'inscrire</button>
-    {{ form_end(registrationForm) }}
-
+        {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

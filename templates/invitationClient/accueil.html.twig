@@ -1,38 +1,40 @@
 {% extends 'miseEnPage_Classique.html.twig' %}
 
 {% block body %}
-    <form method="post" action=" {{ path('invitationClient_ajouter') }}">
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email" />
-        <button class="boutton boutton_endNav" type="submit">Envoyer</button>
-    </form>
-    {% if invitationClients is not empty %}
-        <table id="invitationClient_Table">
-            <tr>
-                <th>Email</th>
-                <th>Action</th>
-            </tr>
-            {% for invitation in invitationClients %}
-            <tr>
-                <th>{{ invitation.email }}</th>
-                <th>
-                    <div class="flex">
-                        <form method="post" action=" {{ path('invitationClient_renvoyer') }}">
-                            <input type="hidden" name="invitationID" value="{{ invitation.id }}"/>
-                            <button class="validation-btn-small" type="submit" >Renvoyer</button>
-                        </form>
-                        <form method="post" action=" {{ path('invitationClient_supprimer') }}">
-                            <input type="hidden" name="invitationID" value="{{ invitation.id }}"/>
-                            <button class="annulation-btn-small" type="submit">Supprimer</button>
-                        </form>
-                    </div>
-                </th>
-            </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <p>Aucune invitation en cours</p>
-    {% endif %}
+    <div class="espaceTopBot">
+        <form method="post" action=" {{ path('invitationClient_ajouter') }}">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" />
+            <button class="bouttonV2" type="submit">Envoyer</button>
+        </form>
+        {% if invitationClients is not empty %}
+            <table id="invitationClient_Table">
+                <tr>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+                {% for invitation in invitationClients %}
+                <tr>
+                    <th>{{ invitation.email }}</th>
+                    <th>
+                        <div class="flex">
+                            <form method="post" action=" {{ path('invitationClient_renvoyer') }}">
+                                <input type="hidden" name="invitationID" value="{{ invitation.id }}"/>
+                                <button class="validation-btn-small" type="submit" >Renvoyer</button>
+                            </form>
+                            <form method="post" action=" {{ path('invitationClient_supprimer') }}">
+                                <input type="hidden" name="invitationID" value="{{ invitation.id }}"/>
+                                <button class="annulation-btn-small" type="submit">Supprimer</button>
+                            </form>
+                        </div>
+                    </th>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Aucune invitation en cours</p>
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% block title %}

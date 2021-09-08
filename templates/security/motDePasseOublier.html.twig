@@ -1,12 +1,14 @@
 {% extends 'miseEnPage_Classique.html.twig' %}
 
 {% block body %}
-    <h1>Mot de passe oublié ?</h1>
-    <form id="MDPOublier_form" method="post" action=" {{ path('app_motDePasseOublier') }}">
-        <label for="email">Email </label>
-        <input type="text" id="email" name="email" />
-        <button class="boutton boutton_endNav" type="submit">Envoyer</button>
-    </form>
+    <div class="espaceTopBot flex column ai_center">
+        <h1>Mot de passe oublié ?</h1>
+        <form id="MDPOublier_form" method="post" action=" {{ path('app_motDePasseOublier') }}">
+            <label for="email">Email </label>
+            <input type="text" id="email" name="email" />
+            <button class="boutton boutton_endNav" type="submit">Envoyer</button>
+        </form>
+    </div>
 {% endblock %}
 
 {% block title %}
