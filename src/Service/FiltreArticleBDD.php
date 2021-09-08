@@ -10,7 +10,8 @@ $GLOBALS['pdo'] = $connexion->createConnexion();
 
 class FiltreArticleBDD {
 
-    public function  randomGet_SansGroup(int $nombre, $repertoir){
+    public function  randomGet_SansGroup(int $nombre, $repertoir): array
+    {
 
         if (count($repertoir)==1) {
 
@@ -36,9 +37,10 @@ class FiltreArticleBDD {
 
     }
 
-   public function randomGet_AvecGroup(int $nombre, $repertoir) {
+   public function randomGet_AvecGroup(int $nombre, $repertoir): array
+   {
 
-       $listeArticle_sansGroup = $this->randomGet_SansGroup($nombre,$repertoir,[]) ;
+       $listeArticle_sansGroup = $this->randomGet_SansGroup($nombre,$repertoir) ;
         $listeArticle_AvecGroup = [] ;
        foreach ($repertoir as $produit) {
            $tab = [];
@@ -55,7 +57,8 @@ class FiltreArticleBDD {
         return $listeArticle_AvecGroup;
    }
 
-   public  function get_AvecGroup($article_SansGroup,$produit) {
+   public  function get_AvecGroup($article_SansGroup,$produit): array
+   {
         //j'ai décider de ne pas prendre les info group / modèle car trop de requete SQL
         //Je récup toute les info et les traitre ensuite
 

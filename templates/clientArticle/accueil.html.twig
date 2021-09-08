@@ -4,7 +4,7 @@
     <div>
         {% for produit in repertoir %}
             <h1>{{ produit.nom }}</h1>
-            <div class="flex wrap">
+            <div class="flex wrap listeArticle">
                 {% for article in listeArticle[produit.nom] %}
                     {% include 'clientArticle/affichage.html.twig' with {'article': article} %}
                 {% endfor %}

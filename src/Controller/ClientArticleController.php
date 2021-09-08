@@ -22,7 +22,7 @@ class ClientArticleController extends AbstractController {
         $repertoir = $repertoirRepository->findAll() ;
 
         foreach ($repertoir as $table) {
-            $listeArticle[$table->getNom()] = $filtreArticleBDD->randomGet(10,[$table]) ;
+            $listeArticle[$table->getNom()] = $filtreArticleBDD->randomGet_AvecGroup(10,[$table]) ;
         }
 
         return $this->render('clientArticle/accueil.html.twig', compact('listeArticle', 'repertoir')) ;

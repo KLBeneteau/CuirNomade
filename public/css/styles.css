@@ -355,8 +355,7 @@ form div#registration_form div:nth-last-child(2){
 }
 
 .prensetationArticle {
-    margin-right:0.87% ;
-    margin-bottom: 0.87%;
+    margin: 0 0.85% 0.85% 0;
     height: 250px;
     width: 24%;
     border: 1px solid rgba(80,80,80,0.2);
