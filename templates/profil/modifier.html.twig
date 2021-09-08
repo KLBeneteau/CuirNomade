@@ -1,10 +1,12 @@
 {% extends 'miseEnPage_Classique.html.twig' %}
 
 {% block body %}
-    {{ form_start(profilForm) }}
-        {{ form_widget(profilForm) }}
-         <button type="submit" class="boutton boutton_endNav">Enregistrer</button>
-    {{ form_end(profilForm) }}
+    <div class="espaceTopBot">
+        {{ form_start(profilForm) }}
+            {{ form_widget(profilForm) }}
+             <button type="submit" class="boutton boutton_endNav">Enregistrer</button>
+        {{ form_end(profilForm) }}
+    </div>
 {% endblock %}
 
 {% block title %}

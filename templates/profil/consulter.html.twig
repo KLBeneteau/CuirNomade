@@ -1,22 +1,24 @@
 {% extends 'miseEnPage_Classique.html.twig' %}
 
 {% block body %}
-    <div id="main_consuler" class="flex jc_center jc_spaceBetween margin_Auto">
-        <div class="flex column">
-            <label>Nom : </label>
-            <label>Prenom : </label>
-            <label>Email : </label>
-            <label>Telephone : </label>
+    <div class="espaceTopBot">
+        <div id="main_consulter" class="flex jc_center jc_spaceBetween margin_Auto">
+            <div class="flex column">
+                <label>Nom : </label>
+                <label>Prenom : </label>
+                <label>Email : </label>
+                <label>Telephone : </label>
+            </div>
+            <div class="flex column">
+                <div>{{ monProfil.nom }}</div>
+                <div>{{ monProfil.prenom }}</div>
+                <div>{{ monProfil.email }}</div>
+                <div>{{ monProfil.telephone }}</div>
+            </div>
         </div>
-        <div class="flex column">
-            <div>{{ monProfil.nom }}</div>
-            <div>{{ monProfil.prenom }}</div>
-            <div>{{ monProfil.email }}</div>
-            <div>{{ monProfil.telephone }}</div>
+        <div class="flex jc_center margin_Auto">
+            <a class="boutton boutton_endNav" href="{{ path('profil_modifier') }}"> Modifier </a>
         </div>
-    </div>
-    <div class="flex jc_center margin_Auto">
-        <a class="boutton boutton_endNav" href="{{ path('profil_modifier') }}"> Modifier </a>
     </div>
 {% endblock %}
 

@@ -246,16 +246,6 @@ form div#registration_form div:nth-last-child(2){
 }
 
 /*------------------------------------------------------------------------------------*/
-/* login.html.twig */
-#main_consulter {
-    width: 60%;
-    margin-bottom: 1em;
-}
-#main_consulter > div > div, #main_consulter > div > label {
-    margin-bottom: 0.3em;
-}
-
-/*------------------------------------------------------------------------------------*/
 /* motDePasseOublier.html.twig */
 #MDPOublier_form input{
     margin-right: 0.5em;
@@ -289,6 +279,17 @@ form div#registration_form div:nth-last-child(2){
 }
 *[id*="_Table"] input {
     max-width: 10em;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* Profil/consulter.html.twig */
+
+#main_consulter {
+    width: 60%;
+    margin-bottom: 1em;
+}
+#main_consulter > div > div, #main_consulter > div > label {
+    margin-bottom: 0.3em;
 }
 
 /*------------------------------------------------------------------------------------*/
