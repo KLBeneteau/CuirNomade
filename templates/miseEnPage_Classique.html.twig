@@ -1,11 +1,5 @@
-{% extends 'base.html.twig' %}
+    {% extends 'base.html.twig' %}
 
 {% block miseEnPage %}
-    <div class="bloc">
-        {{ include('miseEnPage/mainNav.html.twig') }}
-        {{ include('miseEnPage/adminNav.html.twig') }}
-        {{ include('miseEnPage/flash.html.twig') }}
-
-        <main> {% block body %}{% endblock %} </main>
-    </div>
+        {% block body %}{% endblock %}
 {% endblock %}

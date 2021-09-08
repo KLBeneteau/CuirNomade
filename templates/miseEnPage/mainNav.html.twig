@@ -1,5 +1,20 @@
-<nav id="main_nav" class="flex" >
-    <a class="boutton" href="{{ path('main_accueil') }}" >Accueil</a>
-    <a class="boutton" href="{{ path('clientArticle_accueil') }}" >Produits</a>
-    <a class="boutton boutton_endNav" href="{{ path('main_presentation') }}" >L'Entreprise</a>
+<nav id="main_nav" class="flex jc_spaceBetween" >
+    <div class="flex">
+        <a class="boutton" href="{{ path('main_accueil') }}" >Accueil</a>
+        <a class="boutton" href="{{ path('clientArticle_accueil') }}" >Produits</a>
+        <a class="boutton boutton_endNav" href="{{ path('main_presentation') }}" >L'Entreprise</a>
+    </div>
+    <div id="contenueHeader" class="flex column jc_spaceBetween">
+        <nav class="flex jc_end">
+            {% if app.user %}
+                {% if 'ROLE_ADMIN' not in app.user.roles %}
+                    <a class="boutton " href="{{ path('profil_accueil') }} " >Mon Compte</a>
+                {% endif %}
+                <a class="boutton boutton_endNav" href={{ path('app_logout')}} >Déconnexion</a>
+            {% else %}
+                <a class="boutton " href={{ path('app_login')}} >Connexion</a>
+                <a class="boutton boutton_endNav" href={{ path('app_register')}} >Creer un compte</a>
+            {% endif %}
+        </nav>
+    </div>
 </nav>

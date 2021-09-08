@@ -12,31 +12,24 @@
     </head>
     <body class="flex jc_center ai_center column">
 
-            <header class="bloc flex">
-                <a id="logoCuirNomade" href="{{ path('main_accueil') }}">
-                    <img src="/CuirNomade/public/img/frame-29873_640.png" alt="Logo du Site Cuirs Nomades">
-                </a>
-                <div id="contenueHeader" class="flex column jc_spaceBetween">
-                    <h1> Cuirs Nomades </h1>
-                    <nav class="flex jc_end">
-                        {% if app.user %}
-                            {% if 'ROLE_ADMIN' not in app.user.roles %}
-                                 <a class="boutton " href="{{ path('profil_accueil') }} " >Mon Compte</a>
-                             {% endif %}
-                            <a class="boutton boutton_endNav" href={{ path('app_logout')}} >Déconnexion</a>
-                        {% else %}
-                            <a class="boutton " href={{ path('app_login')}} >Connexion</a>
-                            <a class="boutton boutton_endNav" href={{ path('app_register')}} >Creer un compte</a>
-                        {% endif %}
-                    </nav>
-                </div>
+        <div id="bloc">
+            <header class="flex">
+                    <img src="/CuirNomade/public/img/banniereSite.png" alt="Logo du Site Cuirs Nomades">
             </header>
 
-            {% block slider %} {% endblock %}
+            <main>
+                {{ include('miseEnPage/mainNav.html.twig') }}
+                {{ include('miseEnPage/adminNav.html.twig') }}
+                {{ include('miseEnPage/flash.html.twig') }}
 
-            {% block miseEnPage %} {% endblock %}
+                {% block slider %} {% endblock %}
 
-            <footer class="bloc flex jc_center" > footer </footer>
+                {% block miseEnPage %} {% endblock %}
+
+                <footer class="flex jc_center" > footer </footer>
+            </main>
+        </div>
+
     </body>
 
 </html>

@@ -99,34 +99,36 @@ table .bouttonV2 {
 /*------------------------------------------------------------------------------------*/
 /* base.html.twig */
 body {
-    background-image:url("../img/fondCuirTempo.jpg") ;
-    background-repeat:no-repeat;
+    background-image:url("../img/BackgroundWhite.jpg") ;
     background-attachment:fixed;
-    background-size: cover;
+    margin: 0;
 }
 
-.bloc {
-    background-color: antiquewhite;
-    width: 60%;
-    margin: 1em;
-    border: solid 1px black;
-    border-radius: 0.2em;
+#bloc {
+    width: 90%;
+}
+
+header {
+
+}
+
+header img {
+    width: 100%;
+}
+
+main {
+    background-color: white;
+    border: 0.5em solid #439fbc;
+    border-top: none;
+    background-image: url("../img/fondBlanc.jpg");
+    padding: 0.5em;
 }
 
 /*------------------------------------------------------------------------------------*/
-/* Base : Header */
-header {
-    max-height: 200px;
-}
+/* Base : Nav */
+#admin_nav {
+    margin-top: 0.5em;
 
-#logoCuirNomade, #contenueHeader {
-    width: 50%;
-    margin: 0.5em;
-}
-
-#logoCuirNomade img {
-    width: 100%;
-    max-height: 190px;
 }
 
 /*------------------------------------------------------------------------------------*/
@@ -134,13 +136,13 @@ header {
 @keyframes slidy {
     0% { left: 0%; }
     20% { left: 0%; }
-    25% { left: -50%; }
-    45% { left: -50%; }
-    50% { left: -100%; }
-    70% { left: -100%; }
-    75% { left: -150%; }
-    95% { left: -150%; }
-    100% { left: -200%; }
+    25% { left: -33.33333333%; }
+    45% { left: -33.33333333%; }
+    50% { left: -66.66666666%; }
+    70% { left: -66.66666666%; }
+    75% { left: -100%; }
+    95% { left: -100%; }
+    100% { left: -133.3333333%; }
 }
 
 #slider { overflow: hidden }
@@ -148,7 +150,7 @@ header {
 
 #slider figure {
     position: relative;
-    width: 500%; /*car 5 image dans le slider*/
+    width: 600%; /*car 5 image dans le slider*/
     margin: 0;
     padding: 0;
     font-size: 0;
@@ -157,14 +159,7 @@ header {
     animation: 30s slidy infinite;
 }
 
-#slider img { width: 10%; height: auto; float: left; } /* 20 car 100/5 le nombre d'image */
-
-/*------------------------------------------------------------------------------------*/
-/* Base : body nav */
-#main_nav, #admin_nav {
-    margin: 0.5em;
-    background-color: peru;
-}
+#slider img { width: 5.5555555%; height: auto; float: left; } /* 20 car 100/5 le nombre d'image */
 
 /*------------------------------------------------------------------------------------*/
 /* Base : flash */
@@ -179,12 +174,6 @@ header {
 
 .flash-success {
     background-color: #5eb5e0;
-}
-
-/*------------------------------------------------------------------------------------*/
-/* Base : main */
-main {
-    margin: 1em;
 }
 
 /*------------------------------------------------------------------------------------*/
@@ -214,7 +203,6 @@ main {
     background-color: antiquewhite ;
     background-image: none;
 }
-
 
 /*------------------------------------------------------------------------------------*/
 /* Tout les form */
@@ -255,11 +243,11 @@ form div#registration_form div:nth-last-child(2){
 
 /*------------------------------------------------------------------------------------*/
 /* login.html.twig */
-#main_consuler {
+#main_consutler {
     width: 60%;
     margin-bottom: 1em;
 }
-#main_consuler > div > div, #main_consuler > div > label {
+#main_consutler > div > div, #main_consuler > div > label {
     margin-bottom: 0.3em;
 }
 
@@ -350,7 +338,7 @@ form div#registration_form div:nth-last-child(2){
 .prensetationArticle img {
     height: 190px;
     width: 260px;
-    margin: 5px 5px 0px;
+    margin: 5px 5px 0;
 }
 
 .prensetationArticle a {
@@ -361,13 +349,16 @@ form div#registration_form div:nth-last-child(2){
 .prensetationArticle {
     background-color: tan;
     height: 200px;
-    width: 33%;
+    width: 25%;
     border: 1px solid gray;
 }
 
 .prensetationArticle:hover {
     background-color: peru;
 }
+
+/*------------------------------------------------------------------------------------*/
+/* clientArticle/detail.html.twig */
 
 #Article_Table tr>th:nth-child(3) {
     white-space: initial;
