@@ -112,6 +112,7 @@ class AdminProduitsController extends AbstractController {
                 //Supprime la BDD
                 $produitBDD->supprimer($nomProduit);
 
+
                 $this->addFlash('success','Le produit '.$nomProduit.' a bien été supprimé');
 
             } catch (\Exception $e) {

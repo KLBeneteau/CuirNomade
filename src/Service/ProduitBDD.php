@@ -56,6 +56,9 @@ class ProduitBDD {
 
     public function supprimer(String $nom) {
 
+        $query = "DELETE FROM image WHERE nomTable =".$nom;
+        $GLOBALS['pdo']->exec($query);
+
         $query = 'DROP TABLE '.$nom ;
         $GLOBALS['pdo']->exec($query);
 
