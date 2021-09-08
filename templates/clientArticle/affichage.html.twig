@@ -1,7 +1,7 @@
 <div class="prensetationArticle" >
     <a href="{{ path('clientArticle_detail', {'idArticle': article[0], 'nomProduit': article.nomTable }) }}">
-    <div class="flex ">
-        <div>
+    <div class="flex column ai_center jc_stretch">
+        <div class="flex prensetationArticle_info">
             <h4>{{ article.Modele }}</h4>
             <p>{{ article.Prix }} € </p>
         </div>
