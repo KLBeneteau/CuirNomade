@@ -341,7 +341,7 @@ form div#registration_form div:nth-last-child(2){
 /* clientArticle/affichage.html.twig */
 .prensetationArticle img {
     height: 224px;
-    width: 100% ;
+    max-width: 100% ;
 }
 
 .prensetationArticle a {

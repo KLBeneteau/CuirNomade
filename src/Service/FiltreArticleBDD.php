@@ -10,36 +10,31 @@ $GLOBALS['pdo'] = $connexion->createConnexion();
 
 class FiltreArticleBDD {
 
-   public function  randomGet_SansGroup(int $nombre, $repertoir, $listArticle){
+    public function  randomGet_SansGroup(int $nombre, $repertoir){
 
-       if ($nombre>0 and count($repertoir)>0) {
+        if (count($repertoir)==1) {
 
-          $nombreArticle= rand(1,$nombre) ;
-          $nombre -= $nombreArticle;
-
-          $indexProduit = rand(0,count($repertoir)-1) ;
-          $Produit = $repertoir[$indexProduit] ;
-
-           $query = "SELECT * FROM ".$Produit->getNom()." as t
+            $query = "SELECT * FROM ".$repertoir[0]->getNom()." as t
                       INNER JOIN image as i
                       INNER JOIN etat as e
-                      WHERE t.id = i.idArticle AND i.nomTable = '".$Produit->getNom()."' 
+                      WHERE t.id = i.idArticle AND i.nomTable = '".$repertoir[0]->getNom()."' 
                             AND e.id = t.idEtat AND e.Statut = 'EN_VENTE'
                       GROUP BY t.Modele
-                      ORDER BY RAND() LIMIT ".$nombreArticle ;
-           $prep= $GLOBALS['pdo']->prepare($query);
-           $prep->execute();
+                      ORDER BY RAND() LIMIT ".$nombre ;
+            $prep= $GLOBALS['pdo']->prepare($query);
+            $prep->execute();
 
-           $listArticle = array_merge($listArticle,$prep->fetchAll());
+            return $prep->fetchAll() ;
 
-           unset($repertoir[$indexProduit]) ;
+        } else {
+            $listArticle = [] ;
+            foreach ($repertoir as $table){
+                $listArticle = array_merge($listArticle,$this->randomGet_SansGroup((int)($nombre/count($repertoir)),[$table]));
+            }
+            return $listArticle ;
+        }
 
-           return $this->randomGet_SansGroup($nombre,$repertoir,$listArticle);
-
-       } else {
-           return $listArticle ;
-       }
-   }
+    }
 
    public function randomGet_AvecGroup(int $nombre, $repertoir) {
 
