@@ -9,27 +9,25 @@
         <title>{% block title %}Accueil{% endblock %}</title>
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bungee&family=Glory&display=swap" rel="stylesheet">
+
     </head>
-    <body class="flex jc_center ai_center column">
-
-        <div id="bloc">
-            <header class="flex">
-                    <img src="/CuirNomade/public/img/banniereSiteSansBleu.png" alt="Logo du Site Cuirs Nomades">
-            </header>
-
-            <main>
-                {{ include('miseEnPage/mainNav.html.twig') }}
-                {{ include('miseEnPage/adminNav.html.twig') }}
-                {{ include('miseEnPage/flash.html.twig') }}
-
-                {% block slider %} {% endblock %}
-
-                {% block miseEnPage %} {% endblock %}
-
-                <footer class="flex jc_center" > footer </footer>
-            </main>
+    <body>
+        <header class="flex">
+                <img src="/CuirNomade/public/img/banniereSiteSansBleu.png" alt="Logo du Site Cuirs Nomades">
+        </header>
+        <div id="fondTaupe">
+            {% block slider %} {% endblock %}
+            {{ include('miseEnPage/adminNav.html.twig') }}
+            {{ include('miseEnPage/mainNav.html.twig') }}
+            {{ include('miseEnPage/flash.html.twig') }}
         </div>
-
+        <main>
+            {% block miseEnPage %} {% endblock %}
+        </main>
+        <footer class="flex jc_center" > footer </footer>
     </body>
 
 </html>
