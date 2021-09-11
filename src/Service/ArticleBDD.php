@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Repertoir;
 use App\Repository\RepertoirRepository;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -145,20 +146,21 @@ class ArticleBDD {
 
     }
 
-    public function get(String $nomProduit, int $idArticle) {
+    public function get(Repertoir $produit, String $modele) {
 
-        $query = "SELECT * FROM ". $nomProduit ." as a
+        $query = "SELECT * FROM ". $produit->getNom() ." as a
                   INNER JOIN etat AS e
-                  WHERE a.id = ? AND e.id = a.idEtat " ;
+                  WHERE a.Modele = ? AND e.id = a.idEtat 
+                  LIMIT 1" ;
         $prep = $GLOBALS['pdo']->prepare($query);
-        $prep->bindValue(1, $idArticle);
+        $prep->bindValue(1, $modele);
         $prep->execute();
         $article = $prep->fetch();
 
         $query = "SELECT nomImage FROM Image WHERE nomTable = ? AND idArticle = ? " ;
         $prep = $GLOBALS['pdo']->prepare($query);
-        $prep->bindValue(1, $nomProduit);
-        $prep->bindValue(2, $idArticle);
+        $prep->bindValue(1, $produit->getNom());
+        $prep->bindValue(2, $article[0]);
         $prep->execute();
         $listeImage = $prep->fetchall();
 
@@ -166,7 +168,9 @@ class ArticleBDD {
             $article['image'][] = $image['nomImage'] ;
         }
 
-        return $article ;
+        $filtreArticleBDD = new FiltreArticleBDD() ;
+
+        return $filtreArticleBDD->get_AvecGroup([$article],$produit) ;
     }
 
 }

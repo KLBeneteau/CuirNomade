@@ -3,12 +3,12 @@
 {% block title %} {{ article.Modele }} {% endblock %}
 
 {% block body %}
-    <div class="flex margin_Auto jc_spaceEvenly" id="detailArticle">
-        <div id="sliderArticle" class="bloc">
+    <div id="detailArticle" class="flex espaceTopBot">
+        <div id="sliderArticle">
             <figure>
                 {% set j = 0 %}
                 {% for i in 1..10 %}
-                    <img src="/CuirNomade/public/uploads/photos/{{ article.image[j] }}" alt="image de {{ article.nomTable }}">
+                    <img src="/CuirNomade/public/uploads/photos/{{ article.image[j] }}" alt="image de {{ article.Modele }}">
                     {% set j=j+1 %}
                     {% if j == article.image|length %}
                         {% set j = 0 %}
@@ -16,10 +16,27 @@
                 {% endfor %}
             </figure>
         </div>
-        <div>
-            {% for colone in listeColonne|keys %}
-            <p> {{ colone }} : {{ article[colone] }}</p>
+        <form action="#" method="post" class="flex column">
+            {% for colone,isGroup in listeColonne %}
+                {% if isGroup %}
+                    <div>
+                        <label for="{{ colone }}">{{ colone }}</label>
+                        <select id="{{ colone }}">
+                            {% for valeur in article[colone]%}
+                                <option value="{{ valeur }}">{{ valeur }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% else %}
+                    {% if loop.index0 == 0 %}
+                        <div>{{ article.Modele }} {{ article.Prix }}€</div>
+                    {% elseif loop.index0 == 1 %}
+                    {% else %}
+                        <div> {{ article[colone] }}</div>
+                    {% endif %}
+                {% endif %}
             {% endfor %}
-        </div>
+            <input type="submit" value="Ajouter au pannier" class="boutton boutton_endNav">
+        </form>
     </div>
 {% endblock %}

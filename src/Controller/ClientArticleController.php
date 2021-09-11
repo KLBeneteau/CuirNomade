@@ -22,7 +22,7 @@ class ClientArticleController extends AbstractController {
         $repertoir = $repertoirRepository->findAll() ;
 
         foreach ($repertoir as $table) {
-            $listeArticle[$table->getNom()] = $filtreArticleBDD->randomGet_AvecGroup(10,[$table]) ;
+            $listeArticle[$table->getNom()] = $filtreArticleBDD->randomGet_AvecGroup(6,[$table]) ;
         }
 
         return $this->render('clientArticle/accueil.html.twig', compact('listeArticle', 'repertoir')) ;
@@ -31,22 +31,25 @@ class ClientArticleController extends AbstractController {
 
 
     /**
-     * @Route("/detail/{nomProduit}/{idArticle}" , name="detail")
+     * @Route("/detail/{nomProduit}/{modele}" , name="detail")
      */
-    public function detail(String $nomProduit, int $idArticle, ArticleBDD $articleBDD, ProduitBDD  $produitBDD) {
+    public function detail(String $nomProduit, String $modele, ArticleBDD $articleBDD, RepertoirRepository $repertoirRepository, ProduitBDD $produitBDD) {
 
-        //récupère tout les nom de colone de la table
+        $produit = $repertoirRepository->findOneBy(["nom"=>$nomProduit]);
+
+        $article = $articleBDD->get($produit,$modele) ; $article = $article[0];
+
         $info = $produitBDD->info($nomProduit);
-        $listeColonne = [];
-        foreach ($info as $coloneInfo){
-            if ($coloneInfo['Field']!='id' and $coloneInfo['Field']!='idEtat') { $listeColonne[$coloneInfo['Field']] = $coloneInfo['Type'] ; }
+        $infoGroup = str_split($produit->getIsGroup()) ;
+        $i = 0;
+        foreach ($info as $coloneInfo) {
+            if ($coloneInfo['Field']!='id' and $coloneInfo['Field']!='idEtat' and $coloneInfo['Field']!='Stock') {
+                $listeColonne[$coloneInfo['Field']] = $infoGroup[$i] ;
+            }
+            $i++ ;
         }
-        $listeColonne['Statut'] = "varchar(30)";
 
-        $article = $articleBDD->get($nomProduit,$idArticle) ;
-        $article['nomTable'] = $nomProduit ;
-
-        return $this->render('clientArticle/detail.html.twig', compact('article','listeColonne')) ;
+        return $this->render('clientArticle/detail.html.twig', compact('article','listeColonne','produit')) ;
     }
 
 

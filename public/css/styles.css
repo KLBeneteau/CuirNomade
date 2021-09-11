@@ -177,7 +177,6 @@ footer {
 /*------------------------------------------------------------------------------------*/
 /* Base : flash */
 .flash {
-    margin: 0.5em 0 ;
     padding: 0.2em;
 }
 
@@ -397,9 +396,17 @@ form div#registration_form div:nth-last-child(2){
 /*------------------------------------------------------------------------------------*/
 /* clientArticle/detail.html.twig */
 
-#detailArticle {
-    width: 90%;
-    margin: 2em auto;
+#detailArticle > * {
+    margin-left : 6em ;
+}
+
+#detailArticle form > * {
+    margin-bottom: 1em;
+}
+
+#detailArticle form > *:nth-child(1) {
+    margin-bottom: 1em;
+    font-family: 'Bungee', cursive;
 }
 
 #Article_Table tr>th:nth-child(3) {
@@ -418,7 +425,7 @@ form div#registration_form div:nth-last-child(2){
     100% { left: -400%; }
 }
 
-#sliderArticle { overflow: hidden; width: 50% }
+#sliderArticle { overflow: hidden; width: 35% }
 
 #sliderArticle figure {
     position: relative;
@@ -431,7 +438,7 @@ form div#registration_form div:nth-last-child(2){
     animation: 30s slidyArticle infinite;
 }
 
-#sliderArticle img { width: 10%; float: left; height: 400px } /* 20 car 100/5 le nombre d'image */
+#sliderArticle img { width: 10%; float: left; height: 350px } /* 20 car 100/5 le nombre d'image */
 
 
 
