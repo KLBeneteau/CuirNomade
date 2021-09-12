@@ -201,14 +201,11 @@ footer {
 
 #MiseEnPage_colonne > *:nth-child(1) {
     width: 20%;
-    margin-right: 1em;
-    border-right: dashed black 1px;
-    padding: 1em 0.5em 0 0;
 }
 
 #MiseEnPage_colonne > *:nth-child(2) {
-    padding-top: 1em;
     width: 80%;
+    border-left: dashed black 1px;
 }
 /*------------------------------------------------------------------------------------*/
 /* MiseEnPage_Colonne_GestionProduit */
@@ -439,6 +436,32 @@ form div#registration_form div:nth-last-child(2){
 }
 
 #sliderArticle img { width: 10%; float: left; height: 350px } /* 20 car 100/5 le nombre d'image */
+
+/*------------------------------------------------------------------------------------*/
+/* clientArticle/accueil.html.twig */
+
+#accueilArticle > div {
+    padding-left: 1em;
+    margin-bottom: 3em;
+}
+
+#accueilArticle > div:not(:first-child) {
+    border-top: dashed black 1px;
+}
+
+#listeProduit {
+    margin: 1em;
+}
+
+#listeProduit > * {
+    margin-bottom: 1em;
+}
+
+.listeArticle2 {
+    margin: 2em auto auto;
+    width: 80%;
+}
+
 
 
 

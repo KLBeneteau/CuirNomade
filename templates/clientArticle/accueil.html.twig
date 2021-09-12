@@ -1,15 +1,25 @@
-{% extends 'miseEnPage_Colonne_Filtre.html.twig' %}
+{% extends 'miseEnPage_Colonne.html.twig' %}
 
 {% block body %}
-    <div>
+    <div id="accueilArticle" class="flex column">
         {% for produit in repertoir %}
-            <h1>{{ produit.nom }}</h1>
-            <div class="flex wrap listeArticle">
-                {% for article in listeArticle[produit.nom] %}
-                    {% include 'clientArticle/affichage.html.twig' with {'article': article} %}
-                {% endfor %}
+            <div>
+                <h1>{{ produit.nom }}</h1>
+                <div class="flex wrap listeArticle2">
+                    {% for article in listeArticle[produit.nom] %}
+                        {% include 'clientArticle/affichage.html.twig' with {'article': article} %}
+                    {% endfor %}
+                </div>
             </div>
         {% endfor %}
+    </div>
+{% endblock %}
+
+{% block contenueColonne %}
+    <div class="flex column ai_stretch" id="listeProduit">
+        {% for produit in repertoir %}
+            <a href="#" class="boutton boutton_endNav flex ai_center"><h1>{{ produit.nom }}</h1></a>
+        {% endfor%}
     </div>
 {% endblock %}
 

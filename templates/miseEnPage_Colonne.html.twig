@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block miseEnPage %}
+    <div id="MiseEnPage_colonne" class="flex">
+        <div>{% block contenueColonne %} {% endblock %}</div>
+        <div>{% block body %} {% endblock %}</div>
+    </div>
+{% endblock %}
