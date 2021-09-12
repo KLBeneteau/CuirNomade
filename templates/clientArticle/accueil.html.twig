@@ -18,7 +18,7 @@
 {% block contenueColonne %}
     <div class="flex column ai_stretch" id="listeProduit">
         {% for produit in repertoir %}
-            <a href="#" class="boutton boutton_endNav flex ai_center"><h1>{{ produit.nom }}</h1></a>
+            <a href="{{ path('clientArticle_recherche', {'nomProduit': produit.nom}) }}" class="boutton boutton_endNav flex ai_center"><h1>{{ produit.nom }}</h1></a>
         {% endfor%}
     </div>
 {% endblock %}

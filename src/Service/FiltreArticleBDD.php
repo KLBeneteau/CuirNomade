@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Repository\RepertoirRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Repertoir ;
 
 $connexion = new Connexion();
 $GLOBALS['pdo'] = $connexion->createConnexion();
@@ -115,5 +116,28 @@ class FiltreArticleBDD {
 
        return $article_SansGroup;
    }
+
+   public function getValeurColonneGroup(String $nomProduit, String $nomColonne) {
+
+       $query = "SELECT DISTINCT ".$nomColonne." FROM ".$nomProduit. " ORDER BY ".$nomColonne. " ASC";
+       $prep= $GLOBALS['pdo']->prepare($query);
+       $prep->execute();
+       $result = $prep->fetchAll() ;
+
+       foreach ($result as $ligne) {
+           $return[] = $ligne[0] ;
+       }
+
+       return $return ;
+
+   }
+
+    public function getArticles(array $infoFiltre, Repertoir $produit) {
+
+        dd($infoFiltre);
+
+        return [] ;
+
+    }
 
 }

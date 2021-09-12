@@ -1,0 +1,43 @@
+{% extends 'miseEnPage_Colonne.html.twig' %}
+
+{% block body %}
+    <div class="listeArticle2 flex wrap">
+        {% for article in listeArticle %}
+            {% include 'clientArticle/affichage.html.twig' with {'article': article} %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block contenueColonne %}
+    <h1>Filtre</h1>
+    <form  action="{{ path('clientArticle_recherche', {'nomProduit': produit.nom}) }}" method="post" name="formRecherche" id="formRecherche" class="flex column ai_stretch">
+        {% for nom,info in colonneInfo %}
+            {% set nomUnite = info.Type|split('(')|first %}
+            {% set tailleUnite = info.Type|split('(')|last|replace({')' : ""}) %}
+            <div>
+                <label for="{{ nom }}">{{ nom }} : </label>
+                {% if info.isGroup %}
+                    <select name="{{ nom }}" id="{{ nom }}">
+                        <option value="">/</option>
+                        {% for valeur in colonneInfo[nom]['Valeurs'] %}
+                            <option value="{{ valeur }}">{{ valeur }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                     {% if nomUnite == 'varchar' %}
+                         <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nom }}" id="{{ nom }}">
+                     {% elseif nomUnite == 'int' %}
+                         <input type="number" name="{{ nom }}" id="{{ nom }}">
+                     {% elseif nomUnite == 'tinyint' %}
+                         <input type="checkbox" name="{{ nom }}" value="1" id="{{ nom }}">
+                     {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        <input type="submit" value="Rechercher">
+    </form>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
