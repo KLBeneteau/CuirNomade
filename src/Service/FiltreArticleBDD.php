@@ -132,12 +132,58 @@ class FiltreArticleBDD {
 
    }
 
-    public function getArticles(array $infoFiltre, Repertoir $produit) {
+    public function getAvecFiltres_SansGroup(array $infoFiltre, Repertoir $produit) {
 
-        dd($infoFiltre);
+        $filtre="";
 
-        return [] ;
+        foreach ($infoFiltre as $nomColonne=>$infoColonne) {
+            if ($infoColonne["filtre"]!="") {
+               if (preg_match("/varchar/",$infoColonne["Type"])) {
+                   if ($nomColonne == "Nom") {
+                       $filtre.= "( t.Modele LIKE ? OR t.Description LIKE ? ) AND ";
+                   } else {
+                       $filtre.= "t.".$nomColonne." LIKE ? AND ";
+                   }
+               }
+               if ( preg_match("/int/",$infoColonne["Type"])) {
+                   if ($nomColonne == "Prix Max") {
+                       $filtre.= "t.Prix <= ? AND ";
+                   } else {
+                       $filtre.= "t.".$nomColonne." = ? AND ";
+                   }
+               }
+               if (preg_match("/tinyint/",$infoColonne["Type"])) {
+                   $filtre.= "t.".$nomColonne ." = ".$nomColonne["filtre"]?"TRUE":"FALSE"." AND " ;
+               }
+            }
+        }
 
+        $filtre = substr($filtre,0,strlen($filtre)-4);
+
+        $query = "SELECT * FROM ".$produit->getNom()." as t
+                INNER JOIN image as i
+                INNER JOIN etat as e
+                WHERE t.id = i.idArticle AND i.nomTable = '".$produit->getNom()."' AND e.id = t.idEtat AND e.Statut = 'EN_VENTE' AND ".$filtre."
+                GROUP BY t.Modele ";
+        $prep= $GLOBALS['pdo']->prepare($query);
+        $i = 1;
+        foreach ($infoFiltre as $nomColonne=>$infoColonne) {
+            if ($infoColonne["filtre"]!="") {
+                if (preg_match("/varchar/",$infoColonne["Type"])) {
+                    $prep->bindValue($i,"%".$infoColonne["filtre"]."%");
+                    if ($nomColonne == "Nom") {
+                        $i++ ;
+                        $prep->bindValue($i,"%".$infoColonne["filtre"]."%");
+                    }
+                } else {
+                    $prep->bindValue($i,$infoColonne["filtre"]);
+                }
+                $i++;
+            }
+        }
+
+        $prep->execute();
+        return $prep->fetchAll() ;
     }
 
 }

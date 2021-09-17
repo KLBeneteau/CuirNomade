@@ -14,7 +14,7 @@ class MainController extends AbstractController {
      */
     public function accueil(FiltreArticleBDD $filtreArticleBDD, RepertoirRepository $repertoirRepository){
 
-        $listeArticle = $filtreArticleBDD->randomGet_AvecGroup(6,$repertoirRepository->findAll());
+        $listeArticle = $filtreArticleBDD->randomGet_SansGroup(6,$repertoirRepository->findAll());
         return $this->render("main/accueil.html.twig",compact('listeArticle')) ;
     }
 

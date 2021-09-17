@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% block contenueColonne %}
-    <h1>Filtre</h1>
     <form  action="{{ path('clientArticle_recherche', {'nomProduit': produit.nom}) }}" method="post" name="formRecherche" id="formRecherche" class="flex column ai_stretch">
         {% for nom,info in colonneInfo %}
             {% set nomUnite = info.Type|split('(')|first %}

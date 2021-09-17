@@ -23,7 +23,7 @@ class ClientArticleController extends AbstractController {
         $repertoir = $repertoirRepository->findAll() ;
 
         foreach ($repertoir as $table) {
-            $listeArticle[$table->getNom()] = $filtreArticleBDD->randomGet_AvecGroup(6,[$table]) ;
+            $listeArticle[$table->getNom()] = $filtreArticleBDD->randomGet_SansGroup(6,[$table]) ;
         }
 
         return $this->render('clientArticle/accueil.html.twig', compact('listeArticle', 'repertoir')) ;
@@ -88,9 +88,10 @@ class ClientArticleController extends AbstractController {
                     $colonneInfo[$nom]['filtre'] = "" ;
                 }
             }
-            $listeArticle = $filtreArticleBDD->getArticles($colonneInfo,$produit);
+
+            $listeArticle = $filtreArticleBDD->getAvecFiltres_SansGroup($colonneInfo,$produit);
         } else {
-            $listeArticle = $filtreArticleBDD->randomGet_AvecGroup(18,[$produit]) ;
+            $listeArticle = $filtreArticleBDD->randomGet_SansGroup(18,[$produit]) ;
         }
 
         return $this->render('clientArticle/recherche.html.twig', compact('produit','colonneInfo', 'listeArticle')) ;
