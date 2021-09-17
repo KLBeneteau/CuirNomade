@@ -81,6 +81,11 @@ class ClientArticleController extends AbstractController {
 
 
         if(count($_REQUEST)>0) {
+
+            $backRecherche = $_REQUEST ;
+            $backRecherche['Prix Max']=$backRecherche['Prix_Max'];
+            unset($backRecherche['Prix_Max']);
+
             foreach ($colonneInfo as $nom=>$colonne) {
                 if (array_key_exists(str_replace(' ','_',$nom),$_REQUEST)) {
                     $colonneInfo[$nom]['filtre'] = $_REQUEST[str_replace(' ','_',$nom)];
@@ -91,10 +96,13 @@ class ClientArticleController extends AbstractController {
 
             $listeArticle = $filtreArticleBDD->getAvecFiltres_SansGroup($colonneInfo,$produit);
         } else {
+            foreach ($colonneInfo as $nom=>$colonne) {
+                $backRecherche[$nom] = "" ;
+            }
             $listeArticle = $filtreArticleBDD->randomGet_SansGroup(18,[$produit]) ;
         }
 
-        return $this->render('clientArticle/recherche.html.twig', compact('produit','colonneInfo', 'listeArticle')) ;
+        return $this->render('clientArticle/recherche.html.twig', compact('produit','colonneInfo', 'listeArticle', 'backRecherche')) ;
 
     }
 

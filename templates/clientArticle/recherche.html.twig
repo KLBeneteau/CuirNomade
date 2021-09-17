@@ -19,21 +19,24 @@
                     <select name="{{ nom }}" id="{{ nom }}">
                         <option value="">/</option>
                         {% for valeur in colonneInfo[nom]['Valeurs'] %}
-                            <option value="{{ valeur }}">{{ valeur }}</option>
+                            <option value="{{ valeur }}" {% if backRecherche[nom]==valeur %} selected {% endif %} >{{ valeur }}</option>
                         {% endfor %}
                     </select>
                 {% else %}
                      {% if nomUnite == 'varchar' %}
-                         <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nom }}" id="{{ nom }}">
+                         <input type="text" maxlength="{{ tailleUnite }}"  name="{{ nom }}" id="{{ nom }}" value="{{ backRecherche[nom]}}" >
                      {% elseif nomUnite == 'int' %}
-                         <input type="number" name="{{ nom }}" id="{{ nom }}">
+                         <input type="number" name="{{ nom }}" id="{{ nom }}" value="{{ backRecherche[nom]}}">
                      {% elseif nomUnite == 'tinyint' %}
                          <input type="checkbox" name="{{ nom }}" value="1" id="{{ nom }}">
                      {% endif %}
                 {% endif %}
             </div>
         {% endfor %}
-        <input type="submit" value="Rechercher">
+        <div>
+            <a href="{{ path('clientArticle_recherche', {'nomProduit': produit.nom}) }}" class="bouttonV2 flex jc_center">Annuler</a>
+            <input type="submit" value="Rechercher" class="bouttonV2 flex jc_center">
+        </div>
     </form>
 {% endblock %}
 

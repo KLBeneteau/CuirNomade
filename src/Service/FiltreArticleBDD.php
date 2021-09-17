@@ -158,12 +158,10 @@ class FiltreArticleBDD {
             }
         }
 
-        $filtre = substr($filtre,0,strlen($filtre)-4);
-
         $query = "SELECT * FROM ".$produit->getNom()." as t
                 INNER JOIN image as i
                 INNER JOIN etat as e
-                WHERE t.id = i.idArticle AND i.nomTable = '".$produit->getNom()."' AND e.id = t.idEtat AND e.Statut = 'EN_VENTE' AND ".$filtre."
+                WHERE ".$filtre." t.id = i.idArticle AND i.nomTable = '".$produit->getNom()."' AND e.id = t.idEtat AND e.Statut = 'EN_VENTE'
                 GROUP BY t.Modele ";
         $prep= $GLOBALS['pdo']->prepare($query);
         $i = 1;
