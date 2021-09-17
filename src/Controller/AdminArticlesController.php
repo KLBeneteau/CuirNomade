@@ -20,13 +20,13 @@ class AdminArticlesController extends AbstractController {
     /**
      * @Route("/accueil/{nomProduit}/{isModification}/{idArticle<\d+>?0}" , name="accueil")
      */
-    public function accueil(String $nomProduit, int $idArticle, bool $isModification, ProduitBDD $produitBDD, RepertoirRepository $repertoirRepository){
+    public function accueil(String $nomProduit, int $idArticle, bool $isModification, ArticleBDD $articleBDD, RepertoirRepository $repertoirRepository, ProduitBDD $produitBDD){
 
         //recupère tout se qui est enregistrer dans la table
-        $listeArticle = $produitBDD->get_JoinEtat($nomProduit) ;
+        $listeArticle = $articleBDD->get_JoinEtat($nomProduit) ;
 
         //récupère tout les etat de vente différent d'un article
-        $listeEtat = $produitBDD->get('Etat');
+        $listeEtat = $articleBDD->getAll('Etat');
 
         //récupère tout les nom de colone de la table
         $info = $produitBDD->info($nomProduit);
@@ -38,7 +38,7 @@ class AdminArticlesController extends AbstractController {
         $listeColonne['Images'] = "varchar(30)";
 
         //Compte le nombre de photo par article
-        $resultat = $produitBDD->getNombrePhoto_ParArticle($nomProduit) ;
+        $resultat = $articleBDD->getNombrePhoto_ParArticle($nomProduit) ;
         $infoImage = [] ;
         foreach ($resultat as $info){
             $infoImage[$info[0]] = $info['COUNT(*)'] ;

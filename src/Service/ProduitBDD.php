@@ -27,13 +27,6 @@ class ProduitBDD {
 
     }
 
-    public function get(String $nom) {
-        $query = "SELECT * FROM ".$nom ;
-        $prep = $GLOBALS['pdo']->prepare($query);
-        $prep->execute();
-        return $prep->fetchAll();
-    }
-
     public function info(String $nom) {
 
         //récupère tout les nom de colone de la table
@@ -41,17 +34,6 @@ class ProduitBDD {
         $prep = $GLOBALS['pdo']->prepare($query);
         $prep->execute();
         return $prep->fetchAll();
-    }
-
-    public function get_JoinEtat(String $nom) {
-
-        //Récupère tout se qui est enregistrer dans la table
-        $query = "SELECT * FROM ".$nom.'
-                  LEFT JOIN Etat ON Etat.id = '.$nom.'.idEtat';
-        $prep = $GLOBALS['pdo']->prepare($query);
-        $prep->execute();;
-        return $prep->fetchAll();
-
     }
 
     public function supprimer(String $nom) {
@@ -82,11 +64,4 @@ class ProduitBDD {
 
     }
 
-    public function getNombrePhoto_ParArticle(String $nom) {
-
-        $query = "SELECT idArticle,COUNT(*) FROM image WHERE nomTable = '".$nom."' GROUP BY idArticle ";
-        $prep = $GLOBALS['pdo']->prepare($query);
-        $prep->execute();
-        return $prep->fetchAll();
-    }
 }

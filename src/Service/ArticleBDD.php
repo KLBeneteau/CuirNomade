@@ -11,6 +11,33 @@ $GLOBALS['pdo'] = $connexion->createConnexion();
 
 class ArticleBDD {
 
+    public function getNombrePhoto_ParArticle(String $nom) {
+
+        $query = "SELECT idArticle,COUNT(*) FROM image WHERE nomTable = '".$nom."' GROUP BY idArticle ";
+        $prep = $GLOBALS['pdo']->prepare($query);
+        $prep->execute();
+        return $prep->fetchAll();
+    }
+
+    public function get_JoinEtat(String $nom) {
+
+        //Récupère tout se qui est enregistrer dans la table
+        $query = "SELECT * FROM ".$nom.' as t
+                  LEFT JOIN Etat as e ON e.id = t.idEtat
+                  ORDER BY t.Modele ASC, t.Couleur ASC';
+        $prep = $GLOBALS['pdo']->prepare($query);
+        $prep->execute();;
+        return $prep->fetchAll();
+
+    }
+
+    public function getAll(String $nom) {
+        $query = "SELECT * FROM ".$nom ;
+        $prep = $GLOBALS['pdo']->prepare($query);
+        $prep->execute();
+        return $prep->fetchAll();
+    }
+
     private function ajouterUneLigne(String $nomProduit, $valeurColonne) {
 
         //récupère tout les nom de colone de la table

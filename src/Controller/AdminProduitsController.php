@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Repertoir;
 use App\Repository\BaboucheRepository;
 use App\Repository\RepertoirRepository;
+use App\Service\ArticleBDD;
 use App\Service\Connexion;
 use App\Service\CreationProduit;
 use App\Service\ProduitBDD;
@@ -77,10 +78,10 @@ class AdminProduitsController extends AbstractController {
      * @Route("/affichage/{nomProduit}", name="affichage")
      */
     public function affichage(RepertoirRepository $repertoirRepository,
-                              ProduitBDD $produitBDD,
+                              ArticleBDD $articleBDD, ProduitBDD $produitBDD,
                               string $nomProduit){
 
-        $listeArticle = $produitBDD->get_JoinEtat($nomProduit) ;
+        $listeArticle = $articleBDD->get_JoinEtat($nomProduit) ;
         $info = $produitBDD->info($nomProduit) ;
 
         $listeColonne = [];
