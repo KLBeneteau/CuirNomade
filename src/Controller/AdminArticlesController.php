@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\EtatRepository;
 use App\Repository\RepertoirRepository;
 use App\Service\ArticleBDD;
 use App\Service\Connexion;
@@ -20,13 +21,15 @@ class AdminArticlesController extends AbstractController {
     /**
      * @Route("/accueil/{nomProduit}/{isModification}/{idArticle<\d+>?0}" , name="accueil")
      */
-    public function accueil(String $nomProduit, int $idArticle, bool $isModification, ArticleBDD $articleBDD, RepertoirRepository $repertoirRepository, ProduitBDD $produitBDD){
+    public function accueil(String $nomProduit, int $idArticle, bool $isModification, ArticleBDD $articleBDD,
+                            RepertoirRepository $repertoirRepository, ProduitBDD $produitBDD, EtatRepository $etatRepository){
+
 
         //recupère tout se qui est enregistrer dans la table
-        $listeArticle = $articleBDD->get_JoinEtat($nomProduit) ;
+        $listeArticle = $articleBDD->get_JoinEtat($nomProduit,$_REQUEST) ;
 
         //récupère tout les etat de vente différent d'un article
-        $listeEtat = $articleBDD->getAll('Etat');
+        $listeEtat = $etatRepository->findAll();
 
         //récupère tout les nom de colone de la table
         $info = $produitBDD->info($nomProduit);

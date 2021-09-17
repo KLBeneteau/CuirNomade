@@ -81,7 +81,7 @@ class AdminProduitsController extends AbstractController {
                               ArticleBDD $articleBDD, ProduitBDD $produitBDD,
                               string $nomProduit){
 
-        $listeArticle = $articleBDD->get_JoinEtat($nomProduit) ;
+        $listeArticle = $articleBDD->get_JoinEtat($nomProduit,$_REQUEST) ;
         $info = $produitBDD->info($nomProduit) ;
 
         $listeColonne = [];

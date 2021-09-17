@@ -12,6 +12,11 @@
             {% endfor %}
             <a id="bouttonAjoutProduit" class="bouttonV2 flex ai_center" href="{{ path('adminArticle_accueil', {'nomProduit': nomProduit ,'isModification':0}) }}">Editer les articles</a>
         </div>
+        <form method="post" action="{{ path('adminProduit_affichage', {'nomProduit': nomProduit}) }}" class="espaceHaut">
+            <label for="recherche">Modele : </label>
+            <input type="text" name="recherche" id="recherche">
+            <input type="submit" value="Rechercher">
+        </form>
         <div class="scroll-x">
             <table id="affichageProduit_Table">
                <tr>

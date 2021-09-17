@@ -19,23 +19,24 @@ class ArticleBDD {
         return $prep->fetchAll();
     }
 
-    public function get_JoinEtat(String $nom) {
+    public function get_JoinEtat(String $nom, array $filtre = [] ) {
 
+        $recherche = "" ;
+        if(count($filtre)>0){
+            $recherche = " WHERE Modele Like ? ";
+        }
         //Récupère tout se qui est enregistrer dans la table
         $query = "SELECT * FROM ".$nom.' as t
-                  LEFT JOIN Etat as e ON e.id = t.idEtat
+                  LEFT JOIN Etat as e ON e.id = t.idEtat 
+                  '.$recherche.'
                   ORDER BY t.Modele ASC, t.Couleur ASC';
         $prep = $GLOBALS['pdo']->prepare($query);
+        if(count($filtre)>0){
+            $prep->bindValue(1,"%".$filtre["recherche"]."%") ;
+        }
         $prep->execute();;
         return $prep->fetchAll();
 
-    }
-
-    public function getAll(String $nom) {
-        $query = "SELECT * FROM ".$nom ;
-        $prep = $GLOBALS['pdo']->prepare($query);
-        $prep->execute();
-        return $prep->fetchAll();
     }
 
     private function ajouterUneLigne(String $nomProduit, $valeurColonne) {

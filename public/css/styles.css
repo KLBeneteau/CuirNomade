@@ -141,14 +141,6 @@ footer {
 }
 
 /*------------------------------------------------------------------------------------*/
-/* Base : Nav */
-#admin_nav{
-}
-
-#main_nav {
-}
-
-/*------------------------------------------------------------------------------------*/
 /* Base : Slider */
 @keyframes slidy {
     0% { left: 0%; }
@@ -347,6 +339,11 @@ form div#registration_form div:nth-last-child(2){
 .inputFile[type="file"] {
     max-width: none;
     border: none;
+}
+
+#Article_Table th {
+    max-width: 190px;
+    overflow-x: auto;
 }
 
 /*------------------------------------------------------------------------------------*/
