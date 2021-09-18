@@ -201,4 +201,30 @@ class ArticleBDD {
         return $filtreArticleBDD->get_AvecGroup([$article],$produit) ;
     }
 
+    public function getOne(Request $request, array $nomColonneGroup) {
+
+        $recherche = "" ;
+        foreach ($nomColonneGroup as $colonneGroup) {
+            $recherche .= $colonneGroup." = ? AND ";
+        }
+
+        $recherche = substr($recherche,0,strlen($recherche)-4) ;
+
+        $query = "SELECT * FROM ".$request->get('nomProduit')."
+                  WHERE Modele = ? AND ".$recherche ;
+        $prep = $GLOBALS['pdo']->prepare($query);
+
+        $prep->bindValue(1,$request->get('Modele'));
+
+        $i=2;
+        foreach ($nomColonneGroup as $colonneGroup) {
+            $prep->bindValue($i,$request->get($colonneGroup));
+            $i++;
+        }
+
+        $prep->execute();
+        return $prep->fetch();
+
+    }
+
 }

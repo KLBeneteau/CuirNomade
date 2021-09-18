@@ -16,12 +16,12 @@
                 {% endfor %}
             </figure>
         </div>
-        <form action="#" method="post" class="flex column">
+        <form action="{{ path('pannier_ajouter') }}" method="post" class="flex column">
             {% for colone,isGroup in listeColonne %}
                 {% if isGroup %}
                     <div>
                         <label for="{{ colone }}">{{ colone }}</label>
-                        <select id="{{ colone }}">
+                        <select id="{{ colone }}" name="{{ colone }}">
                             {% for valeur in article[colone]%}
                                 <option value="{{ valeur }}">{{ valeur }}</option>
                             {% endfor %}
@@ -36,6 +36,12 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
+            <div>
+                <label for="nombreArticle">Nombre :</label>
+                <input type="number" name="nombreArticle" id="nombreArticle" value="1" min="0">
+            </div>
+            <input type="hidden" value="{{ article.Modele }}" name="Modele">
+            <input type="hidden" value="{{ produit.nom }}" name="nomProduit">
             <input type="submit" value="Ajouter au pannier" class="boutton boutton_endNav">
         </form>
     </div>
