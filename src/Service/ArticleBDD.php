@@ -227,4 +227,13 @@ class ArticleBDD {
 
     }
 
+    public function getOneByID(int $idArticle, String $nomProduit){
+
+        $query = "Select * From ".$nomProduit." WHERE id = ".$idArticle;
+        $prep = $GLOBALS['pdo']->prepare($query);
+        $prep->execute();
+        return $prep->fetch();
+
+    }
+
 }

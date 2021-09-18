@@ -21,7 +21,27 @@ class PannierBDD {
         $prep->execute();
 
     }
+
     public function supprimer(){}
     public function modifier(){}
+
+    public function getArticlePannier($idUser){
+
+        $query = "Select * FROM Pannier WHERE idClient = ".$idUser ;
+        $prep = $GLOBALS['pdo']->prepare($query);
+        $prep->execute();
+        $contenuePannier = $prep->fetchAll() ;
+
+        $articleBDD = new ArticleBDD() ;
+        $i = 0;
+        foreach ($contenuePannier as $article) {
+            $listeArticle[$i] = $articleBDD->getOneByID($article['idArticle'],$article['tableArticle']) ;
+            $listeArticle[$i]['nombre'] = $article['nombreArticle'];
+            $i++;
+        }
+
+        return $listeArticle;
+
+    }
 
 }

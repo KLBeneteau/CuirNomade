@@ -18,6 +18,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class PannierController extends AbstractController {
 
     /**
+     * @Route("/accueil/" , name="accueil")
+     */
+    public function accueil(PannierBDD $pannierBDD) {
+
+        $monPannier = $pannierBDD->getArticlePannier($this->getUser()->getId()) ;
+
+        return $this->render('pannier/accueil.html.twig',compact('monPannier')) ;
+
+    }
+
+    /**
      * @Route("/ajouter/" , name="ajouter")
      */
     public function ajouter(PannierBDD $pannierBDD, Request $request, ArticleBDD $articleBDD, RepertoirRepository $repertoirRepository, ProduitBDD $produitBDD) {

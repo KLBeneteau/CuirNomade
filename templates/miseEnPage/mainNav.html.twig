@@ -8,7 +8,7 @@
         <nav class="flex jc_end">
             {% if app.user %}
                 {% if 'ROLE_ADMIN' not in app.user.roles %}
-                    <a class="boutton " href="#" >Mon Pannier</a>
+                    <a class="boutton " href="{{ path('pannier_accueil') }}" >Mon Pannier</a>
                     <a class="boutton " href="#" >Historique de Commande</a>
                     <a class="boutton " href="{{ path('profil_consulter') }} " >Mon Compte</a>
                 {% endif %}
