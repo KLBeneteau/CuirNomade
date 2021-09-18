@@ -14,7 +14,13 @@ class MainController extends AbstractController {
      */
     public function accueil(FiltreArticleBDD $filtreArticleBDD, RepertoirRepository $repertoirRepository){
 
-        $listeArticle = $filtreArticleBDD->randomGet_SansGroup(6,$repertoirRepository->findAll());
+        if ($this->isGranted("ROLE_CLIENT_VIP")) {
+            $repertoir = $repertoirRepository->findAll();
+        } else {
+            $repertoir = $repertoirRepository->findBy(["isVIP"=>false]) ;
+        }
+
+        $listeArticle = $filtreArticleBDD->randomGet_SansGroup(6,$repertoir);
         return $this->render("main/accueil.html.twig",compact('listeArticle')) ;
     }
 

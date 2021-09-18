@@ -20,7 +20,11 @@ class ClientArticleController extends AbstractController {
      */
     public function accueil(RepertoirRepository $repertoirRepository, FiltreArticleBDD $filtreArticleBDD) {
 
-        $repertoir = $repertoirRepository->findAll() ;
+        if ($this->isGranted("ROLE_CLIENT_VIP")) {
+            $repertoir = $repertoirRepository->findAll();
+        } else {
+            $repertoir = $repertoirRepository->findBy(["isVIP"=>false]) ;
+        }
 
         foreach ($repertoir as $table) {
             $listeArticle[$table->getNom()] = $filtreArticleBDD->randomGet_SansGroup(6,[$table]) ;
@@ -37,6 +41,11 @@ class ClientArticleController extends AbstractController {
     public function detail(String $nomProduit, String $modele, ArticleBDD $articleBDD, RepertoirRepository $repertoirRepository, ProduitBDD $produitBDD) {
 
         $produit = $repertoirRepository->findOneBy(["nom"=>$nomProduit]);
+
+        if (!$this->isGranted("ROLE_CLIENT_VIP") && $produit->getIsVIP()) {
+            $this->addFlash('error',"Ses articles sont réservé au client VIP ! ");
+            return $this->redirectToRoute('main_accueil');
+        }
 
         $article = $articleBDD->get($produit,$modele) ; $article = $article[0];
 
@@ -59,6 +68,12 @@ class ClientArticleController extends AbstractController {
     public function recherche(String $nomProduit, RepertoirRepository $repertoirRepository, ProduitBDD $produitBDD, FiltreArticleBDD  $filtreArticleBDD) {
 
         $produit = $repertoirRepository->findOneBy(["nom"=>$nomProduit]) ;
+
+        if (!$this->isGranted("ROLE_CLIENT_VIP") && $produit->getIsVIP()) {
+            $this->addFlash('error',"Ses articles sont réservé au client VIP ! ");
+            return $this->redirectToRoute('main_accueil');
+        }
+
         $infoGroup = str_split($produit->getIsGroup());
 
         $info = $produitBDD->info($nomProduit);
