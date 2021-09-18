@@ -1,0 +1,38 @@
+{% extends 'miseEnPage_Classique.html.twig' %}
+
+{% block title %}
+    Ton Pannier
+{% endblock %}
+
+{% block body %}
+    <div>
+        <div>
+            <h1> Ton Pannier </h1>
+            <table>
+                <tr>
+                    <th>Article</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th><a href="#">X</a></th>
+                </tr>
+                {% for article in monPannier %}
+                    <tr>
+                        <th>
+                            <div class="flex column">
+                                <h1>{{ article.Modele }}</h1>
+                                {% for colonne in article.colonneGroup %}
+                                    <p>{{ colonne }} : {{ article[colonne] }}</p>
+                                {% endfor %}
+                            </div>
+                        </th>
+                        <th>{{ article.nombre }}</th>
+                        <th>{{ article.Prix }}</th>
+                        <th><a href="#">X</a></th>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div></div>
+    </div>
+{% endblock %}
+

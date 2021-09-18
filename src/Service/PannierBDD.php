@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Repository\RepertoirRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 $connexion = new Connexion();
@@ -25,7 +26,7 @@ class PannierBDD {
     public function supprimer(){}
     public function modifier(){}
 
-    public function getArticlePannier($idUser){
+    public function getArticlePannier($idUser, RepertoirRepository $repertoirRepository){
 
         $query = "Select * FROM Pannier WHERE idClient = ".$idUser ;
         $prep = $GLOBALS['pdo']->prepare($query);
@@ -33,10 +34,12 @@ class PannierBDD {
         $contenuePannier = $prep->fetchAll() ;
 
         $articleBDD = new ArticleBDD() ;
+        $produitBDD = new ProduitBDD() ;
         $i = 0;
         foreach ($contenuePannier as $article) {
             $listeArticle[$i] = $articleBDD->getOneByID($article['idArticle'],$article['tableArticle']) ;
             $listeArticle[$i]['nombre'] = $article['nombreArticle'];
+            $listeArticle[$i]['colonneGroup'] = $produitBDD->getNomColonneGroup($repertoirRepository->findOneBy(["nom"=>$article['tableArticle']]));
             $i++;
         }
 

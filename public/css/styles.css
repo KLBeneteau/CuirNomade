@@ -458,6 +458,10 @@ form div#registration_form div:nth-last-child(2){
     margin-bottom: 1em;
 }
 
+#listeProduit h1 {
+    margin : 0.2em 0;
+}
+
 .listeArticle2 {
     margin: 2em auto auto;
     width: 80%;

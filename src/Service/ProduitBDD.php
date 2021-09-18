@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Repertoir;
 use App\Service\Connexion;
 use PhpParser\Node\Scalar\String_;
 use Symfony\Bundle\MakerBundle\Str;
@@ -62,6 +63,24 @@ class ProduitBDD {
                         DROP COLUMN ".$nomColonne ;
         $GLOBALS['pdo']->exec($query);
 
+    }
+
+    public function getNomColonneGroup(Repertoir $produit){
+
+        $info = $this->info($produit->getNom());
+
+        $infoColoneGroup = str_split($produit->getIsGroup());
+        $nomColonneGroup = [] ;
+
+        $i = 0 ;
+        foreach ($infoColoneGroup as $coloneIsGroup ) {
+            if ($coloneIsGroup) {
+                $nomColonneGroup[] = $info[$i]['Field'];
+            }
+            $i++;
+        }
+
+        return $nomColonneGroup;
     }
 
 }

@@ -20,9 +20,9 @@ class PannierController extends AbstractController {
     /**
      * @Route("/accueil/" , name="accueil")
      */
-    public function accueil(PannierBDD $pannierBDD) {
+    public function accueil(PannierBDD $pannierBDD, RepertoirRepository $repertoirRepository ) {
 
-        $monPannier = $pannierBDD->getArticlePannier($this->getUser()->getId()) ;
+        $monPannier = $pannierBDD->getArticlePannier($this->getUser()->getId(),$repertoirRepository) ;
 
         return $this->render('pannier/accueil.html.twig',compact('monPannier')) ;
 
@@ -36,18 +36,7 @@ class PannierController extends AbstractController {
         try {
 
             $produit = $repertoirRepository->findOneBy(["nom"=>$request->get('nomProduit')]) ;
-            $info = $produitBDD->info($produit->getNom());
-
-            $infoColoneGroup = str_split($produit->getIsGroup());
-            $nomColonneGroup = [] ;
-
-            $i = 0 ;
-            foreach ($infoColoneGroup as $coloneIsGroup ) {
-                if ($coloneIsGroup) {
-                    $nomColonneGroup[] = $info[$i]['Field'];
-                }
-                $i++;
-            }
+            $nomColonneGroup = $produitBDD->getNomColonneGroup($produit);
 
             $article = $articleBDD->getOne($request,$nomColonneGroup);
 
