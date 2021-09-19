@@ -1,32 +1,34 @@
-{% extends 'miseEnPage_Gestion.html.twig' %}
+{% extends 'miseEnPage_Colonne_GestionProduit_nomProduit.html.twig' %}
 
 {% block title %}
     Ajouter un nouveau type de produit
 {% endblock %}
 
 {% block body %}
-    <h1> Ajouter un nouveau type de produits </h1>
+    <div class="espaceGauche">
+        <h1> Ajouter un nouveau type de produits </h1>
 
-    <form method="post" action="{{ path('adminProduit_creer') }}">
-        <div>
-            <label for="nom" > Nom : </label>
-            <input id="nom" type="text" name="nom" required >
-        </div>
-        <div>
-            <label for="isVIP" > Réserver au VIP : </label>
-            <input id="isVIP" type="checkbox" name="isVIP" value="true" >
-        </div>
-        <div>Il possèdera aussi comme attribut obligatoire : </div>
-        <div>- de quel modèle l'article est </div>
-        <div>- un prix </div>
-        <div>- une couleur </div>
-        <div>- une ou des photos </div>
-        <div>- une description </div>
-        <div>- un nombre d'article en stock </div>
-        <div>- une couleur </div>
-        <div>- un etat (en vente, rupture de stock, vente arreter)</div>
-        <button type="submit" class="boutton boutton_endNav espaceHaut">Valider et ajouter d'autres attributs</button>
-    </form>
+        <form method="post" action="{{ path('adminProduit_creer') }}">
+            <div>
+                <label for="nom" > Nom : </label>
+                <input id="nom" type="text" name="nom" required >
+            </div>
+            <div>
+                <label for="isVIP" > Réserver au VIP : </label>
+                <input id="isVIP" type="checkbox" name="isVIP" value="true" >
+            </div>
+            <div>Il possèdera aussi comme attribut obligatoire : </div>
+            <div>- de quel modèle l'article est </div>
+            <div>- un prix </div>
+            <div>- une couleur </div>
+            <div>- une ou des photos </div>
+            <div>- une description </div>
+            <div>- un nombre d'article en stock </div>
+            <div>- une couleur </div>
+            <div>- un etat (en vente, rupture de stock, vente arreter)</div>
+            <button type="submit" class="boutton boutton_endNav espaceHaut">Valider et ajouter d'autres attributs</button>
+        </form>
+    </div>
 {% endblock %}
 
 

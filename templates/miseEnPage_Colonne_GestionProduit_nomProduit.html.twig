@@ -1,14 +1,16 @@
 {% extends 'miseEnPage_Colonne_GestionProduit.html.twig' %}
 
 {% block body %}
-    <div class="flex ai_center">
-        <h1 id="nomProduit">
-            <a href="{{ path('adminProduit_affichage', {'nomProduit': nomProduit}) }}">{{ nomProduit }}</a>
-        </h1>
-        <div>
-            <a class="boutton boutton_endNav" href="{{ path('adminProduit_modifier', {'nomProduit': nomProduit}) }}">Modifier</a>
-            <a class="boutton boutton_endNav" href="{{ path('adminProduit_supprimer', {'nomProduit': nomProduit}) }}">Supprimer</a>
+    <div class="espaceGauche">
+        <div class="flex ai_center">
+            <h1 id="nomProduit">
+                <a href="{{ path('adminProduit_affichage', {'nomProduit': nomProduit}) }}">{{ nomProduit }}</a>
+            </h1>
+            <div>
+                <a class="boutton boutton_endNav" href="{{ path('adminProduit_modifier', {'nomProduit': nomProduit}) }}">Modifier</a>
+                <a class="boutton boutton_endNav" href="{{ path('adminProduit_supprimer', {'nomProduit': nomProduit}) }}">Supprimer</a>
+            </div>
         </div>
+        {% block body2 %} {% endblock %}
     </div>
-    {% block body2 %} {% endblock %}
 {% endblock %}
