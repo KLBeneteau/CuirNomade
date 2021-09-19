@@ -5,34 +5,37 @@
 {% endblock %}
 
 {% block body %}
-    <div>
-        <div>
+        <form id="pannier_Accueil" action="#" method="post">
             <h1> Ton Pannier </h1>
-            <table>
-                <tr>
-                    <th>Article</th>
-                    <th>Quantité</th>
-                    <th>Prix</th>
-                    <th><a href="#">X</a></th>
-                </tr>
-                {% for article in monPannier %}
+            <div class="flex ">
+                <table id="pannier_table">
                     <tr>
-                        <th>
-                            <div class="flex column">
-                                <h1>{{ article.Modele }}</h1>
-                                {% for colonne in article.colonneGroup %}
-                                    <p>{{ colonne }} : {{ article[colonne] }}</p>
-                                {% endfor %}
-                            </div>
-                        </th>
-                        <th>{{ article.nombre }}</th>
-                        <th>{{ article.Prix }}</th>
-                        <th><a href="#">X</a></th>
+                        <th>Article</th>
+                        <th><label for="quantiter">Quantité</label></th>
+                        <th>Prix</th>
+                        <th><a href="#"><img src="/CuirNomade/public/img/LogoPoubelle.png" alt="Logo Vider le Pannier"></a></th>
                     </tr>
-                {% endfor %}
-            </table>
-        </div>
-        <div></div>
-    </div>
+                    {% for article in monPannier %}
+                        <tr>
+                            <th class="flex column">
+                                <h1 class="flex">{{ article.Modele }}</h1>
+                                {% for colonne in article.colonneGroup %}
+                                    <p class="flex">{{ colonne }} : {{ article[colonne] }}</p>
+                                {% endfor %}
+                            </th>
+                            <th><input type="number" value="{{ article.nombre }}" min="0" id="quantiter"></th>
+                            <th>{{ article.Prix }}€</th>
+                            <th><a href="#" class="X" >X</a></th>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="flex column ai_center">
+                    <h1 class="sansEspace"> Montant Total </h1>
+                    <h1 class="sansEspace">{{ totalPannier }}€</h1>
+                    <input type="submit" value="Commander" class="bouttonCommander">
+                    <p class="petiteLigne">Panier affiché TTC sur la base d'une TVA à 20%.</p>
+                </div>
+            </div>
+        </form>
 {% endblock %}
 

@@ -24,7 +24,12 @@ class PannierController extends AbstractController {
 
         $monPannier = $pannierBDD->getArticlePannier($this->getUser()->getId(),$repertoirRepository) ;
 
-        return $this->render('pannier/accueil.html.twig',compact('monPannier')) ;
+        $totalPannier = 0;
+        foreach ($monPannier as $article){
+            $totalPannier+=$article['Prix'];
+        }
+
+        return $this->render('pannier/accueil.html.twig',compact('monPannier','totalPannier')) ;
 
     }
 

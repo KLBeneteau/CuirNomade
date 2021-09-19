@@ -5,69 +5,41 @@
     font-size: 18px;
 }
 
-h1, h1 * {
-    font-size: 30px;
+h1, h1 * { font-size: 30px; }
+
+.petiteLigne {
+    font-size: 12px;
 }
 
-.flex {
-    display: flex;
-}
+.flex { display: flex; }
 
-.jc_center {
-    justify-content: center;
-}
+.jc_center { justify-content: center; }
 
-.jc_spaceEvenly {
-    justify-content: space-evenly;
-}
+.jc_spaceEvenly { justify-content: space-evenly; }
 
-.jc_spaceBetween {
-    justify-content: space-between;
-}
+.jc_spaceBetween { justify-content: space-between; }
 
-.jc_end {
-    justify-content: flex-end;
-}
+.jc_end { justify-content: flex-end; }
 
-.jc_stretch {
-    justify-content: stretch;
-}
+.jc_stretch { justify-content: stretch; }
 
-.ai_center {
-    align-items: center;
-}
+.ai_center { align-items: center; }
 
-.ai_stretch {
-    align-items: stretch;
-}
+.ai_stretch { align-items: stretch; }
 
-.column {
-    flex-direction: column;
-}
+.column { flex-direction: column; }
 
-.wrap {
-    flex-wrap: wrap;
-}
+.wrap { flex-wrap: wrap; }
 
-.margin_Auto {
-    margin: auto;
-}
+.margin_Auto { margin: auto; }
 
-.espaceDroite {
-    margin-right: 1em;
-}
+.espaceDroite { margin-right: 1em; }
 
-.espaceHaut {
-    margin-top: 1em;
-}
+.espaceHaut { margin-top: 1em; }
 
-.espaceGauche {
-    margin-left: 1em;
-}
+.espaceGauche { margin-left: 1em; }
 
-.sansEspace {
-    margin: 0;
-}
+.sansEspace { margin: 0; }
 
 .scroll-x {
     overflow-x: scroll;
@@ -113,6 +85,20 @@ h1, h1 * {
 
 table .bouttonV2 {
     font: inherit;
+}
+
+.bouttonCommander {
+    background-color: rgb(75 209 253);
+    text-decoration: none;
+    color: black;
+    padding: 0.3em 1em ;
+    border-radius: 10px;
+    font-size: 20px;
+    transition: background-color 1s;
+}
+
+.bouttonCommander:hover {
+    background-color: rgb(49 181 224);
 }
 
 /*------------------------------------------------------------------------------------*/
@@ -480,6 +466,61 @@ form div#registration_form div:nth-last-child(2){
     margin-bottom: 0.5em;
 }
 
+/*------------------------------------------------------------------------------------*/
+/* pannier/accueil.html.twig */
+
+#pannier_table {
+    border-spacing: 0;
+    background-color: bisque;
+}
+
+#pannier_table th {
+    border-top: 1px solid black;
+    padding: 0.2em 2.5em ;
+
+}
+
+#pannier_table th:first-child {
+    border-left: 1px solid black;
+}
+
+#pannier_table th:last-child {
+    border-right: 1px solid black;
+}
+
+#pannier_table tr:last-child th {
+    border-bottom: 1px solid black;
+}
+
+#pannier_table tr:first-child {
+    background-color: rgb(33 11 1);
+    color: white;
+}
+
+#pannier_table * {
+    margin: 0;
+}
+
+#pannier_Accueil {
+    width: 70%;
+    margin: auto auto 4em;
+}
+
+#pannier_Accueil > div > div:nth-child(2){
+    margin-left: 4em;
+    padding: 0 2em;
+    background-color: #d0cfcf;
+}
+
+#pannier_Accueil > div > div:nth-child(2) * {
+    margin: 0.3em 0;
+}
+
+.X {
+    text-decoration: none;
+    color: black;
+    padding: 0.5em;
+}
 
 
 
