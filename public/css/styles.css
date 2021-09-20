@@ -176,7 +176,7 @@ footer img {
     animation: 30s slidy infinite;
 }
 
-#slider img { width: 5.5555555%; height: auto; float: left; } /* 20 car 100/5 le nombre d'image */
+#slider img { width: 5.5555555%; height: 350px; float: left; } /* 20 car 100/5 le nombre d'image */
 
 /*------------------------------------------------------------------------------------*/
 /* Base : flash */

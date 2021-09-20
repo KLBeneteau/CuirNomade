@@ -66,4 +66,14 @@ class EvenementBDD {
 
         }
     }
+
+    public function getPhotoParEmplacement(){
+
+        $query="SELECT emp.id,ev.image FROM emplacement as emp 
+                LEFT JOIN evenement as ev ON emp.idEvenement = ev.id ";
+        $prep = $GLOBALS['pdo']->prepare($query);
+        $prep->execute();
+        return $prep->fetchAll();
+
+    }
 }

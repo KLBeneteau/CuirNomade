@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\RepertoirRepository;
+use App\Service\EvenementBDD;
 use App\Service\FiltreArticleBDD;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,7 +13,9 @@ class MainController extends AbstractController {
     /**
      * @Route("/", name="main_accueil")
      */
-    public function accueil(FiltreArticleBDD $filtreArticleBDD, RepertoirRepository $repertoirRepository){
+    public function accueil(FiltreArticleBDD $filtreArticleBDD, RepertoirRepository $repertoirRepository, EvenementBDD $evenementBDD){
+
+        $listPhotoEvenement = $evenementBDD->getPhotoParEmplacement();
 
         if ($this->isGranted("ROLE_CLIENT_VIP")) {
             $repertoir = $repertoirRepository->findAll();
@@ -21,7 +24,7 @@ class MainController extends AbstractController {
         }
 
         $listeArticle = $filtreArticleBDD->randomGet_SansGroup(6,$repertoir);
-        return $this->render("main/accueil.html.twig",compact('listeArticle')) ;
+        return $this->render("main/accueil.html.twig",compact('listeArticle','listPhotoEvenement')) ;
     }
 
     /**
