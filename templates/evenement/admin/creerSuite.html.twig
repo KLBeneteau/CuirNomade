@@ -1,0 +1,25 @@
+{% extends 'miseEnPage_Classique.html.twig' %}
+
+{% block body %}
+    <div>
+        <p>Selecttionez les articles concerncé par l'evenement</p>
+        <table>
+           <form method="post" name="liensArticles" action="{{ path('Evenement_admin_ajouter') }}">
+               {% for article in listArticle %}
+                   <tr>
+                       <th>{{ article.Modele }}</th>
+                       <th><input type="checkbox" value="1" name="{{ article.Modele }}"></th>
+                   </tr>
+               {% endfor %}
+               <input type="hidden" value="{{ nomProduit }}" name="nomProduit">
+               <input type="hidden" value="{{ nomEvenement }}" name="nomEvenement">
+               <tr><th><input type="submit" value="Valider"></th></tr>
+           </form>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+    Ajouter Evenement
+{% endblock %}
+

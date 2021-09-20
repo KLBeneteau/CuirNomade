@@ -1,6 +1,7 @@
 {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
     <nav id="admin_nav" class="flex">
         <a class="boutton "  href="{{ path('invitationClient_accueil') }}">Inviter Des Clients VIP</a>
-        <a class="boutton boutton_endNav"  href="{{ path('adminProduit_accueil') }}">Gestion des Produits</a>
+        <a class="boutton "  href="{{ path('adminProduit_accueil') }}">Gestion des Produits</a>
+        <a class="boutton boutton_endNav"  href="{{ path('Evenement_admin_accueil') }}">Gestion des Evenements</a>
     </nav>
 {% endif %}

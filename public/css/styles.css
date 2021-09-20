@@ -101,6 +101,7 @@ table .bouttonV2 {
     background-color: rgb(49 181 224);
 }
 
+
 /*------------------------------------------------------------------------------------*/
 /* base.html.twig */
 body {
@@ -114,12 +115,33 @@ header img {
 
 main {
     background-image: url("../img/fondBlanc.jpg");
-    padding: 0.5em;
+    padding: 0.5em 0.5em 4em;
 }
 
 footer {
     background-color: rgb(33 11 1);
     color: #FFFFFF;
+}
+
+footer > div {
+    width: 80%;
+    margin: auto;
+}
+
+footer * {
+    margin: 0.2em;
+}
+
+footer p {
+    font-size: 13px;
+}
+
+footer h6 {
+    font-size: 16px;
+}
+
+footer img {
+    height: 70px;
 }
 
 #fondTaupe {

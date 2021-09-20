@@ -18,7 +18,7 @@
     </head>
     <body>
         <header class="flex">
-                <img src="/CuirNomade/public/img/banniereSiteSansBleu.png" alt="Logo du Site Cuirs Nomades">
+                <img src="/CuirNomade/public/img/banniereSiteSansBleu.png" alt="Banniere du Site Cuirs Nomades">
         </header>
         <div id="fondTaupe">
             {% block slider %} {% endblock %}
@@ -29,7 +29,31 @@
         <main>
             {% block miseEnPage %} {% endblock %}
         </main>
-        <footer class="flex jc_center" > footer </footer>
+        <footer>
+            <div class="flex jc_spaceEvenly">
+                <img src="/CuirNomade/public/img/LogoCuirNomade.png" alt="Logo du Site Cuirs Nomades">
+                <div class="flex">
+                    <h6>Nous Contactez : </h6>
+                    <div class="espaceGauche">
+                        <p>cuirsnomades@gmail.com</p>
+                        <p>06 79 66 55 58</p>
+                        <p>06 52 58 04 75 </p>
+                    </div>
+                </div>
+                <div class="flex">
+                    <h6>Nous Retrouvez :</h6>
+                    <div class="espaceGauche">
+                        <p>16 place jean yole</p>
+                        <p>85160 Saint Jean de Monts</p>
+                    </div>
+                </div>
+                <div>
+                    <p>Copyright ©cuirsnomades 1995-2021, artisant cuir </p>
+                    <p>siret : 41295264000032</p>
+                </div>
+                <img src="/CuirNomade/public/img/LogoCuirNomade.png" alt="Logo du Site Cuirs Nomades">
+            </div>
+        </footer>
     </body>
 
 </html>

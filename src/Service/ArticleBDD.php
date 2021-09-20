@@ -236,4 +236,13 @@ class ArticleBDD {
 
     }
 
+    public function getAllModele(String $nomProduit)
+    {
+        $query = "Select DISTINCT Modele FROM ".$nomProduit ;
+        $prep = $GLOBALS['pdo']->prepare($query);
+        $prep->execute();
+        return $prep->fetchAll();
+
+    }
+
 }

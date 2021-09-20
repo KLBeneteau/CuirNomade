@@ -33,18 +33,22 @@ class PannierBDD {
         $prep->execute();
         $contenuePannier = $prep->fetchAll() ;
 
-        $articleBDD = new ArticleBDD() ;
-        $produitBDD = new ProduitBDD() ;
-        $i = 0;
-        foreach ($contenuePannier as $article) {
-            $listeArticle[$i] = $articleBDD->getOneByID($article['idArticle'],$article['tableArticle']) ;
-            $listeArticle[$i]['nombre'] = $article['nombreArticle'];
-            $listeArticle[$i]['colonneGroup'] = $produitBDD->getNomColonneGroup($repertoirRepository->findOneBy(["nom"=>$article['tableArticle']]));
-            $i++;
-        }
+       if ($contenuePannier != []) {
 
-        return $listeArticle;
+           $articleBDD = new ArticleBDD() ;
+           $produitBDD = new ProduitBDD() ;
+           $i = 0;
+           foreach ($contenuePannier as $article) {
+               $listeArticle[$i] = $articleBDD->getOneByID($article['idArticle'],$article['tableArticle']) ;
+               $listeArticle[$i]['nombre'] = $article['nombreArticle'];
+               $listeArticle[$i]['colonneGroup'] = $produitBDD->getNomColonneGroup($repertoirRepository->findOneBy(["nom"=>$article['tableArticle']]));
+               $i++;
+           }
 
+           return $listeArticle;
+       } else {
+           return $contenuePannier ;
+       }
     }
 
 }

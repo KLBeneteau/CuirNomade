@@ -1,0 +1,46 @@
+{% extends 'miseEnPage_Classique.html.twig' %}
+
+{% block title %}
+    Gestions des Evenements
+{% endblock %}
+
+{% block body %}
+    <div class="flex jc_spaceEvenly">
+        <table>
+            <tr>
+                <th>emplacement</th>
+                <th>nom</th>
+            </tr>
+            <form action="{{ path('Evenement_admin_enregistrer') }}" method="post" name="modifierEmplacement">
+                {% for i in 1..6 %}
+                    <tr>
+                        <th>{{ i }}</th>
+                        <th>
+                            <select name="{{ i }}">
+                                {% for evenement in listEvenement %}
+                                    <option value="{{ evenement.id }}" {% if evenement.id == listEmplacement[i-1]['idEvenement']  %} selected {% endif %} >{{ evenement.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </th>
+                    </tr>
+                {% endfor %}
+                <tr><th><input type="submit" value="Enregistrer" class="bouttonV2"></th></tr>
+            </form>
+        </table>
+        <div>
+            <p>Ajouter un Evenement</p>
+            <a href="{{ path('Evenement_admin_creer') }}" class="bouttonV2">Creer</a>
+        </div>
+        <div>
+            <p>Supprmier un Evenement</p>
+            <form method="post" name="supprimerEvenement" action="{{ path('Evenement_admin_supprmier') }}">
+                <select name="nomEvenement">
+                    {% for evenement in listEvenement %}
+                        <option value="{{ evenement.nom }}">{{ evenement.nom }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Supprmier" class="bouttonV2">
+            </form>
+        </div>
+    </div>
+{% endblock %}

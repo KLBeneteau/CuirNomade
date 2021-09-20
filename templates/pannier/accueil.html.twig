@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+    {% if monPannier != [] %}
         <form id="pannier_Accueil" action="#" method="post">
             <h1> Ton Pannier </h1>
             <div class="flex ">
@@ -32,10 +33,13 @@
                 <div class="flex column ai_center">
                     <h1 class="sansEspace"> Montant Total </h1>
                     <h1 class="sansEspace">{{ totalPannier }}€</h1>
-                    <input type="submit" value="Commander" class="bouttonCommander">
+                    <input type="submit" value="Commander" class="bouttonV2">
                     <p class="petiteLigne">Panier affiché TTC sur la base d'une TVA à 20%.</p>
                 </div>
             </div>
         </form>
+    {% else %}
+        <h1 class="espaceGauche">Ton panier est vide !</h1>
+    {% endif %}
 {% endblock %}
 
