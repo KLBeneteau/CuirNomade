@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Repository\RepertoirRepository;
 use App\Service\ArticleBDD;
 use App\Service\EvenementBDD;
-use App\Service\PannierBDD;
+use App\Service\PanierBDD;
 use Symfony\Bridge\PhpUnit\Legacy\ExpectDeprecationTraitBeforeV8_4;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,13 +53,13 @@ class EvenementController extends AbstractController {
             $nomProduit = $_REQUEST['produit'] ;
 
             $listArticle = $articleBDD->getAllModele($_REQUEST['produit']) ;
-            $this->addFlash('success',"l'evenement à bien été créer");
+            $this->addFlash('success',"l'évenement a bien été créé");
 
             return $this->render('evenement/admin/creerSuite.html.twig', compact('listArticle','idEvenement','nomProduit')) ;
 
 
         } catch (\Exception $e) {
-            $this->addFlash('error',"l'evenement n'a pas pue etre enregistrer");
+            $this->addFlash('error',"l'évenement n'a pas pue être enregistré");
             return $this->redirectToRoute("Evenement_admin_creer") ;
         }
 
@@ -84,9 +84,9 @@ class EvenementController extends AbstractController {
         try {
             $evenementBDD->supprimer($_REQUEST["idEvenement"]) ;
 
-            $this->addFlash('success',"L'evenement a bien été supprimer");
+            $this->addFlash('success',"L'évenement a bien été supprimé");
         } catch (\Exception $e) {
-            $this->addFlash('error',"L'evenement n'a pas pue etre supprimer");
+            $this->addFlash('error',"L'evenement n'a pas pue être supprimé");
         }
 
         return $this->redirectToRoute('Evenement_admin_accueil');
@@ -101,9 +101,9 @@ class EvenementController extends AbstractController {
         try {
             $evenementBDD->enregistrerPlacement($_REQUEST) ;
 
-            $this->addFlash('success',"Les emplacement ont bien été enregistrer");
+            $this->addFlash('success',"Les emplacements ont bien été enregistré");
         } catch (\Exception $e) {
-            $this->addFlash('error',"Echec de l'attribution des emplacement");
+            $this->addFlash('error',"Echec de l'attribution des emplacements");
         }
 
         return $this->redirectToRoute('Evenement_admin_accueil');

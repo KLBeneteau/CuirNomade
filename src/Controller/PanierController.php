@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Repository\RepertoirRepository;
 use App\Service\ArticleBDD;
-use App\Service\PannierBDD;
+use App\Service\PanierBDD;
 use App\Service\ProduitBDD;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,30 +13,30 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * @Route("/monCompte/pannier", name="pannier_")
+ * @Route("/monCompte/panier", name="panier_")
  */
-class PannierController extends AbstractController {
+class PanierController extends AbstractController {
 
     /**
      * @Route("/accueil/" , name="accueil")
      */
-    public function accueil(PannierBDD $pannierBDD, RepertoirRepository $repertoirRepository ) {
+    public function accueil(PanierBDD $panierBDD, RepertoirRepository $repertoirRepository ) {
 
-        $monPannier = $pannierBDD->getArticlePannier($this->getUser()->getId(),$repertoirRepository) ;
+        $monPanier = $panierBDD->getArticlePanier($this->getUser()->getId(),$repertoirRepository) ;
 
-        $totalPannier = 0;
-        foreach ($monPannier as $article){
-            $totalPannier+=$article['Prix'];
+        $totalPanier = 0;
+        foreach ($monPanier as $article){
+            $totalPanier+=$article['Prix'];
         }
 
-        return $this->render('pannier/accueil.html.twig',compact('monPannier','totalPannier')) ;
+        return $this->render('panier/accueil.html.twig',compact('monPanier','totalPanier')) ;
 
     }
 
     /**
      * @Route("/ajouter/" , name="ajouter")
      */
-    public function ajouter(PannierBDD $pannierBDD, Request $request, ArticleBDD $articleBDD, RepertoirRepository $repertoirRepository, ProduitBDD $produitBDD) {
+    public function ajouter(PanierBDD $panierBDD, Request $request, ArticleBDD $articleBDD, RepertoirRepository $repertoirRepository, ProduitBDD $produitBDD) {
 
         try {
 
@@ -50,12 +50,12 @@ class PannierController extends AbstractController {
                 return $this->redirectToRoute('clientArticle_detail', ['nomProduit'=>$request->get('nomProduit'),'modele'=>$article['Modele']]);
             }
 
-            $pannierBDD->ajouter($this->getUser()->getId(),$article,$request);
+            $panierBDD->ajouter($this->getUser()->getId(),$article,$request);
 
-            $this->addFlash('success',"l'article a bien été ajouter au pannier");
+            $this->addFlash('success',"l'article a bien été ajouté au panier");
 
         } catch (Exception $e) {
-            $this->addFlash("error","Une erreur est survenue lors de l'ajout de l'article au pannier");
+            $this->addFlash("error","Une erreur est survenue lors de l'ajout de l'article au panier");
         }
 
         return $this->redirectToRoute('main_accueil');

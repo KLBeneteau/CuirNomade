@@ -25,13 +25,10 @@ class AdminArticlesController extends AbstractController {
                             RepertoirRepository $repertoirRepository, ProduitBDD $produitBDD, EtatRepository $etatRepository){
 
 
-        //recupère tout se qui est enregistrer dans la table
         $listeArticle = $articleBDD->get_JoinEtat($nomProduit,$_REQUEST) ;
 
-        //récupère tout les etat de vente différent d'un article
         $listeEtat = $etatRepository->findAll();
 
-        //récupère tout les nom de colone de la table
         $info = $produitBDD->info($nomProduit);
         $listeColonne = [];
         foreach ($info as $coloneInfo){
@@ -40,7 +37,6 @@ class AdminArticlesController extends AbstractController {
         $listeColonne['Statut'] = "varchar(30)";
         $listeColonne['Images'] = "varchar(30)";
 
-        //Compte le nombre de photo par article
         $resultat = $articleBDD->getNombrePhoto_ParArticle($nomProduit) ;
         $infoImage = [] ;
         foreach ($resultat as $info){
@@ -77,10 +73,8 @@ class AdminArticlesController extends AbstractController {
 
         try {
 
-            //Initialise la commande sql
             $listNewId = $articleBDD->ajouter($nomProduit,$request,$repertoirRepository) ;
 
-            //enregistre Les Photos
             foreach ($_FILES["repertoir_image"]["error"] as $key => $error) {
                 if ($error == UPLOAD_ERR_OK) {
                     $tmp_name = $_FILES["repertoir_image"]["tmp_name"][$key];
@@ -98,7 +92,7 @@ class AdminArticlesController extends AbstractController {
             $this->addFlash('success',"l'article a bien été ajouté");
 
         } catch (\Exception $e) {
-            $this->addFlash('error',"l'article n'a pas pue etre ajouté");
+            $this->addFlash('error',"l'article n'a pas pue être ajouté");
         }
 
         return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0,"idArticle"=>$listNewId[0]]);
@@ -117,7 +111,7 @@ class AdminArticlesController extends AbstractController {
             $this->addFlash('success',"l'article a bien été supprimé");
 
         } catch (Exception $e) {
-            $this->addFlash('error',"l'article n'a pas pue etre supprimé");
+            $this->addFlash('error',"l'article n'a pas pue être supprimé");
         }
 
         return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0]);
@@ -149,7 +143,7 @@ class AdminArticlesController extends AbstractController {
             $this->addFlash('success',"l'article a bien été modifié");
 
         } catch (Exception $e) {
-            $this->addFlash('error',"l'article n'a pas pue etre modifié");
+            $this->addFlash('error',"l'article n'a pas pue être modifié");
         }
 
         return $this->redirectToRoute('adminArticle_accueil',["nomProduit"=>$nomProduit,"isModification"=>0]);

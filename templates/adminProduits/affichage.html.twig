@@ -5,7 +5,7 @@
         {% for produit in listeProduits %}
             {% if produit.nom == nomProduit %}
                 {% if produit.isVip %} <p>Ce produit est réservé au clients VIP</p>
-                {% else %} <p>Ce produit n'est pas réservé au client VIP</p>
+                {% else %} <p>Ce produit est disponible à tout public</p>
                 {% endif %}
             {% endif %}
         {% endfor %}

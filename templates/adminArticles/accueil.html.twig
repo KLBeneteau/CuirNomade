@@ -11,8 +11,8 @@
         <a class="boutton boutton_endNav" href="{{ path('adminProduit_affichage', {'nomProduit': nomProduit}) }}">Retour</a>
     </div>
     <div class="flex ai_center">
-        {% if isVIP %} <p class="espaceDroite">Ce produit est réservé au clients VIP</p>
-        {% else %} <p class="espaceDroite">Ce produit est n'est pas réservé au client VIP</p>
+        {% if isVIP %} <p class="espaceDroite">Ce produit est réservé aux clients VIP</p>
+        {% else %} <p class="espaceDroite">Ce produit est disponible à tout public</p>
         {% endif %}
         <form action="{{ path('adminArticle_ChangeVIP', {'nomProduit': nomProduit}) }}" method="post" >
             <input type="hidden" value="{{isVIP}}" name="newVIP">
@@ -20,7 +20,7 @@
         </form>
     </div>
     <div>
-        <p class="sansEspace" > * Ajout groupé : Lors de l'ajout d'un nouveau produit, entrer toutes les valeurs séparées par | pour tout ajouté d'un coup   </p>
+        <p class="sansEspace" > * Ajout groupé : Lors de l'ajout d'un nouveau produit, entrer toutes les valeurs séparées par | pour tout ajouter d'un coup   </p>
         <p class="sansEspace" > ( exemple 1 : valeur1|valeur2|valeur3 ou exemple 2 : valeur1 ) </p>
     </div>
     <form method="post" action="{{ path('adminArticle_accueil', {'isModification': 0, 'nomProduit': nomProduit}) }}" class="espaceHaut">

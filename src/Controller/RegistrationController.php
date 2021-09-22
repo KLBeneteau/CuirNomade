@@ -41,13 +41,13 @@ class RegistrationController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Votre profil a bien été enregistrer');
+                $this->addFlash('success', 'Votre profil a bien été enregistré');
 
                 $validator = new ValidatorMail($user) ;
                 $entityManager->persist($validator);
                 $entityManager->flush();
 
-                $message = (new \Swift_Message('Cuir Nomade : Validation Email'))
+                $message = (new \Swift_Message('Les Cuirs Nomades : Validation Email'))
                     // On attribue l'expéditeur
                     ->setFrom("cuirsnomades@gmail.com")
                     // On attribue le destinataire
@@ -62,7 +62,7 @@ class RegistrationController extends AbstractController
                 ;
                 $mailer->send($message);
 
-                $this->addFlash('success', "Un Email de validation vous a été envoyer de l'adresse : ".$user->getEmail() );
+                $this->addFlash('success', "Un Email de validation vous a été envoyé de l'adresse : ".$user->getEmail() );
 
                 return $this->redirectToRoute('app_login');
 
@@ -111,7 +111,7 @@ class RegistrationController extends AbstractController
                     $entityManager->remove($invitation);
                     $entityManager->flush();
 
-                    $this->addFlash('success', 'Votre profil a bien été enregistrer');
+                    $this->addFlash('success', 'Votre profil a bien été enregistré');
 
                     return $this->redirectToRoute('app_login');
 

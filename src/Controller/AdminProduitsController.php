@@ -39,8 +39,8 @@ class AdminProduitsController extends AbstractController {
     public function creer(RepertoirRepository $repertoirRepository,
                           Request $request,
                           ProduitBDD $produitBDD,
-                          EntityManagerInterface $entityManager)
-    {
+                          EntityManagerInterface $entityManager) {
+
 
         $nomProduit = str_replace(' ','',ucwords($request->get("nom")," \t\r\n\f\v "));
         if ($request->get("isVIP")) {
@@ -61,11 +61,11 @@ class AdminProduitsController extends AbstractController {
                 $entityManager->persist($newRepertoir);
                 $entityManager->flush();
 
-                $this->addFlash("success","le produit $nomProduit été créer");
+                $this->addFlash("success","le produit $nomProduit été créé");
                 return $this->redirectToRoute('adminProduit_modifier',['nomProduit'=>$nomProduit]);
 
             } catch (\Exception $e) {
-                $this->addFlash('error','Le produit '.$nomProduit." n'a pas pue etre créer");
+                $this->addFlash('error','Le produit '.$nomProduit." n'a pas pue être créé");
             }
 
         }
@@ -116,7 +116,7 @@ class AdminProduitsController extends AbstractController {
                 $this->addFlash('success','Le produit '.$nomProduit.' a bien été supprimé');
 
             } catch (\Exception $e) {
-                $this->addFlash('error','Le produit '.$nomProduit." n'a pas pue etre supprimé");
+                $this->addFlash('error','Le produit '.$nomProduit." n'a pas pue être supprimé");
             }
 
             return $this->redirectToRoute('adminProduit_accueil');
@@ -174,15 +174,15 @@ class AdminProduitsController extends AbstractController {
                 $produit->setIsGroup($produit->getIsGroup() . $isGroup ) ;
                 $entityManager->flush();
 
-                $this->addFlash('success','La caractéritique '.$nomChara.' a bien été ajouté');
+                $this->addFlash('success','La caractéristique '.$nomChara.' a bien été ajoutée');
 
             } else {
 
-                $this->addFlash('error','La caractéritique '.$nomChara.' existe déja !');
+                $this->addFlash('error','La caractéristique '.$nomChara.' existe déja !');
             }
 
         } catch (\Exception $e) {
-            $this->addFlash('error','La caractéritique '.$nomChara." n'a pas pue etre ajouter");
+            $this->addFlash('error','La caractéristique '.$nomChara." n'a pas pue être ajoutée");
         }
 
         return $this->redirectToRoute('adminProduit_modifier',compact('nomProduit'));
@@ -210,10 +210,10 @@ class AdminProduitsController extends AbstractController {
 
             $produitBDD->supprColonne($nomProduit,$nomChara);
 
-            $this->addFlash('success','La caractéritique '.$nomChara.' a bien été supprimé');
+            $this->addFlash('success','La caractéristique '.$nomChara.' a bien été supprimée');
 
         } catch (\Exception $e) {
-            $this->addFlash('error','La caractéritique '.$nomChara." n'a pas pue etre ajouter");
+            $this->addFlash('error','La caractéristique '.$nomChara." n'a pas pue être ajoutée");
         }
 
         return $this->redirectToRoute('adminProduit_modifier',compact('nomProduit'));

@@ -50,7 +50,7 @@ class SecurityController extends AbstractController
                 $entityManager->persist($validator);
                 $entityManager->flush();
 
-                $message = (new \Swift_Message('Cuir Nomade : changement mot de passe'))
+                $message = (new \Swift_Message('Les Cuirs Nomades : changement mot de passe'))
                     // On attribue l'expéditeur
                     ->setFrom("cuirsnomades@gmail.com")
                     // On attribue le destinataire
@@ -105,7 +105,7 @@ class SecurityController extends AbstractController
                     $entityManager->remove($validatorCode);
                     $entityManager->flush();
 
-                    $this->addFlash('success', 'Votre mot de passe a bien été modifier ');
+                    $this->addFlash('success', 'Votre mot de passe a bien été modifié ');
 
                     return $this->redirectToRoute('app_login');
 

@@ -58,7 +58,7 @@ class InvitationClientController extends AbstractController {
                         );
                     $mailer->send($message);
 
-                    $this->addFlash('success','le compte client corespondant à cette adresse Email a été promu VIP, un mail pour lui annoncer la nouvelle a été envoyer !');
+                    $this->addFlash('success','le compte client '.$email.' à été promu VIP, un mail pour lui annoncer la nouvelle a été envoyé !');
                 }
 
             } else {
@@ -81,7 +81,7 @@ class InvitationClientController extends AbstractController {
                 );
             $mailer->send($message);
 
-            $this->addFlash('success', 'Une invitation a ' . $email . ' été envoyer ! ');
+            $this->addFlash('success', 'Une invitation a ' . $email . ' été envoyé ! ');
             }
         }
 
@@ -102,7 +102,7 @@ class InvitationClientController extends AbstractController {
         if($user){
 
             if (in_array('ROLE_CLIENT_VIP',$user->getRoles())) {
-                $this->addFlash('error','le compte client corespondant à cette adresse Email est déja VIP !');
+                $this->addFlash('error','le compte client '.$email.' est déja VIP !');
             } else {
                 $user->setRoles(['ROLE_CLIENT_VIP']);
                 $entityManager->flush();
@@ -121,7 +121,7 @@ class InvitationClientController extends AbstractController {
                     );
                 $mailer->send($message);
 
-                $this->addFlash('success','le compte client corespondant à cette adresse Email a été promu VIP, un mail pour lui annoncer la nouvelle a été envoyer !');
+                $this->addFlash('success','le compte client '.$email.' a été promu VIP, un mail pour lui annoncer la nouvelle à été envoyé !');
             }
 
         } else {
@@ -143,7 +143,7 @@ class InvitationClientController extends AbstractController {
                 );
             $mailer->send($message);
 
-            $this->addFlash('success', 'Une invitation a ' . $email . ' été envoyer ! ');
+            $this->addFlash('success', 'Une invitation a ' . $email . ' été envoyé ! ');
         }
 
         return $this->redirectToRoute('invitationClient_accueil');

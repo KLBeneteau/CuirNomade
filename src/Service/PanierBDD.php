@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 $connexion = new Connexion();
 $GLOBALS['pdo'] = $connexion->createConnexion();
 
-class PannierBDD {
+class PanierBDD {
 
     public function ajouter(int $idUser, $article,Request $request){
 
@@ -23,22 +23,19 @@ class PannierBDD {
 
     }
 
-    public function supprimer(){}
-    public function modifier(){}
-
-    public function getArticlePannier($idUser, RepertoirRepository $repertoirRepository){
+    public function getArticlePanier($idUser, RepertoirRepository $repertoirRepository){
 
         $query = "Select * FROM Pannier WHERE idClient = ".$idUser ;
         $prep = $GLOBALS['pdo']->prepare($query);
         $prep->execute();
-        $contenuePannier = $prep->fetchAll() ;
+        $contenuePanier = $prep->fetchAll() ;
 
-       if ($contenuePannier != []) {
+       if ($contenuePanier != []) {
 
            $articleBDD = new ArticleBDD() ;
            $produitBDD = new ProduitBDD() ;
            $i = 0;
-           foreach ($contenuePannier as $article) {
+           foreach ($contenuePanier as $article) {
                $listeArticle[$i] = $articleBDD->getOneByID($article['idArticle'],$article['tableArticle']) ;
                $listeArticle[$i]['nombre'] = $article['nombreArticle'];
                $listeArticle[$i]['colonneGroup'] = $produitBDD->getNomColonneGroup($repertoirRepository->findOneBy(["nom"=>$article['tableArticle']]));
@@ -47,7 +44,7 @@ class PannierBDD {
 
            return $listeArticle;
        } else {
-           return $contenuePannier ;
+           return $contenuePanier ;
        }
     }
 
