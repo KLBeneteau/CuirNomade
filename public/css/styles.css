@@ -152,14 +152,18 @@ footer img {
 /* Base : Slider */
 @keyframes slidy {
     0% { left: 0%; }
-    20% { left: 0%; }
-    25% { left: -33.33333333%; }
-    45% { left: -33.33333333%; }
-    50% { left: -66.66666666%; }
-    70% { left: -66.66666666%; }
-    75% { left: -100%; }
-    95% { left: -100%; }
-    100% { left: -133.3333333%; }
+    12% { left: 0%; }
+    15% { left: -33.33333333%; }
+    28% { left: -33.33333333%; }
+    31% { left: -66.66666666%; }
+    44% { left: -66.66666666%; }
+    47% { left: -100%; }
+    60% { left: -100%; }
+    63% { left: -133.3333333%; }
+    76% { left: -133.3333333%; }
+    79% { left: -166.66666666%; }
+    97% { left: -166.66666666%; }
+    100% { left: -200%; }
 }
 
 #slider { overflow: hidden }
@@ -167,16 +171,21 @@ footer img {
 
 #slider figure {
     position: relative;
-    width: 600%; /*car 5 image dans le slider*/
+    width: 900%; /*car 5 image dans le slider*/
     margin: 0;
     padding: 0;
     font-size: 0;
     left: 0;
     text-align: left;
-    animation: 30s slidy infinite;
+    animation: 60s slidy infinite;
 }
 
-#slider img { width: 5.5555555%; height: 350px; float: left; } /* 20 car 100/5 le nombre d'image */
+#slider img {
+    width: 3.703703%;
+    height: 350px;
+    float: left;
+    outline: 3px solid rgb(33 11 1);
+}
 
 /*------------------------------------------------------------------------------------*/
 /* Base : flash */
@@ -274,7 +283,7 @@ form div#registration_form div:nth-last-child(2){
 }
 
 *[id*="_Table"] th {
-   padding: 0.3em 1em;
+    padding: 0.3em 1em;
 }
 
 *[id*="_Table"] form , *[id*="_Table"] div{
@@ -338,7 +347,7 @@ form div#registration_form div:nth-last-child(2){
 }
 
 #ModifeProduit_form > * {
-   margin-bottom: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 /*------------------------------------------------------------------------------------*/
@@ -542,6 +551,28 @@ form div#registration_form div:nth-last-child(2){
     text-decoration: none;
     color: black;
     padding: 0.5em;
+}
+
+/*------------------------------------------------------------------------------------*/
+/* evenement/accueil.html.twig */
+
+#evenement_accueil > div {
+    border-left: dashed black 1px;
+    padding-left: 7em ;
+}
+
+/* evenement/creer.html.twig */
+#evenement_creer {
+    width: 20%;
+    margin: auto;
+}
+
+#evenement_creer input{
+    align-self: center;
+}
+
+#evenement_creer div {
+    margin: 0.3em;
 }
 
 

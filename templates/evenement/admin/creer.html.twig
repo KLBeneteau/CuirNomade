@@ -5,20 +5,17 @@
 {% endblock %}
 
 {% block body %}
-    <div>
-        <form method="post" name="creerEvenement1" action="{{ path('Evenement_admin_creerSuite') }}" enctype="multipart/form-data">
-            <div class="flex">
+    <div id="evenement_creer" class="espaceTopBot">
+        <form class="flex column ai_stretch" method="post" name="creerEvenement1" action="{{ path('Evenement_admin_creerSuite') }}" enctype="multipart/form-data">
+            <div class="flex jc_spaceBetween">
                 <label for="nomEvement">Nom :</label>
                 <input type="text" name="nom" id="nomEvement" required>
             </div>
-            <div class="flex">
+            <div class="flex jc_spaceBetween ">
                 <label for="descriptionEvenement">Description :</label>
                 <input type="text" name="description" id="descriptionEvenement" required>
             </div>
-            <div>
-                <input type="file" name="image" accept=".png, .jpg, .jpeg" required class="inputFile" >
-            </div>
-            <div class="flex">
+            <div class="flex jc_spaceBetween ">
                 <label for="produitEvenement">Concerne : </label>
                 <select name="produit" id="produitEvenement" required>
                     {% for produit in listProduit %}
@@ -26,7 +23,10 @@
                     {% endfor %}
                 </select>
             </div>
-            <input type="submit" value="Suivant">
+            <div>
+                <input type="file" name="image" accept=".png, .jpg, .jpeg" required class="inputFile" >
+            </div>
+            <input type="submit" value="Suivant" >
         </form>
     </div>
 {% endblock %}

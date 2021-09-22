@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block body %}
-    <div class="flex jc_spaceEvenly">
+    <div class="flex jc_spaceEvenly espaceTopBot" id="evenement_accueil">
         <table>
             <tr>
-                <th>emplacement</th>
-                <th>nom</th>
+                <th><h1>emplacement</h1></th>
+                <th><h1>nom</h1></th>
             </tr>
             <form action="{{ path('Evenement_admin_enregistrer') }}" method="post" name="modifierEmplacement">
                 {% for i in 1..6 %}
@@ -27,12 +27,12 @@
                 <tr><th><input type="submit" value="Enregistrer" class="bouttonV2"></th></tr>
             </form>
         </table>
-        <div>
-            <p>Ajouter un Evenement</p>
+        <div class="flex column ai_center">
+            <h1>Ajouter un Evenement</h1>
             <a href="{{ path('Evenement_admin_creer') }}" class="bouttonV2">Creer</a>
         </div>
-        <div>
-            <p>Supprmier un Evenement</p>
+        <div class="flex column ai_center">
+            <h1>Supprmier un Evenement</h1>
             <form method="post" name="supprimerEvenement" action="{{ path('Evenement_admin_supprmier') }}">
                 <select name="nomEvenement">
                     {% for evenement in listEvenement %}
