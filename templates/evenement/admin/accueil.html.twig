@@ -34,9 +34,9 @@
         <div class="flex column ai_center">
             <h1>Supprmier un Evenement</h1>
             <form method="post" name="supprimerEvenement" action="{{ path('Evenement_admin_supprmier') }}">
-                <select name="nomEvenement">
+                <select name="idEvenement">
                     {% for evenement in listEvenement %}
-                        <option value="{{ evenement.nom }}">{{ evenement.nom }}</option>
+                        <option value="{{ evenement.id }}">{{ evenement.nom }}</option>
                     {% endfor %}
                 </select>
                 <input type="submit" value="Supprmier" class="bouttonV2">

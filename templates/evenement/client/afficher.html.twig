@@ -1,0 +1,21 @@
+{% extends 'miseEnPage_Classique.html.twig' %}
+
+{% block title %} {{ evenement.nom }}{% endblock %}
+
+{% block body %}
+    <div class="flex column ai_center">
+        <h1>{{ evenement.nom }}</h1>
+        <p>{{ evenement.descritpion }}</p>
+        {% if evenement.listArticle|length > 1 %}
+            <div class="listeArticle flex wrap">
+                {% for article in evenement.listArticle %}
+                    {% include 'clientArticle/affichage.html.twig' with {'article': article} %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="soloArticle listeArticle">
+                {% include 'clientArticle/affichage.html.twig' with {'article': evenement.listArticle[0]} %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

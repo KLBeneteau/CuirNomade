@@ -24,6 +24,7 @@ class MainController extends AbstractController {
         }
 
         $listeArticle = $filtreArticleBDD->randomGet_SansGroup(6,$repertoir);
+
         return $this->render("main/accueil.html.twig",compact('listeArticle','listPhotoEvenement')) ;
     }
 

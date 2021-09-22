@@ -371,6 +371,10 @@ form div#registration_form div:nth-last-child(2){
     width: 70%;
 }
 
+.soloArticle > .prensetationArticle {
+    margin: auto;
+}
+
 .prensetationArticle img {
     height: 224px;
     width: 100% ;

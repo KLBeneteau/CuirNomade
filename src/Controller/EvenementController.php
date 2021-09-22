@@ -6,7 +6,6 @@ use App\Repository\RepertoirRepository;
 use App\Service\ArticleBDD;
 use App\Service\EvenementBDD;
 use App\Service\PannierBDD;
-use mysql_xdevapi\Exception;
 use Symfony\Bridge\PhpUnit\Legacy\ExpectDeprecationTraitBeforeV8_4;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,15 +48,14 @@ class EvenementController extends AbstractController {
 
                 move_uploaded_file($tmp_name, $folder);
             }
-            $evenementBDD->creer($_REQUEST,$filename);
+            $idEvenement = $evenementBDD->creer($_REQUEST,$filename);
 
-            $nomEvenement = $_REQUEST['nom'] ;
             $nomProduit = $_REQUEST['produit'] ;
 
             $listArticle = $articleBDD->getAllModele($_REQUEST['produit']) ;
             $this->addFlash('success',"l'evenement à bien été créer");
 
-            return $this->render('evenement/admin/creerSuite.html.twig', compact('listArticle','nomEvenement','nomProduit')) ;
+            return $this->render('evenement/admin/creerSuite.html.twig', compact('listArticle','idEvenement','nomProduit')) ;
 
 
         } catch (\Exception $e) {
@@ -84,7 +82,7 @@ class EvenementController extends AbstractController {
     public function adminSupprimer(EvenementBDD $evenementBDD){
 
         try {
-            $evenementBDD->supprimer($_REQUEST["nomEvenement"]) ;
+            $evenementBDD->supprimer($_REQUEST["idEvenement"]) ;
 
             $this->addFlash('success',"L'evenement a bien été supprimer");
         } catch (\Exception $e) {
@@ -116,6 +114,13 @@ class EvenementController extends AbstractController {
     /**
      * @Route("/client/afficher/{idEvenement}" , name="Evenement_client_afficher")
      */
-    public function clientAfficher(){}
+    public function clientAfficher(EvenementBDD $evenementBDD, int $idEvenement){
+
+        $evenement = $evenementBDD->findById($idEvenement) ;
+
+        return $this->render('evenement/client/afficher.html.twig',compact('evenement')) ;
+
+
+    }
 
 }

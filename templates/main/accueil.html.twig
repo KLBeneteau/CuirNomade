@@ -14,11 +14,11 @@
     <div id="slider">
         <figure>
             {% for i in 0..5 %}
-                <a href="{{ path('Evenement_client_afficher', {'idEvenement': i+1}) }}" id="emplacement{{ i }}"> <img src="../public/uploads/evenement/{{ listPhotoEvenement[i]['image'] }}" alt> </a>
+                <a href="{{ path('Evenement_client_afficher', {'idEvenement': listPhotoEvenement[i]['id']}) }}" id="emplacement{{ i }}"> <img src="../public/uploads/evenement/{{ listPhotoEvenement[i]['image'] }}" alt> </a>
             {% endfor %}
-            <a href="{{ path('Evenement_client_afficher', {'idEvenement': 1}) }}"> <img src="../public/uploads/evenement/{{ listPhotoEvenement[0]['image'] }}" alt> </a>
-            <a href="{{ path('Evenement_client_afficher', {'idEvenement': 2}) }}"> <img src="../public/uploads/evenement/{{ listPhotoEvenement[1]['image'] }}" alt> </a>
-            <a href="{{ path('Evenement_client_afficher', {'idEvenement': 3}) }}"> <img src="../public/uploads/evenement/{{ listPhotoEvenement[2]['image'] }}" alt> </a>
+            <a href="{{ path('Evenement_client_afficher', {'idEvenement': listPhotoEvenement[0]['id']}) }}"> <img src="../public/uploads/evenement/{{ listPhotoEvenement[0]['image'] }}" alt> </a>
+            <a href="{{ path('Evenement_client_afficher', {'idEvenement': listPhotoEvenement[1]['id']}) }}"> <img src="../public/uploads/evenement/{{ listPhotoEvenement[1]['image'] }}" alt> </a>
+            <a href="{{ path('Evenement_client_afficher', {'idEvenement': listPhotoEvenement[2]['id']}) }}"> <img src="../public/uploads/evenement/{{ listPhotoEvenement[2]['image'] }}" alt> </a>
         </figure>
     </div>
 {% endblock %}
