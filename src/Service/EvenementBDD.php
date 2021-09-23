@@ -73,10 +73,11 @@ class EvenementBDD {
     public function getPhotoParEmplacement(){
 
         $query="SELECT emp.id,ev.image,ev.id FROM emplacement as emp 
-                LEFT JOIN evenement as ev ON emp.idEvenement = ev.id ";
+                LEFT JOIN evenement as ev ON emp.idEvenement = ev.id
+                ORDER BY emp.id";
         $prep = $GLOBALS['pdo']->prepare($query);
         $prep->execute();
-        return $prep->fetchAll();
+        return $prep->fetchAll() ;
 
     }
 
