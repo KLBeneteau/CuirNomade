@@ -8,14 +8,13 @@
     {% endif %}
 
     {% if app.user %}
-        <div class="mb-3">
-            Voues êtes conecter en tant que {{ app.user.username }}, <a class="boutton boutton_endNav" href="{{ path('app_logout') }}">déconexion</a>
+        <div class="mb-3 espaceHaut">
+            Vous êtes conecté en tant que {{ app.user.username }}, <a class="bouttonV2" href="{{ path('app_logout') }}">déconexion</a>
         </div>
     {% endif %}
 
     <form name="login_form" method="post" class="espaceTopBot">
         <div id="login_form">
-
             <div>
                 <label for="inputEmail">Email</label>
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
