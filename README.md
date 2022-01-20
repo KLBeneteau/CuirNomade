@@ -1,5 +1,5 @@
 # Cuir Nomade
-Bonjour;
+Bonjour,
 Voici le projet réalisé lors de mon stage pour valider ma formation de Développeur Web et Web Mobile de l'ENI
 Faute d'avoir trouvé une entreprise à temps, j'ai fait ce projet pour mes parents qui tienne un magasin d'artisanat cuir.
 
